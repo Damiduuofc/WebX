@@ -7,39 +7,84 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   href?: string;
   className?: string;
   children: React.ReactNode;
+  variant?: "primary" | "highlight" | "secondary" | "glass" | "outline";
 }
 
-export default function Button({ href, className = "", children, ...props }: ButtonProps) {
+export default function Button({
+  href,
+  className = "",
+  children,
+  variant = "primary",
+  ...props
+}: ButtonProps) {
   const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
 
   const isDisabled = props.disabled;
 
+  let bg = "#0A1F44";
+  let color = "#FFFFFF";
+  let border = "none";
+  let shadow = "0 2px 8px rgba(10, 31, 68, 0.2)";
+
+  if (isDisabled) {
+    bg = "#9CA3AF";
+    shadow = "none";
+  } else if (variant === "highlight") {
+    bg = hovered ? "linear-gradient(135deg, #1E3A5F 0%, #192841 100%)" : "linear-gradient(135deg, #192841 0%, #0A1F44 100%)";
+    shadow = hovered
+      ? "0 12px 28px rgba(25, 40, 65, 0.45), 0 0 16px rgba(30, 92, 179, 0.3)"
+      : "0 8px 22px rgba(25, 40, 65, 0.35), 0 0 10px rgba(30, 92, 179, 0.2)";
+    border = "1px solid rgba(255, 255, 255, 0.25)";
+  } else if (variant === "secondary" || variant === "glass") {
+    bg = hovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.9)";
+    color = "#192841";
+    border = hovered ? "1.5px solid #192841" : "1.5px solid rgba(25, 40, 65, 0.2)";
+    shadow = hovered ? "0 8px 20px rgba(25, 40, 65, 0.15)" : "0 4px 12px rgba(25, 40, 65, 0.08)";
+  } else if (variant === "outline") {
+    bg = hovered ? "rgba(25, 40, 65, 0.05)" : "transparent";
+    color = "#192841";
+    border = "1.5px solid #192841";
+    shadow = "none";
+  } else {
+    // primary
+    bg = hovered ? "#1E3A5F" : "#0A1F44";
+  }
+
   const buttonStyle: React.CSSProperties = {
     flexShrink: 0,
-    padding: '10px 24px',
+    padding: variant === "highlight" ? "12px 28px" : "10px 24px",
     borderRadius: 999,
-    fontSize: 14,
-    fontWeight: 500,
-    color: '#FFFFFF',
-    cursor: isDisabled ? 'not-allowed' : 'pointer',
-    border: 'none',
-    background: isDisabled ? '#9CA3AF' : (hovered ? '#1E3A5F' : '#0A1F44'),
-    boxShadow: isDisabled ? 'none' : '0 2px 8px rgba(10, 31, 68, 0.2)',
-    transform: isDisabled ? 'none' : (pressed ? 'translateY(0) scale(0.98)' : hovered ? 'translateY(-1px)' : 'none'),
-    transition: 'all 0.2s ease',
-    whiteSpace: 'nowrap',
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '8px',
+    fontSize: variant === "highlight" ? 15 : 14,
+    fontWeight: 600,
+    color: color,
+    cursor: isDisabled ? "not-allowed" : "pointer",
+    border: border,
+    background: bg,
+    boxShadow: shadow,
+    transform: isDisabled
+      ? "none"
+      : pressed
+      ? "translateY(0) scale(0.98)"
+      : hovered
+      ? "translateY(-1.5px) scale(1.01)"
+      : "none",
+    transition: "all 0.25s cubic-bezier(0.16, 1, 0.3, 1)",
+    whiteSpace: "nowrap",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "10px",
     ...props.style,
   };
 
   const buttonElement = (
     <button
       onMouseEnter={() => !isDisabled && setHovered(true)}
-      onMouseLeave={() => { setHovered(false); setPressed(false); }}
+      onMouseLeave={() => {
+        setHovered(false);
+        setPressed(false);
+      }}
       onMouseDown={() => !isDisabled && setPressed(true)}
       onMouseUp={() => setPressed(false)}
       style={buttonStyle}
@@ -51,19 +96,30 @@ export default function Button({ href, className = "", children, ...props }: But
   );
 
   if (href) {
-    const isAnchor = href.startsWith('#');
-    const isExternal = href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:');
+    const isAnchor = href.startsWith("#");
+    const isExternal =
+      href.startsWith("http") ||
+      href.startsWith("mailto:") ||
+      href.startsWith("tel:");
 
     if (isAnchor || isExternal) {
       return (
-        <a href={href} style={{ textDecoration: 'none', display: 'inline-flex' }} className={className}>
+        <a
+          href={href}
+          style={{ textDecoration: "none", display: "inline-flex" }}
+          className={className}
+        >
           {buttonElement}
         </a>
       );
     }
 
     return (
-      <Link href={href} style={{ textDecoration: 'none', display: 'inline-flex' }} className={className}>
+      <Link
+        href={href}
+        style={{ textDecoration: "none", display: "inline-flex" }}
+        className={className}
+      >
         {buttonElement}
       </Link>
     );
