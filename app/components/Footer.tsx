@@ -6,14 +6,14 @@ import { ArrowUpRight, Phone, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
   const wordmarkParts = [
-    "NEXA RIDER",
+    "UNIVA RIDER",
     "URBAN TRANSIT",
     "JOURNEY PLANNER",
-    "REAL-TIME MOBILITY",
+    "2100 MOBILITY",
   ];
 
   return (
-    <footer className="relative w-full bg-[#051124] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
+    <footer className="relative w-full bg-[#000000] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-[#72222B]/20 mt-20">
       {/* Top Section: Logo/Description + Links Grid */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         
@@ -35,15 +35,10 @@ export default function Footer() {
             Streamlining urban commuting through radical clarity and precision.
           </h3>
           <p className="text-[#D6DAE3]/80 text-sm leading-relaxed max-w-sm font-normal">
-            NEXA empowers transit riders with real-time route telemetry, multimodal schedules, live delay alerts, and distraction-free journey guidance.
+            UNIVA empowers transit riders with real-time route telemetry, multimodal schedules, live delay alerts, and distraction-free journey guidance.
           </p>
 
-          <div className="pt-2 flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#2E7D5B] inline-block animate-pulse" />
-            <span className="text-xs font-medium text-[#D6DAE3]">
-              All transit lines operating on schedule
-            </span>
-          </div>
+
         </div>
 
         {/* Right Columns Grid: Spans 8 Columns */}
@@ -57,9 +52,9 @@ export default function Footer() {
             <ul className="flex flex-col space-y-2.5">
               {[
                 { name: "Home", href: "/" },
+                { name: "Live Route (SmartMetro)", href: "/smartmetro" },
                 { name: "About Us", href: "/about" },
                 { name: "Contact Us", href: "/contact" },
-                { name: "Live Routes", href: "/#routes" },
                 { name: "Commuter Pass", href: "/#pass" },
               ].map((item) => (
                 <li key={item.name}>
@@ -98,10 +93,10 @@ export default function Footer() {
               <li className="flex items-center gap-2">
                 <Mail size={14} className="text-[#D6DAE3] shrink-0" />
                 <a
-                  href="mailto:rider-support@nexa-transit.com"
+                  href="mailto:rider-support@univa.com"
                   className="hover:text-white transition-colors break-all"
                 >
-                  rider-support@nexa.com
+                  rider-support@univa.com
                 </a>
               </li>
               <li className="flex items-center gap-2">
@@ -123,7 +118,7 @@ export default function Footer() {
               Network Social
             </h4>
             <ul className="flex flex-col space-y-2.5">
-              {["X (Transit Alerts)", "LinkedIn", "Community Forum", "App Store", "Google Play"].map((social) => (
+              {["X", "LinkedIn", "Community Forum", "App Store", "Google Play"].map((social) => (
                 <li key={social}>
                   <a
                     href="#"
@@ -143,7 +138,7 @@ export default function Footer() {
 
       {/* Middle Row: Copyright & Design Credit */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 py-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-[#D6DAE3]/70 font-normal">
-        <p>© 2026 NEXA Transit Systems Inc. All commuter rights reserved.</p>
+        <p>© 2026 UNIVA Transit Systems Inc. All commuter rights reserved.</p>
         <p className="flex items-center gap-3">
           <span className="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
           <span>•</span>

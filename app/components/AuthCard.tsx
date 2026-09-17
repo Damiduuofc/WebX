@@ -110,7 +110,7 @@ export default function AuthCard({
           type="button"
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute top-5 right-5 z-30 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#192841] flex items-center justify-center transition-colors cursor-pointer"
+          className="absolute top-5 right-5 z-30 w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 text-[#0F172A] flex items-center justify-center transition-colors cursor-pointer"
         >
           <X size={18} />
         </button>
@@ -125,10 +125,10 @@ export default function AuthCard({
           
           {/* Top Brand Spark Icon */}
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-[#192841] text-white flex items-center justify-center shadow-sm">
-              <Sparkles size={16} className="text-[#38BDF8]" />
+            <div className="w-8 h-8 rounded-xl bg-[#72222B] text-white flex items-center justify-center shadow-sm">
+              <Sparkles size={16} className="text-white" />
             </div>
-            <span className="text-xs font-extrabold uppercase tracking-widest text-[#192841]">
+            <span className="text-xs font-extrabold uppercase tracking-widest text-[#72222B]">
               Univa 2100
             </span>
           </div>
@@ -147,14 +147,14 @@ export default function AuthCard({
                   <Check size={32} />
                 </div>
                 <div className="space-y-1">
-                  <h3 className="text-2xl font-black text-[#192841]">
+                  <h3 className="text-2xl font-black text-[#0F172A]">
                     Welcome, {successUser?.name}!
                   </h3>
                   <p className="text-sm text-[#5A6B85]">
                     {mode === "signup" ? "Your Rider Account has been created." : "You have logged in successfully."}
                   </p>
                 </div>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#192841]/5 text-[#192841] text-xs font-semibold">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-semibold">
                   <span>Redirecting to journey control...</span>
                 </div>
               </motion.div>
@@ -169,7 +169,7 @@ export default function AuthCard({
               >
                 {/* Header Titles */}
                 <div className="space-y-1.5">
-                  <h2 className="text-3xl sm:text-4xl font-black text-[#192841] tracking-tight">
+                  <h2 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
                     {mode === "signup" ? "Create an account" : "Welcome back"}
                   </h2>
                   <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
@@ -190,7 +190,7 @@ export default function AuthCard({
                       transition={{ duration: 0.2 }}
                       className="space-y-1"
                     >
-                      <label className="block text-xs font-bold text-[#192841]">
+                      <label className="block text-xs font-bold text-[#0F172A]">
                         Name
                       </label>
                       <input
@@ -198,14 +198,14 @@ export default function AuthCard({
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your name"
-                        className="w-full px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#192841] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                        className="w-full px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#72222B] focus:ring-2 focus:ring-[#72222B]/15 transition-all"
                       />
                     </motion.div>
                   )}
 
                   {/* Email / Username field */}
                   <div className="space-y-1">
-                    <label className="block text-xs font-bold text-[#192841]">
+                    <label className="block text-xs font-bold text-[#0F172A]">
                       {mode === "signup" ? "Email" : "Email or Username"}
                     </label>
                     <input
@@ -213,21 +213,21 @@ export default function AuthCard({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder={mode === "signup" ? "Your email" : "Enter username or email"}
-                      className="w-full px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#192841] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                      className="w-full px-4 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#72222B] focus:ring-2 focus:ring-[#72222B]/15 transition-all"
                     />
                   </div>
 
                   {/* Password field */}
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold text-[#192841]">
+                      <label className="block text-xs font-bold text-[#0F172A]">
                         Password
                       </label>
                       {mode === "login" && (
                         <button
                           type="button"
                           onClick={() => handleAuthSuccess("Recovered Rider")}
-                          className="text-[11px] text-[#5A6B85] hover:text-[#192841] hover:underline cursor-pointer"
+                          className="text-[11px] text-[#5A6B85] hover:text-[#72222B] hover:underline cursor-pointer"
                         >
                           Forgot password?
                         </button>
@@ -239,23 +239,23 @@ export default function AuthCard({
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder={mode === "signup" ? "Create a password" : "Enter your password"}
-                        className="w-full px-4 py-3 sm:py-3.5 pr-11 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#192841] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                        className="w-full px-4 py-3 sm:py-3.5 pr-11 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#72222B] focus:ring-2 focus:ring-[#72222B]/15 transition-all"
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword((prev) => !prev)}
-                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#192841] transition-colors cursor-pointer"
+                        className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8] hover:text-[#72222B] transition-colors cursor-pointer"
                       >
                         {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                       </button>
                     </div>
                   </div>
 
-                  {/* Primary CTA Button (Preserves Univa Deep Navy color code) */}
+                  {/* Primary CTA Button */}
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-[0_8px_20px_rgba(25,40,65,0.22)] hover:shadow-[0_12px_28px_rgba(25,40,65,0.3)] hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3.5 sm:py-4 px-6 rounded-xl sm:rounded-2xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>{mode === "signup" ? "Create account" : "Sign in to Univa"}</span>
                       <ArrowRight size={16} />
@@ -333,7 +333,7 @@ export default function AuthCard({
                       <button
                         type="button"
                         onClick={() => setMode("login")}
-                        className="font-bold text-[#192841] hover:underline cursor-pointer"
+                        className="font-bold text-[#72222B] hover:underline cursor-pointer"
                       >
                         Log in
                       </button>
@@ -344,7 +344,7 @@ export default function AuthCard({
                       <button
                         type="button"
                         onClick={() => setMode("signup")}
-                        className="font-bold text-[#192841] hover:underline cursor-pointer"
+                        className="font-bold text-[#72222B] hover:underline cursor-pointer"
                       >
                         Sign up
                       </button>
@@ -416,7 +416,7 @@ export default function AuthCard({
                       <button
                         type="button"
                         onClick={handlePrevTestimonial}
-                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#192841] transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
                         aria-label="Previous story"
                       >
                         <ArrowLeft size={15} />
@@ -424,7 +424,7 @@ export default function AuthCard({
                       <button
                         type="button"
                         onClick={handleNextTestimonial}
-                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#192841] transition-colors cursor-pointer"
+                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
                         aria-label="Next story"
                       >
                         <ArrowRight size={15} />

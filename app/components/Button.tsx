@@ -22,33 +22,33 @@ export default function Button({
 
   const isDisabled = props.disabled;
 
-  let bg = "#0A1F44";
+  let bg = "#72222B";
   let color = "#FFFFFF";
   let border = "none";
-  let shadow = "0 2px 8px rgba(10, 31, 68, 0.2)";
+  let shadow = "0 2px 8px rgba(114, 34, 43, 0.18)";
 
   if (isDisabled) {
     bg = "#9CA3AF";
     shadow = "none";
   } else if (variant === "highlight") {
-    bg = hovered ? "linear-gradient(135deg, #1E3A5F 0%, #192841 100%)" : "linear-gradient(135deg, #192841 0%, #0A1F44 100%)";
+    bg = hovered ? "linear-gradient(135deg, #842833 0%, #72222B 100%)" : "linear-gradient(135deg, #72222B 0%, #5B1B22 100%)";
     shadow = hovered
-      ? "0 12px 28px rgba(25, 40, 65, 0.45), 0 0 16px rgba(30, 92, 179, 0.3)"
-      : "0 8px 22px rgba(25, 40, 65, 0.35), 0 0 10px rgba(30, 92, 179, 0.2)";
-    border = "1px solid rgba(255, 255, 255, 0.25)";
+      ? "0 10px 24px rgba(114, 34, 43, 0.35)"
+      : "0 6px 18px rgba(114, 34, 43, 0.25)";
+    border = "1px solid rgba(255, 255, 255, 0.2)";
   } else if (variant === "secondary" || variant === "glass") {
-    bg = hovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.9)";
-    color = "#192841";
-    border = hovered ? "1.5px solid #192841" : "1.5px solid rgba(25, 40, 65, 0.2)";
-    shadow = hovered ? "0 8px 20px rgba(25, 40, 65, 0.15)" : "0 4px 12px rgba(25, 40, 65, 0.08)";
+    bg = hovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.95)";
+    color = "#72222B";
+    border = hovered ? "1.5px solid #72222B" : "1.5px solid rgba(114, 34, 43, 0.2)";
+    shadow = hovered ? "0 6px 16px rgba(114, 34, 43, 0.1)" : "0 2px 8px rgba(114, 34, 43, 0.05)";
   } else if (variant === "outline") {
-    bg = hovered ? "rgba(25, 40, 65, 0.05)" : "transparent";
-    color = "#192841";
-    border = "1.5px solid #192841";
+    bg = hovered ? "rgba(114, 34, 43, 0.05)" : "transparent";
+    color = "#72222B";
+    border = "1.5px solid #72222B";
     shadow = "none";
   } else {
     // primary
-    bg = hovered ? "#1E3A5F" : "#0A1F44";
+    bg = hovered ? "#5B1B22" : "#72222B";
   }
 
   const buttonStyle: React.CSSProperties = {

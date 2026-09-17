@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import LoadingAnimation from "./components/loadingAnimation";
 import AuthModal from "./components/AuthModal";
 import HeroSection from "./components/HeroSection";
@@ -266,9 +267,9 @@ export default function Home() {
           {/* Social Proof Bar & Avatar Stack */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D6DAE3]">
             <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-[#5A6B85]">
-              <span className="text-[#192841] font-bold">💙 We are Univa</span>
+              <span className="text-[#72222B] font-bold">💙 We are Univa</span>
               <span>•</span>
-              <span className="flex items-center gap-1 text-[#192841]">
+              <span className="flex items-center gap-1 text-[#0F172A]">
                 <span className="text-[#F59E0B]">★</span>
                 <span>120K+ Commuters Satisfied</span>
               </span>
@@ -279,7 +280,7 @@ export default function Home() {
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="inline-block h-7 w-7 rounded-full ring-2 ring-white bg-[#192841] text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
+                    className="inline-block h-7 w-7 rounded-full ring-2 ring-white bg-[#72222B] text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
                   >
                     R{i}
                   </div>
@@ -291,22 +292,22 @@ export default function Home() {
 
           {/* Huge Statement Heading matching reference "Visa Travels means Going Places" */}
           <div className="text-center max-w-3xl mx-auto space-y-4">
-            <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-[#192841] leading-tight">
+            <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-[#0F172A] leading-tight">
               Univa means <br />
-              <span className="text-[#192841] relative inline-block">
+              <span className="text-[#72222B] relative inline-block">
                 Effortless Movement
               </span>
             </h2>
 
             {/* Waypoint Path Illustration matching reference line dot graphic */}
-            <div className="flex items-center justify-center gap-3 py-2 text-[#192841]">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#192841]" />
-              <div className="w-20 sm:w-32 h-[2px] bg-dashed border-b-2 border-dashed border-[#192841]/40" />
-              <div className="w-5 h-5 rounded-full border-2 border-[#192841] flex items-center justify-center">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#192841]" />
+            <div className="flex items-center justify-center gap-3 py-2 text-[#72222B]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#72222B]" />
+              <div className="w-20 sm:w-32 h-[2px] bg-dashed border-b-2 border-dashed border-[#72222B]/40" />
+              <div className="w-5 h-5 rounded-full border-2 border-[#72222B] flex items-center justify-center">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#72222B]" />
               </div>
-              <div className="w-20 sm:w-32 h-[2px] bg-dashed border-b-2 border-dashed border-[#192841]/40" />
-              <span className="w-2.5 h-2.5 rounded-full bg-[#192841]" />
+              <div className="w-20 sm:w-32 h-[2px] bg-dashed border-b-2 border-dashed border-[#72222B]/40" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#72222B]" />
             </div>
           </div>
 
@@ -314,13 +315,13 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
             
             {/* Left Value Narrative Column */}
-            <div className="lg:col-span-4 bg-white rounded-3xl border border-[#D6DAE3] p-6 sm:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.06)] flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-4 bg-white rounded-3xl border border-[#D6DAE3] p-6 sm:p-8 shadow-[0_4px_20px_rgba(114,34,43,0.04)] flex flex-col justify-between space-y-6">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/5 text-[#192841] text-xs font-bold uppercase tracking-wider">
-                  <span className="w-2 h-2 rounded-full bg-[#192841]" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-bold uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-[#72222B]" />
                   <span>01 Rider Services</span>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#192841] tracking-tight leading-snug">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight leading-snug">
                   Not Your Grandparent&apos;s Commute
                 </h3>
                 <p className="text-sm text-[#5A6B85] leading-relaxed">
@@ -332,7 +333,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setAuthModal("signup")}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Get Rider Pass</span>
                   <ArrowRight size={16} />
@@ -355,22 +356,22 @@ export default function Home() {
                       onClick={() => setActiveServiceIndex(idx)}
                       className={`cursor-pointer bg-white rounded-3xl border ${
                         isSelected
-                          ? "border-[#192841] shadow-[0_8px_24px_rgba(25,40,65,0.14)] ring-2 ring-[#192841]"
-                          : "border-[#D6DAE3] shadow-[0_4px_16px_rgba(25,40,65,0.06)] hover:border-[#192841]/50"
+                          ? "border-[#72222B] shadow-[0_8px_24px_rgba(114,34,43,0.12)] ring-2 ring-[#72222B]/20"
+                          : "border-[#D6DAE3] shadow-[0_4px_16px_rgba(0,0,0,0.04)] hover:border-[#72222B]/40"
                       } p-5 flex flex-col justify-between space-y-4 transition-all group`}
                     >
                       <div className="space-y-3">
                         <div className="flex items-center justify-between">
-                          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#192841]/5 text-[#192841]">
+                          <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#72222B]/10 text-[#72222B]">
                             {svc.badge}
                           </span>
-                          <div className="w-8 h-8 rounded-xl bg-[#192841] text-white flex items-center justify-center shadow-xs">
+                          <div className="w-8 h-8 rounded-xl bg-[#72222B] text-white flex items-center justify-center shadow-xs">
                             <Icon size={16} />
                           </div>
                         </div>
 
                         {/* Visual Card Frame */}
-                        <div className="w-full h-36 rounded-2xl bg-gradient-to-br from-[#192841] via-[#1E2E4D] to-[#0A1F44] text-white p-4 flex flex-col justify-end relative overflow-hidden group-hover:scale-[1.02] transition-transform">
+                        <div className="w-full h-36 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white p-4 flex flex-col justify-end relative overflow-hidden group-hover:scale-[1.02] transition-transform">
                           <div className="absolute top-3 right-3 text-white/10 font-black text-4xl select-none">
                             2100
                           </div>
@@ -390,7 +391,7 @@ export default function Home() {
                       <div className="pt-2 border-t border-[#D6DAE3]/70">
                         <ul className="space-y-1">
                           {svc.specs.map((spec, sIdx) => (
-                            <li key={sIdx} className="text-[11px] font-semibold text-[#192841] flex items-center gap-1.5">
+                            <li key={sIdx} className="text-[11px] font-semibold text-[#0F172A] flex items-center gap-1.5">
                               <span className="w-1.5 h-1.5 rounded-full bg-[#2E7D5B]" />
                               <span>{spec}</span>
                             </li>
@@ -411,14 +412,14 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => setActiveServiceIndex((prev) => (prev > 0 ? prev - 1 : riderServices.length - 1))}
-                    className="w-8 h-8 rounded-full border border-[#D6DAE3] bg-white hover:bg-[#F7F8FA] flex items-center justify-center text-[#192841] shadow-xs cursor-pointer"
+                    className="w-8 h-8 rounded-full border border-[#D6DAE3] bg-white hover:bg-[#F7F8FA] hover:border-[#72222B] flex items-center justify-center text-[#0F172A] shadow-xs cursor-pointer"
                   >
                     <ChevronLeft size={16} />
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveServiceIndex((prev) => (prev + 1) % riderServices.length)}
-                    className="w-8 h-8 rounded-full border border-[#D6DAE3] bg-white hover:bg-[#F7F8FA] flex items-center justify-center text-[#192841] shadow-xs cursor-pointer"
+                    className="w-8 h-8 rounded-full border border-[#D6DAE3] bg-white hover:bg-[#F7F8FA] hover:border-[#72222B] flex items-center justify-center text-[#0F172A] shadow-xs cursor-pointer"
                   >
                     <ChevronRight size={16} />
                   </button>
@@ -436,11 +437,11 @@ export default function Home() {
           {/* Header Row */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/5 text-[#192841] text-xs font-bold uppercase tracking-wider">
-                <span className="w-2 h-2 rounded-full bg-[#192841]" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-bold uppercase tracking-wider">
+                <span className="w-2 h-2 rounded-full bg-[#72222B]" />
                 <span>Popular Commuter Routes • 2100</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#192841] tracking-tight">
+              <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] tracking-tight">
                 Pick the Place
               </h2>
             </div>
@@ -451,7 +452,7 @@ export default function Home() {
           </div>
 
           {/* Filter Pills Bar matching reference */}
-          <div className="bg-white rounded-2xl border border-[#D6DAE3] p-2 sm:p-3 shadow-[0_2px_12px_rgba(25,40,65,0.04)] flex flex-wrap items-center justify-between gap-3">
+          <div className="bg-white rounded-2xl border border-[#D6DAE3] p-2 sm:p-3 shadow-xs flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-1.5">
               {["All", "SkyRail Express", "Autonomous Bus", "Smart Road Pods", "Airport Direct"].map((cat) => (
                 <button
@@ -460,8 +461,8 @@ export default function Home() {
                   onClick={() => setRouteCategory(cat)}
                   className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                     routeCategory === cat
-                      ? "bg-[#192841] text-white shadow-xs"
-                      : "bg-transparent text-[#5A6B85] hover:text-[#192841] hover:bg-[#F7F8FA]"
+                      ? "bg-[#72222B] text-white shadow-xs"
+                      : "bg-transparent text-[#5A6B85] hover:text-[#72222B] hover:bg-[#F7F8FA]"
                   }`}
                 >
                   {cat}
@@ -479,10 +480,10 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             
             {/* CARD 1 */}
-            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-[0_4px_20px_rgba(25,40,65,0.08)] flex flex-col justify-between space-y-4 hover:border-[#192841] transition-all">
+            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#72222B]/60 transition-all">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#192841]">General Sir John Kotelawala Defence University</span>
+                  <span className="text-xs font-bold text-[#0F172A]">General Sir John Kotelawala Defence University</span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2E7D5B]/10 text-[#2E7D5B]">
                     4 Seats Left
                   </span>
@@ -490,7 +491,7 @@ export default function Home() {
                 <div className="text-xs text-[#5A6B85]">Ratmalana Campus Concourse</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#192841] to-[#274068] p-4 text-white flex flex-col justify-between relative overflow-hidden">
+                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">Bus 245 + SkyRail</span>
                     <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">On Time</span>
@@ -525,7 +526,7 @@ export default function Home() {
                   const el = document.getElementById("planner-section");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Track Journey</span>
                 <ArrowRight size={14} />
@@ -533,18 +534,18 @@ export default function Home() {
             </div>
 
             {/* CARD 2 */}
-            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-[0_4px_20px_rgba(25,40,65,0.08)] flex flex-col justify-between space-y-4 hover:border-[#192841] transition-all">
+            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#72222B]/60 transition-all">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#192841]">Bandaranaike International Airport</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#192841]/10 text-[#192841]">
+                  <span className="text-xs font-bold text-[#0F172A]">Bandaranaike International Airport</span>
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#72222B]/10 text-[#72222B]">
                     SuperLink Express
                   </span>
                 </div>
                 <div className="text-xs text-[#5A6B85]">Katunayake SkyRail Terminal</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F1D33] to-[#1E3A5F] p-4 text-white flex flex-col justify-between relative overflow-hidden">
+                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">SkyRail Line 01</span>
                     <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">Non-Stop</span>
@@ -579,7 +580,7 @@ export default function Home() {
                   const el = document.getElementById("planner-section");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Track Journey</span>
                 <ArrowRight size={14} />
@@ -587,10 +588,10 @@ export default function Home() {
             </div>
 
             {/* CARD 3 */}
-            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-[0_4px_20px_rgba(25,40,65,0.08)] flex flex-col justify-between space-y-4 hover:border-[#192841] transition-all">
+            <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#72222B]/60 transition-all">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-[#192841]">Marine Drive Promenade</span>
+                  <span className="text-xs font-bold text-[#0F172A]">Marine Drive Promenade</span>
                   <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#2E7D5B]/10 text-[#2E7D5B]">
                     Eco Pod Fleet
                   </span>
@@ -598,7 +599,7 @@ export default function Home() {
                 <div className="text-xs text-[#5A6B85]">Kollupitiya Ocean Concourse</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#192841] to-[#1E293B] p-4 text-white flex flex-col justify-between relative overflow-hidden">
+                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
                   <div className="flex items-center justify-between text-xs font-semibold">
                     <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">Smart Road Pod</span>
                     <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">Zero Emiss</span>
@@ -633,7 +634,7 @@ export default function Home() {
                   const el = document.getElementById("planner-section");
                   el?.scrollIntoView({ behavior: "smooth" });
                 }}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Track Journey</span>
                 <ArrowRight size={14} />
@@ -648,24 +649,31 @@ export default function Home() {
         <section id="planner-section" className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/5 text-[#192841] text-xs font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-bold uppercase tracking-wider mb-2">
                 <Radio size={14} className="text-[#2E7D5B] animate-pulse" />
                 <span>Live Route Telemetry & Voice Co-Pilot</span>
               </div>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#192841] tracking-tight">
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight">
                 Live Journey Control
               </h2>
             </div>
 
-            {/* Tell Univa Voice Button */}
-            <div className="flex items-center gap-3">
+            {/* Live Map & Voice Control Buttons */}
+            <div className="flex flex-wrap items-center gap-3">
+              <Link
+                href="/smartmetro"
+                className="px-5 py-3 rounded-full font-bold text-xs sm:text-sm bg-white hover:bg-[#F7F8FA] border border-[#D6DAE3] hover:border-[#72222B] text-[#0F172A] flex items-center gap-2 transition-all shadow-xs"
+              >
+                <Radio size={16} className="text-[#22C55E] animate-pulse" />
+                <span>SmartMetro™ Live Map</span>
+              </Link>
               <button
                 type="button"
                 onClick={handleVoiceClick}
                 className={`px-5 py-3 rounded-full font-bold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-md cursor-pointer ${
                   isVoiceListening
-                    ? "bg-[#1E2E4D] ring-4 ring-[#192841]/30 text-white scale-105"
-                    : "bg-[#192841] hover:bg-[#1E2E4D] text-white"
+                    ? "bg-[#5B1B22] ring-4 ring-[#72222B]/30 text-white scale-105"
+                    : "bg-[#72222B] hover:bg-[#5B1B22] text-white"
                 }`}
               >
                 <Mic size={18} className={isVoiceListening ? "animate-pulse" : ""} />
@@ -675,25 +683,25 @@ export default function Home() {
           </div>
 
           {voiceTranscript && (
-            <div className="px-4 py-2.5 bg-white rounded-xl border border-[#D6DAE3] shadow-sm flex items-center gap-2 text-xs text-[#192841]">
-              <Volume2 size={15} className="text-[#192841]" />
+            <div className="px-4 py-2.5 bg-white rounded-xl border border-[#D6DAE3] shadow-sm flex items-center gap-2 text-xs text-[#0F172A]">
+              <Volume2 size={15} className="text-[#72222B]" />
               <span className="font-semibold">{voiceTranscript}</span>
             </div>
           )}
 
           {/* Journey Plan Summary Card (Section 5.5 of Design.md) */}
-          <div className="bg-white rounded-3xl border border-[#D6DAE3] p-6 sm:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.08)] space-y-6">
+          <div className="bg-white rounded-3xl border border-[#D6DAE3] p-6 sm:p-8 shadow-sm space-y-6">
             
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-[#D6DAE3]">
               <div>
                 <div className="text-xs font-semibold text-[#5A6B85] uppercase tracking-wide">
                   Active Selected Route
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#192841] mt-0.5">
+                <h3 className="text-xl sm:text-2xl font-bold text-[#0F172A] mt-0.5">
                   {activePlan.destination}
                 </h3>
                 <p className="text-xs sm:text-sm text-[#5A6B85] mt-1 flex items-center gap-1.5">
-                  <Navigation size={14} className="text-[#192841]" />
+                  <Navigation size={14} className="text-[#72222B]" />
                   <span>Departing from: <strong className="text-black">{activePlan.fromLocation}</strong></span>
                 </p>
               </div>
@@ -719,7 +727,7 @@ export default function Home() {
             {/* 4 Key Stats */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 py-2">
               <div className="bg-[#F7F8FA] rounded-2xl p-4 border border-[#D6DAE3]/60">
-                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#192841] mb-2 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#72222B] mb-2 shadow-xs">
                   <Clock size={16} />
                 </div>
                 <div className="text-xl sm:text-2xl font-extrabold text-black tracking-tight">
@@ -731,7 +739,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#F7F8FA] rounded-2xl p-4 border border-[#D6DAE3]/60">
-                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#192841] mb-2 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#72222B] mb-2 shadow-xs">
                   <Zap size={16} />
                 </div>
                 <div className="text-xl sm:text-2xl font-extrabold text-black tracking-tight">
@@ -743,7 +751,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#F7F8FA] rounded-2xl p-4 border border-[#D6DAE3]/60">
-                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#192841] mb-2 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#72222B] mb-2 shadow-xs">
                   <Train size={16} />
                 </div>
                 <div className="text-xl sm:text-2xl font-extrabold text-black tracking-tight">
@@ -755,7 +763,7 @@ export default function Home() {
               </div>
 
               <div className="bg-[#F7F8FA] rounded-2xl p-4 border border-[#D6DAE3]/60">
-                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#192841] mb-2 shadow-xs">
+                <div className="w-8 h-8 rounded-lg bg-white border border-[#D6DAE3] flex items-center justify-center text-[#72222B] mb-2 shadow-xs">
                   <Footprints size={16} />
                 </div>
                 <div className="text-xl sm:text-2xl font-extrabold text-black tracking-tight">
@@ -779,13 +787,13 @@ export default function Home() {
                     className="flex items-center justify-between p-3 rounded-xl bg-white border border-[#D6DAE3]"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-lg bg-[#192841] text-white flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-[#72222B] text-white flex items-center justify-center">
                         {segment.type === "train" && <Train size={16} />}
                         {segment.type === "bus" && <Bus size={16} />}
                         {segment.type === "walk" && <Footprints size={16} />}
                       </div>
                       <div>
-                        <div className="text-sm font-bold text-[#192841]">
+                        <div className="text-sm font-bold text-[#0F172A]">
                           {segment.line}
                         </div>
                         <div className="text-xs text-[#5A6B85]">
@@ -793,7 +801,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#192841]/5 text-[#192841]">
+                    <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-[#72222B]/10 text-[#72222B]">
                       Leg #{idx + 1}
                     </span>
                   </div>
@@ -810,7 +818,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => alert(`Starting Live Journey Guidance to ${activePlan.destination}!`)}
-                  className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-xs font-bold text-white transition-colors shadow-sm cursor-pointer"
+                  className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-xs font-bold text-white transition-colors shadow-sm cursor-pointer"
                 >
                   Start Live Journey
                 </button>

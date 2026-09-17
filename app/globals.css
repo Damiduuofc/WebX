@@ -3,8 +3,9 @@
 :root {
   --background: #F7F8FA;
   --foreground: #000000;
-  --navy: #192841;
-  --navy-90: #1E2E4D;
+  --primary: #72222B;
+  --navy: #72222B;
+  --navy-90: #5B1B22;
   --navy-60: #5A6B85;
   --navy-20: #D6DAE3;
   --off-white: #F7F8FA;
@@ -15,8 +16,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-navy: #192841;
-  --color-navy-90: #1E2E4D;
+  --color-primary: #72222B;
+  --color-navy: #72222B;
+  --color-navy-90: #5B1B22;
   --color-navy-60: #5A6B85;
   --color-navy-20: #D6DAE3;
   --color-off-white: #F7F8FA;

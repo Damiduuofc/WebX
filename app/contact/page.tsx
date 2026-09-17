@@ -57,14 +57,14 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-12 sm:space-y-16">
+    <div className="w-full max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-12 sm:pb-16 space-y-12 sm:space-y-16">
       {/* 1. Page Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#192841]/5 border border-[#192841]/15 text-[#192841] text-xs font-semibold tracking-wide">
-          <MessageSquare size={13} className="text-[#192841]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#72222B]/10 border border-[#72222B]/20 text-[#72222B] text-xs font-semibold tracking-wide">
+          <MessageSquare size={13} className="text-[#72222B]" />
           <span>24/7 Rider Support & Operations</span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-extrabold text-[#192841] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] tracking-tight">
           How can we help your journey?
         </h1>
         <p className="text-base text-[#5A6B85]">
@@ -76,9 +76,9 @@ export default function ContactPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Left Form: Spans 7 columns */}
-        <div className="lg:col-span-7 bg-white rounded-2xl border border-[#D6DAE3] p-6 sm:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.08)]">
+        <div className="lg:col-span-7 bg-white rounded-2xl border border-[#D6DAE3] p-6 sm:p-8 shadow-sm">
           <div className="mb-6">
-            <h2 className="text-xl sm:text-2xl font-bold text-[#192841]">
+            <h2 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
               Send a Rider Inquiry
             </h2>
             <p className="text-xs sm:text-sm text-[#5A6B85] mt-1">
@@ -91,7 +91,7 @@ export default function ContactPage() {
               <div className="w-14 h-14 rounded-full bg-[#2E7D5B]/10 text-[#2E7D5B] flex items-center justify-center mx-auto">
                 <CheckCircle2 size={32} />
               </div>
-              <h3 className="text-xl font-bold text-[#192841]">
+              <h3 className="text-xl font-bold text-[#0F172A]">
                 Inquiry Received by Central Dispatch
               </h3>
               <p className="text-sm text-[#5A6B85] max-w-md mx-auto">
@@ -106,7 +106,7 @@ export default function ContactPage() {
                   setSubject("");
                   setMessage("");
                 }}
-                className="mt-4 px-6 py-2.5 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white text-xs font-bold transition-colors"
+                className="mt-4 px-6 py-2.5 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white text-xs font-bold transition-colors"
               >
                 Send Another Message
               </button>
@@ -115,7 +115,7 @@ export default function ContactPage() {
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Your Full Name *
                   </label>
                   <input
@@ -124,12 +124,12 @@ export default function ContactPage() {
                     placeholder="e.g. Kasun Silva"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Email Address *
                   </label>
                   <input
@@ -138,20 +138,20 @@ export default function ContactPage() {
                     placeholder="kasun@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Inquiry Category *
                   </label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                   >
                     <option value="delay">Report Transit / Bus Delay</option>
                     <option value="lost_found">Lost & Found on Vehicle</option>
@@ -162,7 +162,7 @@ export default function ContactPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Rider Pass ID (Optional)
                   </label>
                   <input
@@ -170,13 +170,13 @@ export default function ContactPage() {
                     placeholder="e.g. NX-9821-44"
                     value={riderId}
                     onChange={(e) => setRiderId(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                    className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                   Subject *
                 </label>
                 <input
@@ -185,12 +185,12 @@ export default function ContactPage() {
                   placeholder="Summary of issue or route (e.g. Bus 138 delay at Pettah)"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-[#192841] mb-1.5">
+                <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                   Message Details *
                 </label>
                 <textarea
@@ -199,13 +199,13 @@ export default function ContactPage() {
                   placeholder="Please describe the station, time, vehicle number, or question..."
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#192841] focus:ring-1 focus:ring-[#192841]"
+                  className="w-full px-4 py-3 rounded-xl border border-[#D6DAE3] bg-white text-sm text-black placeholder:text-[#5A6B85] focus:outline-none focus:border-[#72222B] focus:ring-1 focus:ring-[#72222B]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white text-sm font-bold transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+                className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white text-sm font-bold transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
               >
                 <span>Submit Inquiry</span>
                 <Send size={16} />
@@ -218,9 +218,9 @@ export default function ContactPage() {
         <div className="lg:col-span-5 space-y-6">
           
           {/* Operations Hotline Card */}
-          <div className="bg-[#192841] text-white rounded-2xl p-6 sm:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.12)] space-y-5">
-            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#D6DAE3]">
-              <ShieldAlert size={15} className="text-[#B8860B]" />
+          <div className="bg-[#0F172A] text-white rounded-2xl p-6 sm:p-8 border border-slate-800 shadow-md space-y-5">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+              <ShieldAlert size={15} className="text-[#22C55E]" />
               <span>Immediate Rider Assistance</span>
             </div>
 
@@ -228,16 +228,16 @@ export default function ContactPage() {
               <div className="text-2xl font-black tracking-tight text-white">
                 24/7 Operations Dispatch
               </div>
-              <p className="text-xs text-[#D6DAE3]/90 mt-1 leading-relaxed">
+              <p className="text-xs text-slate-300 mt-1 leading-relaxed">
                 Need real-time station support or reporting an active safety concern on the transit network?
               </p>
             </div>
 
             <div className="space-y-4 pt-2 border-t border-white/10 text-sm">
               <div className="flex items-start gap-3">
-                <Phone size={18} className="text-white shrink-0 mt-0.5" />
+                <Phone size={18} className="text-[#72222B] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[#D6DAE3]">Toll-Free Dispatch Helpline</div>
+                  <div className="text-xs text-slate-400">Toll-Free Dispatch Helpline</div>
                   <a href="tel:+94112003344" className="text-base font-bold text-white hover:underline">
                     +94 11 200 3344
                   </a>
@@ -245,9 +245,9 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Mail size={18} className="text-white shrink-0 mt-0.5" />
+                <Mail size={18} className="text-[#72222B] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[#D6DAE3]">Rider Support Desk</div>
+                  <div className="text-xs text-slate-400">Rider Support Desk</div>
                   <a href="mailto:rider-support@nexa.com" className="text-sm font-semibold text-white hover:underline">
                     rider-support@nexa.com
                   </a>
@@ -255,9 +255,9 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start gap-3">
-                <MapPin size={18} className="text-white shrink-0 mt-0.5" />
+                <MapPin size={18} className="text-[#72222B] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[#D6DAE3]">Operations Center</div>
+                  <div className="text-xs text-slate-400">Operations Center</div>
                   <div className="text-sm font-semibold text-white">
                     Central Concourse, Platform Level 2, Fort Station
                   </div>
@@ -265,9 +265,9 @@ export default function ContactPage() {
               </div>
 
               <div className="flex items-start gap-3">
-                <Clock size={18} className="text-white shrink-0 mt-0.5" />
+                <Clock size={18} className="text-[#72222B] shrink-0 mt-0.5" />
                 <div>
-                  <div className="text-xs text-[#D6DAE3]">Passenger Service Hours</div>
+                  <div className="text-xs text-slate-400">Passenger Service Hours</div>
                   <div className="text-sm font-semibold text-white">
                     24 Hours / 7 Days a Week
                   </div>
@@ -276,32 +276,17 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Quick Line Status Pill */}
-          <div className="bg-white rounded-2xl border border-[#D6DAE3] p-5 shadow-[0_2px_10px_rgba(25,40,65,0.04)] flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="w-3 h-3 rounded-full bg-[#2E7D5B] animate-pulse" />
-              <div>
-                <div className="text-xs font-bold text-[#192841]">All Hubs Connected</div>
-                <div className="text-[11px] text-[#5A6B85]">Zero reported system outages</div>
-              </div>
-            </div>
-            <Link
-              href="/"
-              className="text-xs font-bold text-[#192841] hover:underline"
-            >
-              Check Routes
-            </Link>
-          </div>
+
         </div>
       </div>
 
       {/* 3. Rider Frequently Asked Questions */}
-      <div className="bg-white rounded-2xl border border-[#D6DAE3] p-6 sm:p-10 shadow-[0_4px_20px_rgba(25,40,65,0.08)] space-y-6">
+      <div className="bg-white rounded-2xl border border-[#D6DAE3] p-6 sm:p-10 shadow-sm space-y-6">
         <div>
           <div className="text-xs font-bold text-[#5A6B85] uppercase tracking-wider">
             Common Inquiries
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#192841] mt-1">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] mt-1">
             Frequently Asked Questions by Commuters
           </h2>
         </div>
@@ -316,13 +301,13 @@ export default function ContactPage() {
                   onClick={() => setExpandedFaq(isOpen ? null : idx)}
                   className="w-full flex items-center justify-between text-left gap-4 py-2 cursor-pointer focus:outline-none"
                 >
-                  <span className="text-base font-bold text-[#192841]">
+                  <span className="text-base font-bold text-[#000000]">
                     {faq.question}
                   </span>
                   <ChevronDown
                     size={18}
                     className={`text-[#5A6B85] shrink-0 transition-transform duration-200 ${
-                      isOpen ? "rotate-180 text-[#192841]" : ""
+                      isOpen ? "rotate-180 text-[#72222B]" : ""
                     }`}
                   />
                 </button>

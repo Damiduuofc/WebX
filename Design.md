@@ -8,22 +8,23 @@ A modern, minimalist visual language for the NEXA journey-planning app.
 
 | Role | Color | Hex | Usage |
 |---|---|---|---|
-| Primary | Deep Navy | `#192841` | Logo, primary buttons, active states, headers, map route lines |
-| Base Dark | Black | `#000000` | Primary text on light backgrounds, icons, high-contrast elements |
-| Base Light | White | `#FFFFFF` | Backgrounds, cards, text on navy/dark surfaces |
+| Primary | Architectural Crimson | `#72222B` | Primary buttons, active states, route accents, focus rings |
+| Base Dark | Slate Charcoal / Black | `#0F172A` / `#000000` | Headings, primary text on light backgrounds, high-contrast elements |
+| Base Light | White | `#FFFFFF` | Backgrounds, cards, elevated surfaces |
 
 ### Supporting shades (derived, for depth without adding new hues)
 
 | Name | Hex | Usage |
 |---|---|---|
-| Navy 90% | `#1E2E4D` | Hover state on primary buttons |
-| Navy 60% | `#5A6B85` | Secondary text, inactive icons |
-| Navy 20% | `#D6DAE3` | Dividers, input borders, disabled states |
-| Off-White | `#F7F8FA` | Page background (instead of pure white, to reduce glare) |
-| Success Green | `#2E7D5B` | On-time / arrived states (used sparingly) |
-| Alert Amber | `#B8860B` | Delays / warnings (used sparingly) |
+| Crimson 90% | `#5B1B22` | Hover state on primary buttons |
+| Crimson Soft Tint | `#72222B`/10 | Active pill badges, subtle highlights |
+| Slate 60% | `#5A6B85` | Secondary text, inactive icons |
+| Slate 20% | `#D6DAE3` | Dividers, input borders, disabled states |
+| Off-White | `#F7F9FC` | Page background (clean and soft, reducing eye strain) |
+| Success Green | `#22C55E` | On-time / arrived states (used sparingly) |
+| Alert Amber | `#F59E0B` | Delays / warnings (used sparingly) |
 
-**Rule of thumb:** Navy carries brand identity and primary actions. Black is for text. White/off-white is for space and clarity. Accent colors (green/amber) are functional only — never decorative.
+**Rule of thumb:** Architectural Crimson is applied with minimalist restraint for active states, primary CTA buttons, and telemetry lines. All headings and body text remain crisp neutral slate/charcoal (`#0F172A`). Accent colors (green/amber) are functional only — never decorative.
 
 ---
 

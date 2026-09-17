@@ -20,7 +20,7 @@ export default function RootLayout({
         className="min-h-full flex flex-col bg-[#F7F8FA] text-[#000000]"
       >
         <Navbar />
-        <main className="flex-1 w-full pt-28 sm:pt-32">
+        <main className="flex-1 w-full">
           {children}
         </main>
         <Footer />

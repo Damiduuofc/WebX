@@ -162,7 +162,7 @@ export default function LoadingAnimation({
         {particles.map((p) => (
           <div
             key={p.id}
-            className="absolute rounded-full bg-gradient-to-tr from-[#00B4D8]/20 to-[#6366F1]/20 blur-[1px] animate-pulse"
+            className="absolute rounded-full bg-gradient-to-tr from-[#72222B]/15 to-[#8F2D38]/15 blur-[1px] animate-pulse"
             style={{
               left: `${p.x}%`,
               top: `${p.y}%`,
@@ -181,11 +181,11 @@ export default function LoadingAnimation({
       {/* 2. Expanding Geometric Shockwave Pulse */}
       {rippleActive && (
         <div
-          className="absolute w-72 h-72 rounded-full border border-[#00B4D8] pointer-events-none will-change-transform"
+          className="absolute w-72 h-72 rounded-full border border-[#72222B]/30 pointer-events-none will-change-transform"
           style={{
             transform: `scale(${rippleScale})`,
             opacity: rippleOpacity,
-            boxShadow: "0 0 25px rgba(0, 180, 216, 0.3)",
+            boxShadow: "0 0 25px rgba(114, 34, 43, 0.15)",
           }}
         />
       )}
@@ -218,9 +218,9 @@ export default function LoadingAnimation({
             >
               <stop offset="0%" stopColor="#07090E" stopOpacity="0.95" />
               <stop offset="35%" stopColor="#07090E" stopOpacity="0.95" />
-              <stop offset="45%" stopColor="#6366F1" stopOpacity="1" />
-              <stop offset="50%" stopColor="#00B4D8" stopOpacity="1" />
-              <stop offset="55%" stopColor="#38BDF8" stopOpacity="1" />
+              <stop offset="45%" stopColor="#72222B" stopOpacity="1" />
+              <stop offset="50%" stopColor="#8F2D38" stopOpacity="1" />
+              <stop offset="55%" stopColor="#5B1B22" stopOpacity="1" />
               <stop offset="65%" stopColor="#07090E" stopOpacity="0.95" />
               <stop offset="100%" stopColor="#07090E" stopOpacity="0.95" />
             </linearGradient>
@@ -399,11 +399,11 @@ export default function LoadingAnimation({
         <div className="mt-12 relative w-32 sm:w-44 h-[2.5px] bg-black/[0.06] rounded-full overflow-hidden shadow-inner">
           {/* Main Progress Line */}
           <div
-            className="h-full bg-gradient-to-r from-black/20 via-[#07090E] to-[#00B4D8] transition-all duration-75 ease-out rounded-full relative"
+            className="h-full bg-gradient-to-r from-black/20 via-[#72222B] to-[#8F2D38] transition-all duration-75 ease-out rounded-full relative"
             style={{ width: `${Math.round(progress * 100)}%` }}
           >
             {/* Glowing Leading Particle Head */}
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#00B4D8] shadow-[0_0_8px_#00B4D8]" />
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#8F2D38] shadow-[0_0_8px_rgba(114,34,43,0.4)]" />
           </div>
         </div>
       </div>

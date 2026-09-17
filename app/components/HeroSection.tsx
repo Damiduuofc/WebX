@@ -111,18 +111,18 @@ export function HeroImageGrid() {
         className="object-cover transition-transform duration-700 group-hover:scale-105"
       />
       {/* Visual Depth Gradient Scrim */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1322]/90 via-[#0A1322]/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none" />
 
       {/* Top Badge: Mode Category */}
       <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3 sm:left-3 sm:right-3 flex items-center justify-between pointer-events-none">
-        <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#192841]/85 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-bold text-white shadow-sm">
-          {item.type === "skyrail" && <Train size={11} className="text-[#38BDF8]" />}
-          {item.type === "bus" && <Bus size={11} className="text-[#34D399]" />}
-          {item.type === "pod" && <Zap size={11} className="text-[#FBBF24]" />}
+        <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#ffffff]/90 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-bold text-white shadow-sm">
+          {item.type === "skyrail" && <Train size={11} className="text-[000000]" />}
+          {item.type === "bus" && <Bus size={11} className="text-[#000000]" />}
+          {item.type === "pod" && <Zap size={11} className="text-[#000000]" />}
           <span>{item.badge}</span>
         </span>
 
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-white/90 backdrop-blur-md text-[9px] sm:text-[10px] font-extrabold text-[#192841] shadow-xs">
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] sm:text-[10px] font-extrabold text-[#000000] shadow-xs">
           <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
           <span>{item.status}</span>
         </span>
@@ -156,10 +156,10 @@ export function HeroImageGrid() {
   return (
     <div className="w-full max-w-[720px] mx-auto">
       {/* Container with liquid depth & responsive viewport framing */}
-      <div className="relative w-full h-[320px] sm:h-[420px] md:h-[500px] lg:h-[660px] xl:h-[720px] overflow-hidden rounded-2xl sm:rounded-3xl">
+      <div className="relative w-full h-[320px] sm:h-[420px] md:h-[500px] lg:h-[580px] xl:h-[620px] overflow-hidden rounded-2xl sm:rounded-3xl">
         {/* Soft edge masking gradients blending seamlessly into page bg #F7F8FA */}
-        <div className="absolute top-0 inset-x-0 h-16 sm:h-24 lg:h-32 bg-gradient-to-b from-[#F7F8FA] via-[#F7F8FA]/90 to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-16 sm:h-24 lg:h-32 bg-gradient-to-t from-[#F7F8FA] via-[#F7F8FA]/90 to-transparent z-20 pointer-events-none" />
+        <div className="absolute top-0 inset-x-0 h-10 sm:h-14 bg-gradient-to-b from-[#F7F8FA] to-transparent z-20 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-12 sm:h-16 bg-gradient-to-t from-[#F7F8FA] to-transparent z-20 pointer-events-none" />
 
         <div className="grid grid-cols-2 gap-3 sm:gap-5 h-full">
           {/* LEFT COLUMN: Scrolls Up */}
@@ -262,7 +262,7 @@ export default function HeroSection({
   };
 
   return (
-    <section className="relative w-full min-h-[calc(100vh-5rem)] lg:min-h-screen flex items-center overflow-x-hidden overflow-y-hidden bg-[#F7F8FA] font-sans text-[#192841] pt-4 pb-12 sm:pt-6 sm:pb-16 lg:py-16 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
+    <section className="relative w-full overflow-x-hidden overflow-y-hidden bg-[#F7F8FA] font-sans text-[#0F172A] pt-20 sm:pt-24 lg:pt-24 pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
       {/* Full-width Background Liquid Glass Artwork */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <Image
@@ -283,7 +283,7 @@ export default function HeroSection({
           y: [0, -15, 0],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -top-16 left-[2%] h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full bg-gradient-to-br from-blue-400/20 via-sky-300/15 to-transparent blur-[80px] sm:blur-[120px] z-0"
+        className="pointer-events-none absolute -top-16 left-[2%] h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full bg-gradient-to-br from-[#72222B]/10 via-[#72222B]/5 to-transparent blur-[80px] sm:blur-[120px] z-0"
       />
       <motion.div
         animate={{
@@ -292,7 +292,7 @@ export default function HeroSection({
           y: [0, 20, 0],
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -bottom-20 right-[2%] h-[340px] w-[340px] sm:h-[580px] sm:w-[580px] rounded-full bg-gradient-to-tl from-sky-400/20 via-indigo-400/15 to-transparent blur-[90px] sm:blur-[140px] z-0"
+        className="pointer-events-none absolute -bottom-20 right-[2%] h-[340px] w-[340px] sm:h-[580px] sm:w-[580px] rounded-full bg-gradient-to-tl from-slate-400/10 via-[#72222B]/5 to-transparent blur-[90px] sm:blur-[140px] z-0"
       />
 
       {/* Translucent Overlays for High Contrast Readability */}
@@ -301,7 +301,7 @@ export default function HeroSection({
 
       {/* Main Centered Content Container */}
       <div className="relative z-10 mx-auto w-full max-w-[1600px]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-start lg:items-center">
           {/* ========================================================================= */}
           {/* LEFT CONTENT COLUMN (5-6 Cols)                                            */}
           {/* ========================================================================= */}
@@ -309,24 +309,24 @@ export default function HeroSection({
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center text-left"
+            className="lg:col-span-6 xl:col-span-5 flex flex-col justify-start text-left"
           >
 
-            {/* Title with Gradient Styling (Safe responsive scaling) */}
+            {/* Title with Restrained Crimson & Neutral Typography */}
             <h1 className="font-sans font-black text-3xl sm:text-5xl md:text-[54px] lg:text-[52px] xl:text-[54px] uppercase leading-[1.08] sm:leading-[1.05] tracking-tight mb-4 sm:mb-6 flex flex-col gap-1 select-none">
-              <span className="bg-gradient-to-r from-[#0A1322] via-[#192841] to-[#1E2E4D] bg-clip-text text-transparent block">
+              <span className="text-[#0F172A] block">
                 One Platform.
               </span>
 
               <div className="flex items-center gap-2.5 sm:gap-3 my-1 sm:my-1.5">
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#192841]/30" />
+                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#72222B]/30" />
                 <span className="text-[#5A6B85] text-[11px] sm:text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em]">
                   EVERY JOURNEY
                 </span>
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#192841]/30" />
+                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#72222B]/30" />
               </div>
 
-              <span className="bg-gradient-to-r from-[#192841] via-[#1E5CB3] to-[#0284C7] bg-clip-text text-transparent block leading-tight">
+              <span className="text-[#72222B] block leading-tight">
                 UNIVA{" "}
                 <span className="italic font-black text-2xl sm:text-4xl md:text-[46px] lg:text-[46px] xl:text-[48px]">
                   2100 NETWORK
@@ -347,10 +347,10 @@ export default function HeroSection({
               <button
                 type="button"
                 onClick={handlePrimaryCTA}
-                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-[#192841] via-[#1E3A5F] to-[#0A1F44] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_10px_28px_-3px_rgba(25,40,65,0.45),0_0_20px_rgba(30,92,179,0.25)] hover:shadow-[0_16px_38px_-3px_rgba(25,40,65,0.65),0_0_28px_rgba(30,92,179,0.4)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#192841]/30 cursor-pointer overflow-hidden min-h-[48px]"
+                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(114,34,43,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(114,34,43,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#72222B]/20 cursor-pointer overflow-hidden min-h-[48px]"
               >
                 {/* Dynamic Light Sweep Highlight on hover */}
-                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/25 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
+                <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
 
                 {/* Luminous Pulsing Badge */}
                 <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3 shrink-0">
@@ -369,27 +369,23 @@ export default function HeroSection({
               <button
                 type="button"
                 onClick={handleVoiceCTA}
-                className={`relative group w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer backdrop-blur-xl min-h-[48px] ${
+                className={`relative group w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer min-h-[48px] ${
                   isVoiceListening
-                    ? "bg-[#192841] text-white ring-4 ring-[#192841]/30 scale-[1.02] shadow-[0_12px_32px_rgba(25,40,65,0.35)]"
-                    : "bg-white/95 hover:bg-white text-[#192841] border-2 border-[#192841]/25 hover:border-[#192841] shadow-[0_6px_20px_-3px_rgba(25,40,65,0.12)] hover:shadow-[0_12px_28px_-3px_rgba(25,40,65,0.22)] hover:-translate-y-1 hover:scale-[1.02] active:scale-[0.99]"
+                    ? "bg-[#72222B] text-white ring-4 ring-[#72222B]/20 scale-[1.02] shadow-md"
+                    : "bg-white hover:bg-[#F7F8FA] text-[#0F172A] border border-[#D6DAE3] hover:border-[#72222B] shadow-xs hover:-translate-y-0.5 active:scale-[0.99]"
                 }`}
               >
                 <div
                   className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
                     isVoiceListening
-                      ? "bg-white text-[#192841]"
-                      : "bg-[#192841]/10 text-[#192841] group-hover:bg-[#192841] group-hover:text-white"
+                      ? "bg-white text-[#72222B]"
+                      : "bg-[#72222B]/10 text-[#72222B] group-hover:bg-[#72222B] group-hover:text-white"
                   }`}
                 >
                   <Mic size={15} className={isVoiceListening ? "animate-pulse" : ""} />
                 </div>
 
                 <span>{isVoiceListening ? "Listening..." : "Tell Univa (Voice)"}</span>
-
-                <span className="text-[10px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-full bg-[#192841]/10 text-[#192841] group-hover:bg-[#192841] group-hover:text-white transition-colors">
-                  AI 2100
-                </span>
               </button>
             </div>
 
@@ -398,11 +394,11 @@ export default function HeroSection({
             {/* ========================================================================= */}
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full max-w-[620px] bg-white/95 backdrop-blur-xl rounded-2xl border border-[#D6DAE3] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2"
+              className="w-full max-w-[620px] bg-white rounded-2xl border border-[#D6DAE3] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2"
             >
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <div className="flex-1 flex items-center gap-2.5 px-3 py-2 bg-[#F7F8FA] rounded-xl border border-[#D6DAE3]/60">
-                  <Search size={18} className="text-[#192841] shrink-0" />
+                  <Search size={18} className="text-[#72222B] shrink-0" />
                   <div className="flex-1 min-w-0">
                     <span className="block text-[10px] font-bold text-[#5A6B85] uppercase tracking-wider">
                       Where do you want to go?
@@ -412,14 +408,14 @@ export default function HeroSection({
                       value={searchTo}
                       onChange={(e) => setSearchTo?.(e.target.value)}
                       placeholder="Search places, stations, universities..."
-                      className="w-full text-base sm:text-sm font-semibold text-[#192841] bg-transparent focus:outline-none placeholder:text-[#5A6B85]/60 truncate"
+                      className="w-full text-base sm:text-sm font-semibold text-[#0F172A] bg-transparent focus:outline-none placeholder:text-[#5A6B85]/60 truncate"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#192841] hover:bg-[#1E2E4D] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
                 >
                   <span>Find Routes</span>
                   <ArrowRight size={14} />
@@ -429,13 +425,13 @@ export default function HeroSection({
               {/* Sub-bar: Departure Point & Quick Filters */}
               <div className="flex flex-wrap items-center justify-between gap-2 px-1 pt-1.5 border-t border-[#D6DAE3]/50 text-[11px] text-[#5A6B85]">
                 <div className="flex items-center gap-1.5 truncate">
-                  <MapPin size={12} className="text-[#192841] shrink-0" />
+                  <MapPin size={12} className="text-[#72222B] shrink-0" />
                   <span>From:</span>
                   <input
                     type="text"
                     value={searchFrom}
                     onChange={(e) => setSearchFrom?.(e.target.value)}
-                    className="font-bold text-[#192841] bg-transparent focus:outline-none border-b border-dashed border-[#192841]/40 max-w-[130px] sm:max-w-[170px] truncate"
+                    className="font-bold text-[#0F172A] bg-transparent focus:outline-none border-b border-dashed border-[#72222B]/40 max-w-[130px] sm:max-w-[170px] truncate"
                   />
                 </div>
 
@@ -444,7 +440,7 @@ export default function HeroSection({
                     <select
                       value={searchMode}
                       onChange={(e) => setSearchMode?.(e.target.value)}
-                      className="bg-transparent font-semibold text-[#192841] focus:outline-none cursor-pointer text-[11px]"
+                      className="bg-transparent font-semibold text-[#0F172A] focus:outline-none cursor-pointer text-[11px]"
                     >
                       <option value="Autonomous Bus + SkyRail">Bus + SkyRail</option>
                       <option value="SkyRail Express">SkyRail Express</option>
@@ -457,7 +453,7 @@ export default function HeroSection({
                     <select
                       value={searchPriority}
                       onChange={(e) => setSearchPriority?.(e.target.value)}
-                      className="bg-transparent font-semibold text-[#192841] focus:outline-none cursor-pointer text-[11px]"
+                      className="bg-transparent font-semibold text-[#0F172A] focus:outline-none cursor-pointer text-[11px]"
                     >
                       <option value="Fastest Route">⚡ Fastest</option>
                       <option value="Eco-Friendly">🌱 Eco</option>
@@ -476,7 +472,7 @@ export default function HeroSection({
                 <button
                   type="button"
                   onClick={() => onOpenAuth("signup")}
-                  className="text-[#192841] font-bold underline hover:text-[#1E5CB3] cursor-pointer"
+                  className="text-[#72222B] font-bold underline hover:text-[#5B1B22] cursor-pointer"
                 >
                   Sign Up for Rider Pass
                 </button>
@@ -484,7 +480,7 @@ export default function HeroSection({
                 <button
                   type="button"
                   onClick={() => onOpenAuth("login")}
-                  className="text-[#192841] font-bold hover:underline cursor-pointer"
+                  className="text-[#72222B] font-bold hover:underline cursor-pointer"
                 >
                   Log in to TapPass
                 </button>
@@ -498,11 +494,11 @@ export default function HeroSection({
                 <span>100% Step-Free Accessible</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Radio size={13} className="text-[#192841]" />
+                <Radio size={13} className="text-[#72222B]" />
                 <span>Live GPS Telemetry</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <ShieldCheck size={14} className="text-[#0284C7]" />
+                <ShieldCheck size={14} className="text-[#22C55E]" />
                 <span>Zero-Emission Fleet</span>
               </div>
             </div>
