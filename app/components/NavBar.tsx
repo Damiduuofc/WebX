@@ -25,6 +25,40 @@ export default function Navbar() {
   const [sliderStyle, setSliderStyle] = useState<React.CSSProperties>({});
   const [menuOpen, setMenuOpen] = useState(false);
   const [authModal, setAuthModal] = useState<"login" | "signup" | null>(null);
+  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
+
+  useEffect(() => {
+    const checkUser = () => {
+      try {
+        const stored = localStorage.getItem("univa_user");
+        if (stored) {
+          setUser(JSON.parse(stored));
+        } else {
+          setUser(null);
+        }
+      } catch {
+        setUser(null);
+      }
+    };
+
+    checkUser();
+    window.addEventListener("univa_auth_change", checkUser);
+    window.addEventListener("storage", checkUser);
+    return () => {
+      window.removeEventListener("univa_auth_change", checkUser);
+      window.removeEventListener("storage", checkUser);
+    };
+  }, []);
+
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem("univa_user");
+      window.dispatchEvent(new Event("univa_auth_change"));
+      setUser(null);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const activeTab =
     pathname === "/about" || pathname.startsWith("/Aboutus")
@@ -242,62 +276,105 @@ export default function Navbar() {
             className="nv-desktop-actions"
             style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}
           >
-            <button
-              type="button"
-              onClick={() => setAuthModal("login")}
-              className="nv-auth-btn"
-              style={{
-                padding: "7px 16px",
-                borderRadius: 999,
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#192841",
-                cursor: "pointer",
-                border: "1px solid #D6DAE3",
-                background: "#FFFFFF",
-                transition: "all 0.2s ease",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "#192841";
-                e.currentTarget.style.background = "#F7F8FA";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "#D6DAE3";
-                e.currentTarget.style.background = "#FFFFFF";
-              }}
-            >
-              Log In
-            </button>
+            {user ? (
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: "50%",
+                    background: "#192841",
+                    color: "#FFFFFF",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 12,
+                    fontWeight: 700,
+                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
+                  }}
+                >
+                  {user.name.charAt(0).toUpperCase()}
+                </div>
+                <span style={{ fontSize: 13, fontWeight: 700, color: "#192841" }}>
+                  {user.name}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  style={{
+                    border: "none",
+                    background: "none",
+                    fontSize: 11,
+                    fontWeight: 600,
+                    color: "#5A6B85",
+                    cursor: "pointer",
+                    textDecoration: "underline",
+                    padding: "2px 4px",
+                  }}
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setAuthModal("login")}
+                  className="nv-auth-btn"
+                  style={{
+                    padding: "7px 16px",
+                    borderRadius: 999,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "#192841",
+                    cursor: "pointer",
+                    border: "1px solid #D6DAE3",
+                    background: "#FFFFFF",
+                    transition: "all 0.2s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "#192841";
+                    e.currentTarget.style.background = "#F7F8FA";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "#D6DAE3";
+                    e.currentTarget.style.background = "#FFFFFF";
+                  }}
+                >
+                  Log In
+                </button>
 
-            <button
-              type="button"
-              onClick={() => setAuthModal("signup")}
-              className="nv-auth-btn"
-              style={{
-                padding: "7px 18px",
-                borderRadius: 999,
-                fontSize: 13,
-                fontWeight: 600,
-                color: "#FFFFFF",
-                cursor: "pointer",
-                border: "none",
-                background: "#192841",
-                boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
-                transition: "all 0.2s ease",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#1E2E4D";
-                e.currentTarget.style.transform = "translateY(-1px)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#192841";
-                e.currentTarget.style.transform = "translateY(0)";
-              }}
-            >
-              Sign Up
-            </button>
+                <button
+                  type="button"
+                  onClick={() => setAuthModal("signup")}
+                  className="nv-auth-btn"
+                  style={{
+                    padding: "7px 18px",
+                    borderRadius: 999,
+                    fontSize: 13,
+                    fontWeight: 600,
+                    color: "#FFFFFF",
+                    cursor: "pointer",
+                    border: "none",
+                    background: "#192841",
+                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
+                    transition: "all 0.2s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#1E2E4D";
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#192841";
+                    e.currentTarget.style.transform = "translateY(0)";
+                  }}
+                >
+                  Sign Up
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile hamburger button */}
@@ -360,48 +437,100 @@ export default function Navbar() {
                 }}
               />
 
-              <div style={{ display: "flex", gap: "8px", padding: "4px" }}>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthModal("login");
-                    setMenuOpen(false);
-                  }}
-                  style={{
-                    flex: 1,
-                    padding: "9px 12px",
-                    borderRadius: "12px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "#192841",
-                    border: "1px solid #D6DAE3",
-                    background: "#FFFFFF",
-                    cursor: "pointer",
-                  }}
-                >
-                  Log In
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setAuthModal("signup");
-                    setMenuOpen(false);
-                  }}
-                  style={{
-                    flex: 1,
-                    padding: "9px 12px",
-                    borderRadius: "12px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: "#FFFFFF",
-                    border: "none",
-                    background: "#192841",
-                    cursor: "pointer",
-                  }}
-                >
-                  Sign Up
-                </button>
-              </div>
+              {user ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "6px 8px" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div
+                      style={{
+                        width: 32,
+                        height: 32,
+                        borderRadius: "50%",
+                        background: "#192841",
+                        color: "#FFFFFF",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontSize: 13,
+                        fontWeight: 700,
+                      }}
+                    >
+                      {(user.name || user.email || "U").slice(0, 1).toUpperCase()}
+                    </div>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: "#192841" }}>
+                        {user.name || "Explorer"}
+                      </span>
+                      <span style={{ fontSize: 11, color: "#5A6B85" }}>
+                        {user.email}
+                      </span>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      handleLogout();
+                      setMenuOpen(false);
+                    }}
+                    style={{
+                      width: "100%",
+                      padding: "8px 12px",
+                      borderRadius: "10px",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      color: "#EF4444",
+                      border: "1px solid #FCA5A5",
+                      background: "#FEF2F2",
+                      cursor: "pointer",
+                      marginTop: 4,
+                    }}
+                  >
+                    Sign Out
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: "flex", gap: "8px", padding: "4px" }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthModal("login");
+                      setMenuOpen(false);
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: "9px 12px",
+                      borderRadius: "12px",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: "#192841",
+                      border: "1px solid #D6DAE3",
+                      background: "#FFFFFF",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Log In
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthModal("signup");
+                      setMenuOpen(false);
+                    }}
+                    style={{
+                      flex: 1,
+                      padding: "9px 12px",
+                      borderRadius: "12px",
+                      fontSize: "13px",
+                      fontWeight: 600,
+                      color: "#FFFFFF",
+                      border: "none",
+                      background: "#192841",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </nav>
