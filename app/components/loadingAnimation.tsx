@@ -5,11 +5,13 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 interface LoadingAnimationProps {
   loop?: boolean;
   loopDuration?: number; // in seconds
+  onComplete?: () => void;
 }
 
 export default function LoadingAnimation({
   loop = true,
   loopDuration = 4.0,
+  onComplete,
 }: LoadingAnimationProps) {
   const [progress, setProgress] = useState<number>(0);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -17,6 +19,12 @@ export default function LoadingAnimation({
 
   const startTimeRef = useRef<number | null>(null);
   const animationFrameRef = useRef<number | null>(null);
+  const completedRef = useRef<boolean>(false);
+  const onCompleteRef = useRef(onComplete);
+
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   // Smooth mouse parallax lerp
   useEffect(() => {
@@ -52,6 +60,10 @@ export default function LoadingAnimation({
       if (!loop && elapsed >= loopDuration) {
         p = 1;
         setProgress(1);
+        if (!completedRef.current) {
+          completedRef.current = true;
+          onCompleteRef.current?.();
+        }
         return;
       }
 
