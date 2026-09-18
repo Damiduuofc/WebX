@@ -9,7 +9,7 @@ export default function Footer() {
     "UNIVA RIDER",
     "URBAN TRANSIT",
     "JOURNEY PLANNER",
-    "2100 MOBILITY",
+    " MOBILITY",
   ];
 
   return (

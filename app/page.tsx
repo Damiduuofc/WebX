@@ -203,7 +203,7 @@ export default function Home() {
       description: "Speak naturally while walking or changing platforms. Ask 'Where do I transfer?' or 'Is my SkyRail on time?' and receive immediate vocal transit guidance.",
       specs: ["Multilingual Voice", "Haptic Platform Alerts", "Offline Speech Mode"],
       icon: Mic,
-      tag: "Tell Univa 2100",
+      tag: "Tell Univa",
     },
   ];
 
@@ -267,26 +267,8 @@ export default function Home() {
           {/* Social Proof Bar & Avatar Stack */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D6DAE3]">
             <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-[#5A6B85]">
-              <span className="text-[#72222B] font-bold">💙 We are Univa</span>
-              <span>•</span>
               <span className="flex items-center gap-1 text-[#0F172A]">
-                <span className="text-[#F59E0B]">★</span>
-                <span>120K+ Commuters Satisfied</span>
               </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-2 overflow-hidden">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="inline-block h-7 w-7 rounded-full ring-2 ring-white bg-[#72222B] text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
-                  >
-                    R{i}
-                  </div>
-                ))}
-              </div>
-              <span className="text-xs font-semibold text-[#5A6B85]">+50k Active</span>
             </div>
           </div>
 
@@ -373,7 +355,6 @@ export default function Home() {
                         {/* Visual Card Frame */}
                         <div className="w-full h-36 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white p-4 flex flex-col justify-end relative overflow-hidden group-hover:scale-[1.02] transition-transform">
                           <div className="absolute top-3 right-3 text-white/10 font-black text-4xl select-none">
-                            2100
                           </div>
                           <span className="text-xs font-bold text-[#D6DAE3] uppercase tracking-wide">
                             {svc.tag}
@@ -406,7 +387,7 @@ export default function Home() {
               {/* Slider Navigation Row matching reference (< Prev, Next >) */}
               <div className="flex items-center justify-between pt-2">
                 <div className="text-xs text-[#5A6B85]">
-                  Showing 3 primary autonomous transit modes • Year 2100 Grid
+                  Showing 3 primary autonomous transit modes
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -430,7 +411,7 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 3: "PICK THE PLACE" / POPULAR 2100 ROUTES (Matching Tier 3)       */}
+        {/* SECTION 3: "PICK THE PLACE" / POPULAR  ROUTES (Matching Tier 3)       */}
         {/* ========================================================================= */}
         <section id="routes-section" className="space-y-8">
           
@@ -439,7 +420,7 @@ export default function Home() {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-bold uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-[#72222B]" />
-                <span>Popular Commuter Routes • 2100</span>
+                <span>Popular Commuter Routes • </span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] tracking-tight">
                 Pick the Place

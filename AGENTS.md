@@ -1,14 +1,14 @@
-# Univa — Transportation 2100
+# Univa — Transportation 
 
 ## 1. Project Overview
 
-**Univa** is a futuristic, accessible, and intelligent transportation platform designed for the year **2100**.
+**Univa** is a futuristic, accessible, and intelligent transportation platform designed for the year ****.
 
 The application connects different forms of future transportation into one simple journey-planning experience. Users can search for a destination, receive an optimized journey plan, follow their journey in real time, transfer between different transportation systems, and receive a journey summary when they arrive.
 
 The main goal is to make advanced transportation technology feel **simple, accessible, reliable, and easy to understand for everyone**, regardless of age or technical experience.
 
-Univa should not feel like a complicated futuristic dashboard. It should feel like a **clean, modern transportation app that happens to use advanced 2100 technology**.
+Univa should not feel like a complicated futuristic dashboard. It should feel like a **clean, modern transportation app that happens to use advanced  technology**.
 
 ---
 
@@ -168,7 +168,7 @@ Avoid:
 * Overloaded maps
 * Unnecessary decorative elements
 
-The design should look like a **real transportation product from 2100**, not a science-fiction movie interface.
+The design should look like a **real transportation product from **, not a science-fiction movie interface.
 
 ---
 
@@ -479,7 +479,7 @@ Prioritize lower environmental impact.
 
 ### Most Accessible
 
-♿
+
 
 Prioritize accessibility.
 

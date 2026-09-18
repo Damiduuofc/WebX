@@ -1,8 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, Eye, EyeOff, X, Check, Sparkles } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Eye,
+  EyeOff,
+  X,
+  Check,
+  Sparkles,
+  Train,
+  Bus,
+  Zap,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface AuthCardProps {
@@ -12,25 +24,46 @@ interface AuthCardProps {
   isModal?: boolean;
 }
 
-const testimonials = [
+const showcaseItems = [
   {
+    image: "/images/skyrail.jpg",
+    vehicleName: "SkyRail Line 02",
+    badge: "180 km/h Maglev",
+    status: "On Time",
+    type: "skyrail" as const,
+    alt: "Futuristic SkyRail magnetic levitation train on elevated guideway",
     quote: "Univa cut my daily commute across Colombo and KDU by 35%. The synchronized SkyRail and autonomous bus links feel seamless.",
     author: "Sara Bright",
     role: "Daily Commuter • KDU Scholar",
-    tag1: "Autonomous Grid 2100",
+    avatar: "SB",
+    tag1: "Autonomous Grid ",
     tag2: "Synchronized Rail",
   },
   {
+    image: "/images/bus.jpg",
+    vehicleName: "Autonomous Bus 245",
+    badge: "Precision Docking",
+    status: "Arriving Now",
+    type: "bus" as const,
+    alt: "Electric autonomous public transit bus at boarding station",
     quote: "With step-free precision docking and instant TapPass, our faculty members travel between research hubs effortlessly.",
     author: "Dr. Priyantha K.",
     role: "Senior Researcher • Computing Faculty",
+    avatar: "PK",
     tag1: "Step-Free Transit",
     tag2: "Digital TapPass",
   },
   {
+    image: "/images/pod.jpg",
+    vehicleName: "Smart Road Pod EV",
+    badge: "On-Demand Cabin",
+    status: "Zero Emissions",
+    type: "pod" as const,
+    alt: "Autonomous smart road electric pod on coastal highway",
     quote: "Hands-free voice routing with Tell Univa gives me real-time platform updates right before every interchange.",
     author: "Malik Perera",
     role: "Undergraduate Commuter",
+    avatar: "MP",
     tag1: "AI Voice Co-Pilot",
     tag2: "Zero Emissions",
   },
@@ -53,11 +86,11 @@ export default function AuthCard({
   const [successUser, setSuccessUser] = useState<{ name: string; email: string } | null>(null);
 
   const handleNextTestimonial = () => {
-    setTestimonialIdx((prev) => (prev + 1) % testimonials.length);
+    setTestimonialIdx((prev) => (prev + 1) % showcaseItems.length);
   };
 
   const handlePrevTestimonial = () => {
-    setTestimonialIdx((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setTestimonialIdx((prev) => (prev - 1 + showcaseItems.length) % showcaseItems.length);
   };
 
   const handleAuthSuccess = (userName?: string, userEmail?: string) => {
@@ -66,7 +99,7 @@ export default function AuthCard({
       name.trim() ||
       (email.includes("@") ? email.split("@")[0] : email.trim()) ||
       "Transit Rider";
-    const resolvedEmail = userEmail || email.trim() || "rider@univa2100.org";
+    const resolvedEmail = userEmail || email.trim() || "rider@univa.org";
 
     const userData = { name: resolvedName, email: resolvedEmail, loggedIn: true };
 
@@ -100,7 +133,7 @@ export default function AuthCard({
     handleAuthSuccess();
   };
 
-  const currentTestimonial = testimonials[testimonialIdx];
+  const currentItem = showcaseItems[testimonialIdx];
 
   return (
     <div className="relative w-full max-w-[980px] bg-white rounded-[32px] sm:rounded-[36px] shadow-[0_24px_70px_rgba(25,40,65,0.18)] border border-[#E2E8F0] overflow-hidden p-6 sm:p-8 md:p-10 transition-all">
@@ -129,7 +162,7 @@ export default function AuthCard({
               <Sparkles size={16} className="text-white" />
             </div>
             <span className="text-xs font-extrabold uppercase tracking-widest text-[#72222B]">
-              Univa 2100
+              Univa 
             </span>
           </div>
 
@@ -361,73 +394,168 @@ export default function AuthCard({
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT COLUMN: THE SHOWCASE CARD (Matches uploaded photo aesthetics)       */}
+        {/* RIGHT COLUMN: THE SHOWCASE CARD (Brand Crimson & Navy Transit Showcase)    */}
         {/* ========================================================================= */}
-        <div className="md:col-span-6 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-6 sm:p-7 flex flex-col justify-between min-h-[460px] sm:min-h-[520px] shadow-inner">
-          {/* Rich warm liquid gradient backdrop matching photo */}
-          <div className="absolute inset-0 bg-gradient-to-br from-[#E27D60] via-[#C3523B] to-[#7E2919] z-0 pointer-events-none" />
+        <div className="md:col-span-6 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-5 sm:p-7 flex flex-col justify-between min-h-[500px] sm:min-h-[560px] shadow-inner">
+          {/* Rich brand Architectural Crimson & Deep Navy gradient backdrop */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#8C2B38] via-[#72222B] to-[#3A0F14] z-0 pointer-events-none" />
           
-          {/* Fluid Ambient Light Contours */}
-          <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-[#FFBE98]/40 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#F4A261]/30 blur-3xl pointer-events-none" />
+          {/* Fluid Ambient Light Contours in matching crimson & navy tones */}
+          <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-[#B83A4A]/35 blur-3xl pointer-events-none" />
+          <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#192841]/55 blur-3xl pointer-events-none" />
           
           {/* Subtle diagonal highlight wave */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.25)_0%,_transparent_70%)] pointer-events-none" />
 
-          {/* Top Pill Tags / Filter Chips */}
-          <div className="relative z-10 flex flex-wrap items-center gap-2">
-            <span className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/25 backdrop-blur-md border border-white/30 text-[11px] font-semibold text-white tracking-wide transition-colors shadow-xs">
-              {currentTestimonial.tag1}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/25 backdrop-blur-md border border-white/30 text-[11px] font-semibold text-white tracking-wide transition-colors shadow-xs">
-              {currentTestimonial.tag2}
-            </span>
+          {/* Top Pill Tags & Slide Counter */}
+          <div className="relative z-10 flex items-center justify-between gap-2">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/25 backdrop-blur-md border border-white/30 text-[11px] font-semibold text-white tracking-wide transition-colors shadow-xs">
+                {currentItem.tag1}
+              </span>
+              <span className="px-3 py-1 rounded-full bg-white/20 hover:bg-white/25 backdrop-blur-md border border-white/30 text-[11px] font-semibold text-white tracking-wide transition-colors shadow-xs">
+                {currentItem.tag2}
+              </span>
+            </div>
+            <div className="px-2.5 py-1 rounded-full bg-black/25 backdrop-blur-md border border-white/20 text-[10px] font-extrabold text-white tracking-wider">
+              {testimonialIdx + 1} / {showcaseItems.length}
+            </div>
           </div>
 
-          {/* Floating Testimonial Quote Box with Cutout Navigation Controls */}
-          <div className="relative z-10 pt-16">
-            <div className="relative bg-white/20 backdrop-blur-xl border border-white/35 rounded-3xl p-5 sm:p-6 text-white shadow-[0_12px_32px_rgba(0,0,0,0.16)]">
+          {/* Featured Hero Photo Card on the Brand Showcase Space */}
+          <div className="relative z-10 my-3 sm:my-4 space-y-2.5">
+            <div className="relative w-full h-44 sm:h-52 rounded-2xl sm:rounded-3xl overflow-hidden border border-white/35 shadow-[0_12px_32px_rgba(0,0,0,0.25)] bg-slate-900 group">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={testimonialIdx}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    src={currentItem.image}
+                    alt={currentItem.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 460px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                  {/* Visual Depth Gradient Scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent pointer-events-none" />
+
+                  {/* Top Floating Badges on Photo */}
+                  <div className="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/25 text-[11px] font-bold text-white shadow-sm">
+                      {currentItem.type === "skyrail" && <Train size={12} className="text-[#F1B5BC]" />}
+                      {currentItem.type === "bus" && <Bus size={12} className="text-[#F1B5BC]" />}
+                      {currentItem.type === "pod" && <Zap size={12} className="text-[#F1B5BC]" />}
+                      <span>{currentItem.badge}</span>
+                    </span>
+
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-[#0F172A] shadow-xs">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
+                      <span>{currentItem.status}</span>
+                    </span>
+                  </div>
+
+                  {/* Bottom Title Bar on Photo */}
+                  <div className="absolute bottom-2.5 left-3 right-3 pointer-events-none">
+                    <h4 className="text-sm sm:text-base font-extrabold text-white leading-tight drop-shadow-md">
+                      {currentItem.vehicleName}
+                    </h4>
+                    <p className="text-[10px] sm:text-[11px] text-white/80 font-medium">
+                      Univa  Multimodal Autonomous Network
+                    </p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Interactive 3-Photo Thumbnail Strip on the Transit Showcase */}
+            <div className="grid grid-cols-3 gap-2">
+              {showcaseItems.map((item, idx) => {
+                const isSelected = testimonialIdx === idx;
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setTestimonialIdx(idx)}
+                    className={`relative rounded-xl overflow-hidden text-left transition-all duration-200 cursor-pointer ${
+                      isSelected
+                        ? "ring-2 ring-white border-2 border-white shadow-md scale-[1.03]"
+                        : "border border-white/30 opacity-70 hover:opacity-100 hover:scale-[1.01]"
+                    }`}
+                  >
+                    <div className="relative h-12 sm:h-14 w-full">
+                      <Image
+                        src={item.image}
+                        alt={item.vehicleName}
+                        fill
+                        sizes="140px"
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/75 to-transparent" />
+                      <div className="absolute bottom-1 left-1.5 right-1.5 truncate text-[10px] font-bold text-white leading-none">
+                        {item.type === "skyrail" ? "SkyRail" : item.type === "bus" ? "Bus 245" : "Smart Pod"}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Floating Testimonial Quote Box with Integrated Cutout Carousel Navigation */}
+          <div className="relative z-10">
+            <div className="relative bg-white/20 backdrop-blur-xl border border-white/35 rounded-2xl sm:rounded-3xl p-4 sm:p-5 text-white shadow-[0_12px_32px_rgba(0,0,0,0.16)]">
               {/* Quote text with animated transitions */}
               <AnimatePresence mode="wait">
                 <motion.div
                   key={testimonialIdx}
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25 }}
-                  className="space-y-4"
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.22 }}
+                  className="space-y-3"
                 >
-                  <p className="text-base sm:text-lg font-medium leading-relaxed text-white/95">
-                    &ldquo;{currentTestimonial.quote}&rdquo;
+                  <p className="text-xs sm:text-sm font-medium leading-relaxed text-white/95">
+                    &ldquo;{currentItem.quote}&rdquo;
                   </p>
 
                   <div className="flex items-center justify-between pt-1">
-                    <div>
-                      <h4 className="font-extrabold text-sm sm:text-base text-white">
-                        {currentTestimonial.author}
-                      </h4>
-                      <p className="text-xs text-white/80 font-medium">
-                        {currentTestimonial.role}
-                      </p>
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-white/25 border border-white/40 flex items-center justify-center font-bold text-xs text-white shadow-xs">
+                        {currentItem.avatar}
+                      </div>
+                      <div>
+                        <h4 className="font-extrabold text-xs sm:text-sm text-white leading-none">
+                          {currentItem.author}
+                        </h4>
+                        <p className="text-[11px] text-white/80 font-medium mt-0.5">
+                          {currentItem.role}
+                        </p>
+                      </div>
                     </div>
 
                     {/* Integrated Carousel Arrow Controls */}
-                    <div className="flex items-center gap-1.5 bg-white rounded-2xl p-1.5 shadow-md">
+                    <div className="flex items-center gap-1 bg-white rounded-xl sm:rounded-2xl p-1 shadow-md">
                       <button
                         type="button"
                         onClick={handlePrevTestimonial}
-                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
-                        aria-label="Previous story"
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
+                        aria-label="Previous vehicle"
                       >
-                        <ArrowLeft size={15} />
+                        <ArrowLeft size={14} />
                       </button>
                       <button
                         type="button"
                         onClick={handleNextTestimonial}
-                        className="w-8 h-8 rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
-                        aria-label="Next story"
+                        className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg sm:rounded-xl flex items-center justify-center hover:bg-slate-100 text-[#0F172A] transition-colors cursor-pointer"
+                        aria-label="Next vehicle"
                       >
-                        <ArrowRight size={15} />
+                        <ArrowRight size={14} />
                       </button>
                     </div>
                   </div>

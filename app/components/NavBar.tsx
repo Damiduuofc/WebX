@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import AuthModal from "./AuthModal";
 
-const navItems = ["Home", "Live Route", "About Us", "Contact Us"];
+const navItems = ["Home", "Live Route"];
 
 const getHref = (item: string) => {
   switch (item) {
@@ -13,10 +13,6 @@ const getHref = (item: string) => {
       return "/";
     case "Live Route":
       return "/smartmetro";
-    case "About Us":
-      return "/about";
-    case "Contact Us":
-      return "/contact";
     default:
       return "/";
   }
@@ -63,11 +59,8 @@ export default function Navbar() {
   };
 
   const activeTab =
-    pathname === "/about" || pathname.startsWith("/Aboutus")
-      ? "About Us"
-      : pathname === "/contact" || pathname.startsWith("/Contact")
-      ? "Contact Us"
-      : pathname === "/smartmetro" || pathname.startsWith("/smartmetro") || pathname === "/liveroute" || pathname.startsWith("/liveroute")
+   
+       pathname === "/smartmetro" || pathname.startsWith("/smartmetro") || pathname === "/liveroute" || pathname.startsWith("/liveroute")
       ? "Live Route"
       : "Home";
 

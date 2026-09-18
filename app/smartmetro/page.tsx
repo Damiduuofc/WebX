@@ -32,7 +32,7 @@ import {
 import LiveRouteMap, { StopPoint, LiveBus } from "../components/LiveRouteMap";
 
 // =========================================================================
-// REAL ROUTE & STOP DATA (MATCHING LANKAMETRO.LK/EN/SMARTMETRO + UNIVA 2100)
+// REAL ROUTE & STOP DATA (MATCHING LANKAMETRO.LK/EN/SMARTMETRO + UNIVA )
 // =========================================================================
 
 interface TransitRoute {
@@ -147,7 +147,7 @@ const TRANSIT_ROUTES: Record<string, TransitRoute> = {
     id: "UN01",
     code: "UN01",
     title: "Route UN01 • KDU Ratmalana ⇄ BIA Airport",
-    subtitle: "2100 SkyRail Autonomous Express Inter-City Arterial",
+    subtitle: " SkyRail Autonomous Express Inter-City Arterial",
     origin: "KDU, Ratmalana",
     destination: "Bandaranaike International Airport",
     distance: "46.2 km",
@@ -355,7 +355,7 @@ export default function SmartMetroLivePage() {
               </span>
 
               <span className="text-xs text-[#5A6B85] font-semibold hidden sm:inline">
-                Year 2100 Multimodal Transit Grid
+                Year  Multimodal Transit Grid
               </span>
             </div>
 
@@ -654,7 +654,7 @@ export default function SmartMetroLivePage() {
 
                           <div className="flex items-center gap-1 text-[#22C55E] font-semibold">
                             <ShieldCheck size={12} />
-                            <span>♿ Ramp Ready</span>
+                            <span> Ramp Ready</span>
                           </div>
                         </div>
                       </div>
@@ -844,12 +844,12 @@ export default function SmartMetroLivePage() {
             isSimulating={true}
           />
 
-          {/* Under-Map Mobile App Banner (Matching Lanka Metro LMT-GO) */}
+          {/* Under-Map Mobile App Banner) */}
           <div className="bg-[#0C1017] border border-[#72222B]/30 rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
             <div className="space-y-1 text-center sm:text-left">
               <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#22C55E]">
                 <QrCode size={13} />
-                <span>LMT-GO & Univa Rider Mobile App</span>
+                <span>Univa Rider Mobile App</span>
               </div>
               <h3 className="text-base sm:text-lg font-bold text-white">
                 Track live on the go with real-time push alerts
@@ -861,7 +861,7 @@ export default function SmartMetroLivePage() {
 
             <div className="flex items-center gap-2.5 shrink-0">
               <a
-                href="https://play.google.com/store/apps/details?id=com.lankametrotransit.lmtgo"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white flex items-center gap-2 transition-colors"
@@ -869,7 +869,7 @@ export default function SmartMetroLivePage() {
                 <span>Google Play</span>
               </a>
               <a
-                href="https://apps.apple.com/lk/app/lmt-go/id6761980523"
+                href="/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-xs font-semibold text-white flex items-center gap-2 transition-colors"
