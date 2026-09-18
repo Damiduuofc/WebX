@@ -5,7 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import AuthModal from "./AuthModal";
 
-const navItems = ["Home", "Live Route", "About Us", "Contact Us"];
+const navItems = ["Home", "Live Route"];
 
 const getHref = (item: string) => {
   switch (item) {
@@ -13,10 +13,6 @@ const getHref = (item: string) => {
       return "/";
     case "Live Route":
       return "/liveroute";
-    case "About Us":
-      return "/about";
-    case "Contact Us":
-      return "/contact";
     default:
       return "/";
   }
@@ -63,11 +59,7 @@ export default function Navbar() {
   };
 
   const activeTab =
-    pathname === "/about" || pathname.startsWith("/Aboutus")
-      ? "About Us"
-      : pathname === "/contact" || pathname.startsWith("/Contact")
-      ? "Contact Us"
-      : pathname === "/smartmetro" || pathname.startsWith("/smartmetro") || pathname === "/liveroute" || pathname.startsWith("/liveroute")
+    pathname === "/smartmetro" || pathname.startsWith("/smartmetro") || pathname === "/liveroute" || pathname.startsWith("/liveroute")
       ? "Live Route"
       : "Home";
 
@@ -126,7 +118,7 @@ export default function Navbar() {
         .nv-tab:focus-visible,
         .nv-auth-btn:focus-visible,
         .nv-burger:focus-visible {
-          outline: 2px solid rgba(25, 40, 65, 0.3);
+          outline: 2px solid rgba(114, 34, 43, 0.35);
           outline-offset: 2px;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -164,7 +156,7 @@ export default function Navbar() {
             borderRadius: "999px",
             background: "rgba(255, 255, 255, 0.92)",
             border: "1px solid rgba(226, 232, 240, 0.9)",
-            boxShadow: "0 4px 20px rgba(25, 40, 65, 0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
+            boxShadow: "0 4px 20px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",
             position: "relative",
@@ -205,12 +197,12 @@ export default function Navbar() {
               gap: 2,
               padding: 3,
               borderRadius: 999,
-              background: "rgba(25, 40, 65, 0.04)",
+              background: "rgba(114, 34, 43, 0.05)",
               border: "1px solid rgba(226, 232, 240, 0.8)",
               position: "relative",
             }}
           >
-            {/* Animated solid navy slider */}
+            {/* Animated solid crimson slider */}
             <div
               aria-hidden="true"
               className="nv-slider"
@@ -219,8 +211,8 @@ export default function Navbar() {
                 top: 3,
                 bottom: 3,
                 borderRadius: 999,
-                background: "#192841",
-                boxShadow: "0 2px 8px rgba(25, 40, 65, 0.25)",
+                background: "#72222B",
+                boxShadow: "0 2px 10px rgba(114, 34, 43, 0.35)",
                 transition: "left 0.28s cubic-bezier(0.34,1.56,0.64,1), width 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease",
                 pointerEvents: "none",
                 zIndex: 0,
@@ -252,7 +244,7 @@ export default function Navbar() {
                     padding: "7px 18px",
                     borderRadius: 999,
                     fontSize: 13,
-                    fontWeight: 550,
+                    fontWeight: 600,
                     color: isActive ? "#FFFFFF" : "#64748B",
                     cursor: "pointer",
                     textDecoration: "none",
@@ -263,7 +255,7 @@ export default function Navbar() {
                     transition: "color 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#192841";
+                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#72222B";
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#64748B";
@@ -287,14 +279,14 @@ export default function Navbar() {
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    background: "#192841",
+                    background: "#72222B",
                     color: "#FFFFFF",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 12,
                     fontWeight: 700,
-                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
+                    boxShadow: "0 2px 8px rgba(114, 34, 43, 0.25)",
                   }}
                 >
                   {user.name.charAt(0).toUpperCase()}
@@ -338,8 +330,8 @@ export default function Navbar() {
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#192841";
-                    e.currentTarget.style.background = "#F7F9FC";
+                    e.currentTarget.style.borderColor = "#72222B";
+                    e.currentTarget.style.background = "#F7F8FA";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = "#E2E8F0";
@@ -361,17 +353,17 @@ export default function Navbar() {
                     color: "#FFFFFF",
                     cursor: "pointer",
                     border: "none",
-                    background: "#192841",
-                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
+                    background: "#72222B",
+                    boxShadow: "0 2px 10px rgba(114, 34, 43, 0.3)",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#111C2E";
+                    e.currentTarget.style.background = "#5B1B22";
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#192841";
+                    e.currentTarget.style.background = "#72222B";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -397,7 +389,7 @@ export default function Navbar() {
                 borderRadius: 20,
                 background: "rgba(255, 255, 255, 0.98)",
                 border: "1px solid #E2E8F0",
-                boxShadow: "0 12px 32px rgba(25, 40, 65, 0.12)",
+                boxShadow: "0 12px 32px rgba(15, 23, 42, 0.12)",
                 backdropFilter: "blur(20px)",
                 padding: 12,
                 display: "flex",
@@ -420,11 +412,11 @@ export default function Navbar() {
                     padding: "10px 14px",
                     borderRadius: 12,
                     fontSize: 14,
-                    fontWeight: 500,
+                    fontWeight: 600,
                     cursor: "pointer",
                     textDecoration: "none",
                     display: "block",
-                    background: activeTab === item ? "#192841" : "transparent",
+                    background: activeTab === item ? "#72222B" : "transparent",
                     color: activeTab === item ? "#FFFFFF" : "#64748B",
                     transition: "background 0.2s ease",
                   }}
@@ -449,7 +441,7 @@ export default function Navbar() {
                         width: 32,
                         height: 32,
                         borderRadius: "50%",
-                        background: "#192841",
+                        background: "#72222B",
                         color: "#FFFFFF",
                         display: "flex",
                         alignItems: "center",
@@ -527,7 +519,7 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: "#FFFFFF",
                       border: "none",
-                      background: "#192841",
+                      background: "#72222B",
                       cursor: "pointer",
                     }}
                   >
@@ -540,7 +532,7 @@ export default function Navbar() {
         </nav>
       </div>
 
-      {/* Auth Modal (Login / Sign Up) adhering strictly to Design.md Section 5.1 & 5.2 */}
+      {/* Auth Modal */}
       {authModal && (
         <AuthModal
           mode={authModal}

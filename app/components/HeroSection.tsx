@@ -134,7 +134,7 @@ export function HeroImageGrid() {
           {item.title}
         </h4>
         <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium truncate">
-          Year 2100 Autonomous Network
+          Year  Autonomous Network
         </p>
       </div>
     </div>
@@ -267,7 +267,7 @@ export default function HeroSection({
       <div className="absolute inset-0 pointer-events-none z-0">
         <Image
           src="/HeroBG.png"
-          alt="Univa 2100 Fluid Transport Ribbon"
+          alt="Univa  Fluid Transport Ribbon"
           fill
           priority
           sizes="100vw"
@@ -329,7 +329,7 @@ export default function HeroSection({
               <span className="text-[#72222B] block leading-tight">
                 UNIVA{" "}
                 <span className="italic font-black text-2xl sm:text-4xl md:text-[46px] lg:text-[46px] xl:text-[48px]">
-                  2100 NETWORK
+                   NETWORK
                 </span>
               </span>
             </h1>
@@ -457,7 +457,7 @@ export default function HeroSection({
                     >
                       <option value="Fastest Route">⚡ Fastest</option>
                       <option value="Eco-Friendly">🌱 Eco</option>
-                      <option value="Most Accessible">♿ Step-Free</option>
+                      <option value="Most Accessible"> Step-Free</option>
                       <option value="Less Walking">🚶 Min Walk</option>
                     </select>
                   )}

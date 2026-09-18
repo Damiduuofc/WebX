@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import LoadingAnimation from "./components/loadingAnimation";
 import AuthModal from "./components/AuthModal";
 import HeroSection from "./components/HeroSection";
@@ -39,6 +40,7 @@ interface JourneyPlan {
   fare: string;
   status: "on-time" | "delay";
   statusText: string;
+  image: string;
 }
 
 const PRESET_DESTINATIONS: Record<string, JourneyPlan> = {
@@ -61,6 +63,7 @@ const PRESET_DESTINATIONS: Record<string, JourneyPlan> = {
     fare: "LKR 120",
     status: "on-time",
     statusText: "On schedule • Next departure in 4 mins",
+    image: "/images/bus.jpg",
   },
   Home: {
     id: "home",
@@ -79,6 +82,7 @@ const PRESET_DESTINATIONS: Record<string, JourneyPlan> = {
     fare: "LKR 80",
     status: "on-time",
     statusText: "On schedule • Platform 2",
+    image: "/images/pod.jpg",
   },
   Work: {
     id: "work",
@@ -97,6 +101,7 @@ const PRESET_DESTINATIONS: Record<string, JourneyPlan> = {
     fare: "Free (Walking)",
     status: "on-time",
     statusText: "Direct pedestrian connection",
+    image: "/images/skyrail.jpg",
   },
   Airport: {
     id: "airport",
@@ -115,6 +120,7 @@ const PRESET_DESTINATIONS: Record<string, JourneyPlan> = {
     fare: "LKR 350",
     status: "delay",
     statusText: "Slight traffic delay (+5 mins)",
+    image: "/images/skyrail.jpg",
   },
 };
 
@@ -191,6 +197,7 @@ export default function Home() {
       specs: ["3 min Headway", "Step-Free Boarding", "Zero Tailpipe Emissions"],
       icon: Bus,
       tag: "Bus 245 Express",
+      image: "/images/bus.jpg",
     },
     {
       title: "SkyRail Magnetic Lines",
@@ -200,6 +207,7 @@ export default function Home() {
       specs: ["100% On-Time Guarantee", "Direct Hub-to-Hub", "Climate Sealed Pods"],
       icon: Train,
       tag: "SkyRail Line 02",
+      image: "/images/skyrail.jpg",
     },
     {
       title: "Smart Road Autonomous Pods",
@@ -209,6 +217,7 @@ export default function Home() {
       specs: ["Instant Dispatch", "Private Work Cabins", "Smart Road Charging"],
       icon: Zap,
       tag: "Smart Pod EV",
+      image: "/images/pod.jpg",
     },
     {
       title: "Voice Journey Co-Pilot",
@@ -217,7 +226,8 @@ export default function Home() {
       description: "Speak naturally while walking or changing platforms. Ask 'Where do I transfer?' or 'Is my SkyRail on time?' and receive immediate vocal transit guidance.",
       specs: ["Multilingual Voice", "Haptic Platform Alerts", "Offline Speech Mode"],
       icon: Mic,
-      tag: "Tell Univa 2100",
+      tag: "Tell Univa",
+      image: "/images/skyrail.jpg",
     },
   ];
 
@@ -283,26 +293,8 @@ export default function Home() {
           {/* Social Proof Bar & Avatar Stack */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#D6DAE3]">
             <div className="flex items-center gap-3 text-xs sm:text-sm font-semibold text-[#5A6B85]">
-              <span className="text-[#72222B] font-bold">💙 We are Univa</span>
-              <span>•</span>
               <span className="flex items-center gap-1 text-[#0F172A]">
-                <span className="text-[#F59E0B]">★</span>
-                <span>120K+ Commuters Satisfied</span>
               </span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-2 overflow-hidden">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="inline-block h-7 w-7 rounded-full ring-2 ring-white bg-[#72222B] text-white text-[10px] font-bold flex items-center justify-center shadow-xs"
-                  >
-                    R{i}
-                  </div>
-                ))}
-              </div>
-              <span className="text-xs font-semibold text-[#5A6B85]">+50k Active</span>
             </div>
           </div>
 
@@ -343,6 +335,27 @@ export default function Home() {
                 <p className="text-sm text-[#5A6B85] leading-relaxed">
                   We coordinate autonomous bus lines, elevated magnetic SkyRail, and on-demand vehicle pods into a single reliable schedule. No multiple ticketing, zero unexpected transfers.
                 </p>
+
+                {/* Multimodal Network Image Preview */}
+                <div className="relative w-full h-36 rounded-2xl overflow-hidden shadow-sm border border-[#D6DAE3] group">
+                  <Image
+                    src="/images/skyrail.jpg"
+                    alt="Univa Multimodal Transit System"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 360px"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-2.5 left-3.5 right-3.5 flex items-center justify-between text-white pointer-events-none">
+                    <div>
+                      <span className="text-[10px] font-bold text-[#FFBE98] uppercase tracking-wider block">Unified Fleet</span>
+                      <span className="text-xs font-bold">Synchronized Autonomous Grid</span>
+                    </div>
+                    <span className="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-white/25 backdrop-blur-md border border-white/30">
+                      2100
+                    </span>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-3 pt-4 border-t border-[#D6DAE3]">
@@ -386,17 +399,24 @@ export default function Home() {
                           </div>
                         </div>
 
-                        {/* Visual Card Frame */}
-                        <div className="w-full h-36 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white p-4 flex flex-col justify-end relative overflow-hidden group-hover:scale-[1.02] transition-transform">
-                          <div className="absolute top-3 right-3 text-white/10 font-black text-4xl select-none">
-                            2100
+                        {/* Visual Card Frame with Image */}
+                        <div className="w-full h-36 rounded-2xl relative overflow-hidden group-hover:scale-[1.02] transition-transform shadow-sm bg-slate-900">
+                          <Image
+                            src={svc.image}
+                            alt={svc.title}
+                            fill
+                            sizes="(max-width: 640px) 100vw, 280px"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
+                          <div className="absolute bottom-2.5 left-3 right-3 text-white pointer-events-none">
+                            <span className="text-[10px] font-bold text-[#FFBE98] uppercase tracking-wider block">
+                              {svc.tag}
+                            </span>
+                            <h4 className="text-sm font-extrabold text-white leading-tight drop-shadow-sm truncate">
+                              {svc.title}
+                            </h4>
                           </div>
-                          <span className="text-xs font-bold text-[#D6DAE3] uppercase tracking-wide">
-                            {svc.tag}
-                          </span>
-                          <h4 className="text-base font-bold text-white leading-tight">
-                            {svc.title}
-                          </h4>
                         </div>
 
                         <p className="text-xs text-[#5A6B85] leading-relaxed">
@@ -422,7 +442,7 @@ export default function Home() {
               {/* Slider Navigation Row matching reference (< Prev, Next >) */}
               <div className="flex items-center justify-between pt-2">
                 <div className="text-xs text-[#5A6B85]">
-                  Showing 3 primary autonomous transit modes • Year 2100 Grid
+                  Showing 3 primary autonomous transit modes
                 </div>
                 <div className="flex items-center gap-2">
                   <button
@@ -446,7 +466,7 @@ export default function Home() {
         </section>
 
         {/* ========================================================================= */}
-        {/* SECTION 3: "PICK THE PLACE" / POPULAR 2100 ROUTES (Matching Tier 3)       */}
+        {/* SECTION 3: "PICK THE PLACE" / POPULAR  ROUTES (Matching Tier 3)       */}
         {/* ========================================================================= */}
         <section id="routes-section" className="space-y-8">
           
@@ -455,7 +475,7 @@ export default function Home() {
             <div className="space-y-2">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#72222B]/10 text-[#72222B] text-xs font-bold uppercase tracking-wider">
                 <span className="w-2 h-2 rounded-full bg-[#72222B]" />
-                <span>Popular Commuter Routes • 2100</span>
+                <span>Popular Commuter Routes • </span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0F172A] tracking-tight">
                 Pick the Place
@@ -507,15 +527,25 @@ export default function Home() {
                 <div className="text-xs text-[#5A6B85]">Ratmalana Campus Concourse</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
-                  <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">Bus 245 + SkyRail</span>
-                    <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">On Time</span>
-                  </div>
+                <div className="w-full h-44 rounded-2xl relative overflow-hidden shadow-sm group bg-slate-900">
+                  <Image
+                    src="/images/bus.jpg"
+                    alt="Autonomous Bus to KDU Ratmalana Campus"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 380px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">Bus 245 + SkyRail</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">On Time</span>
+                    </div>
 
-                  <div className="space-y-1">
-                    <div className="text-2xl font-black">27 min</div>
-                    <div className="text-[11px] text-[#D6DAE3]">Departure: 08:15 AM • Bay 4</div>
+                    <div className="space-y-0.5">
+                      <div className="text-2xl font-black drop-shadow-sm">27 min</div>
+                      <div className="text-[11px] text-white/90">Departure: 08:15 AM • Bay 4</div>
+                    </div>
                   </div>
                 </div>
 
@@ -560,15 +590,25 @@ export default function Home() {
                 <div className="text-xs text-[#5A6B85]">Katunayake SkyRail Terminal</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
-                  <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">SkyRail Line 01</span>
-                    <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">Non-Stop</span>
-                  </div>
+                <div className="w-full h-44 rounded-2xl relative overflow-hidden shadow-sm group bg-slate-900">
+                  <Image
+                    src="/images/skyrail.jpg"
+                    alt="SkyRail Express to Bandaranaike International Airport"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 380px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">SkyRail Line 01</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">Non-Stop</span>
+                    </div>
 
-                  <div className="space-y-1">
-                    <div className="text-2xl font-black">18 min</div>
-                    <div className="text-[11px] text-[#D6DAE3]">Direct Airport Shuttles every 10 min</div>
+                    <div className="space-y-0.5">
+                      <div className="text-2xl font-black drop-shadow-sm">18 min</div>
+                      <div className="text-[11px] text-white/90">Direct Airport Shuttles every 10 min</div>
+                    </div>
                   </div>
                 </div>
 
@@ -613,15 +653,25 @@ export default function Home() {
                 <div className="text-xs text-[#5A6B85]">Kollupitiya Ocean Concourse</div>
 
                 {/* Card Visual / Map Block */}
-                <div className="w-full h-44 rounded-2xl bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] p-4 text-white flex flex-col justify-between relative overflow-hidden">
-                  <div className="flex items-center justify-between text-xs font-semibold">
-                    <span className="bg-white/20 backdrop-blur-md px-2.5 py-1 rounded-full">Smart Road Pod</span>
-                    <span className="text-[#2E7D5B] bg-white px-2 py-0.5 rounded-full font-bold">Zero Emiss</span>
-                  </div>
+                <div className="w-full h-44 rounded-2xl relative overflow-hidden shadow-sm group bg-slate-900">
+                  <Image
+                    src="/images/pod.jpg"
+                    alt="Smart Road Pod EV on Coastal Route"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 380px"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 pointer-events-none" />
+                  <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
+                    <div className="flex items-center justify-between text-xs font-semibold">
+                      <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">Smart Road Pod</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">Zero Emiss</span>
+                    </div>
 
-                  <div className="space-y-1">
-                    <div className="text-2xl font-black">14 min</div>
-                    <div className="text-[11px] text-[#D6DAE3]">Coastal Route • Direct Curb Drop</div>
+                    <div className="space-y-0.5">
+                      <div className="text-2xl font-black drop-shadow-sm">14 min</div>
+                      <div className="text-[11px] text-white/90">Coastal Route • Direct Curb Drop</div>
+                    </div>
                   </div>
                 </div>
 
@@ -705,8 +755,8 @@ export default function Home() {
           {/* Journey Plan Summary Card (Section 5.5 of Design.md) */}
           <div className="bg-white rounded-3xl border border-[#D6DAE3] p-6 sm:p-8 shadow-sm space-y-6">
             
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-6 border-b border-[#D6DAE3]">
-              <div>
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#D6DAE3]">
+              <div className="space-y-1 flex-1">
                 <div className="text-xs font-semibold text-[#5A6B85] uppercase tracking-wide">
                   Active Selected Route
                 </div>
@@ -717,23 +767,43 @@ export default function Home() {
                   <Navigation size={14} className="text-[#72222B]" />
                   <span>Departing from: <strong className="text-black">{activePlan.fromLocation}</strong></span>
                 </p>
+
+                <div className="pt-2">
+                  <span
+                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
+                      activePlan.status === "on-time"
+                        ? "bg-[#2E7D5B]/10 text-[#2E7D5B]"
+                        : "bg-[#B8860B]/10 text-[#B8860B]"
+                    }`}
+                  >
+                    {activePlan.status === "on-time" ? (
+                      <CheckCircle2 size={13} />
+                    ) : (
+                      <AlertCircle size={13} />
+                    )}
+                    <span>{activePlan.statusText}</span>
+                  </span>
+                </div>
               </div>
 
-              <div className="self-start sm:self-auto flex items-center gap-2">
-                <span
-                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold ${
-                    activePlan.status === "on-time"
-                      ? "bg-[#2E7D5B]/10 text-[#2E7D5B]"
-                      : "bg-[#B8860B]/10 text-[#B8860B]"
-                  }`}
-                >
-                  {activePlan.status === "on-time" ? (
-                    <CheckCircle2 size={13} />
-                  ) : (
-                    <AlertCircle size={13} />
-                  )}
-                  <span>{activePlan.statusText}</span>
-                </span>
+              {/* Active Route Vehicle Photo Banner */}
+              <div className="relative w-full md:w-64 h-32 rounded-2xl overflow-hidden shadow-xs border border-[#D6DAE3] shrink-0 group bg-slate-900">
+                <Image
+                  src={activePlan.image || "/images/skyrail.jpg"}
+                  alt={activePlan.destination}
+                  fill
+                  sizes="260px"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
+                <div className="absolute bottom-2.5 left-3.5 right-3.5 text-white pointer-events-none">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFBE98] block">
+                    Assigned Fleet
+                  </span>
+                  <div className="text-xs font-bold truncate">
+                    {activePlan.name} Multimodal Unit
+                  </div>
+                </div>
               </div>
             </div>
 
