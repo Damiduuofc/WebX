@@ -5,6 +5,7 @@ import Link from "next/link";
 import LoadingAnimation from "./components/loadingAnimation";
 import AuthModal from "./components/AuthModal";
 import HeroSection from "./components/HeroSection";
+import JourneyPlanModal from "./liveroute/JourneyPlanModal";
 import {
   Mic,
   Clock,
@@ -122,6 +123,19 @@ export default function Home() {
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [authModal, setAuthModal] = useState<"login" | "signup" | null>(null);
 
+  // 5-Step Journey Plan Popup Modal state
+  const [isJourneyModalOpen, setIsJourneyModalOpen] = useState(false);
+  const [journeyModalStep, setJourneyModalStep] = useState<1 | 2 | 3 | 4 | 5>(1);
+  const [journeyModalDest, setJourneyModalDest] = useState("Bandaranaike International Airport (BIA)");
+
+  const handleOpenJourneyPlanner = (step: 1 | 2 | 3 | 4 | 5 = 1, dest?: string) => {
+    if (dest) {
+      setJourneyModalDest(dest);
+    }
+    setJourneyModalStep(step);
+    setIsJourneyModalOpen(true);
+  };
+
   // Search Bar state (docked hero bar)
   const [searchFrom, setSearchFrom] = useState("KDU, Ratmalana");
   const [searchTo, setSearchTo] = useState("Bandaranaike Airport");
@@ -233,6 +247,14 @@ export default function Home() {
         />
       )}
 
+      {/* 5-Step Journey Plan Popup Modal */}
+      <JourneyPlanModal
+        isOpen={isJourneyModalOpen}
+        onClose={() => setIsJourneyModalOpen(false)}
+        initialStep={journeyModalStep}
+        initialDestination={journeyModalDest}
+      />
+
       {/* ========================================================================= */}
       {/* SECTION 1: FULL-SIZE HERO WITH DUAL INFINITE SCROLL & HIGHLIGHTED CTAs    */}
       {/* ========================================================================= */}
@@ -240,10 +262,7 @@ export default function Home() {
         onOpenAuth={(mode) => setAuthModal(mode)}
         onVoiceClick={handleVoiceClick}
         isVoiceListening={isVoiceListening}
-        onExploreClick={() => {
-          const el = document.getElementById("routes-section") || document.getElementById("planner-section");
-          el?.scrollIntoView({ behavior: "smooth" });
-        }}
+        onExploreClick={() => handleOpenJourneyPlanner(1)}
         searchFrom={searchFrom}
         setSearchFrom={setSearchFrom}
         searchTo={searchTo}
@@ -252,10 +271,7 @@ export default function Home() {
         setSearchMode={setSearchMode}
         searchPriority={searchPriority}
         setSearchPriority={setSearchPriority}
-        onSearchSubmit={() => {
-          const el = document.getElementById("routes-section") || document.getElementById("planner-section");
-          el?.scrollIntoView({ behavior: "smooth" });
-        }}
+        onSearchSubmit={() => handleOpenJourneyPlanner(1, searchTo)}
       />
 
       <div className="w-full max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 space-y-16 sm:space-y-24 pt-10 sm:pt-16 pb-16">
@@ -523,8 +539,7 @@ export default function Home() {
                 type="button"
                 onClick={() => {
                   setSelectedDestination("University");
-                  const el = document.getElementById("planner-section");
-                  el?.scrollIntoView({ behavior: "smooth" });
+                  handleOpenJourneyPlanner(2, "General Sir John Kotelawala Defence University (KDU)");
                 }}
                 className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
@@ -577,8 +592,7 @@ export default function Home() {
                 type="button"
                 onClick={() => {
                   setSelectedDestination("Airport");
-                  const el = document.getElementById("planner-section");
-                  el?.scrollIntoView({ behavior: "smooth" });
+                  handleOpenJourneyPlanner(2, "Bandaranaike International Airport (BIA)");
                 }}
                 className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
@@ -631,8 +645,7 @@ export default function Home() {
                 type="button"
                 onClick={() => {
                   setSelectedDestination("Home");
-                  const el = document.getElementById("planner-section");
-                  el?.scrollIntoView({ behavior: "smooth" });
+                  handleOpenJourneyPlanner(2, "Marine Drive Promenade, Kollupitiya");
                 }}
                 className="w-full py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
@@ -817,7 +830,7 @@ export default function Home() {
               <div className="flex items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
-                  onClick={() => alert(`Starting Live Journey Guidance to ${activePlan.destination}!`)}
+                  onClick={() => handleOpenJourneyPlanner(2, activePlan.destination)}
                   className="flex-1 sm:flex-initial px-6 py-2.5 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-xs font-bold text-white transition-colors shadow-sm cursor-pointer"
                 >
                   Start Live Journey

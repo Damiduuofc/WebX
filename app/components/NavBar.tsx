@@ -12,7 +12,7 @@ const getHref = (item: string) => {
     case "Home":
       return "/";
     case "Live Route":
-      return "/smartmetro";
+      return "/liveroute";
     case "About Us":
       return "/about";
     case "Contact Us":
@@ -126,7 +126,7 @@ export default function Navbar() {
         .nv-tab:focus-visible,
         .nv-auth-btn:focus-visible,
         .nv-burger:focus-visible {
-          outline: 2px solid rgba(85, 0, 0, 0.3);
+          outline: 2px solid rgba(25, 40, 65, 0.3);
           outline-offset: 2px;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -162,9 +162,9 @@ export default function Navbar() {
             margin: "0 auto",
             padding: "10px 18px",
             borderRadius: "999px",
-            background: "rgba(255, 255, 255, 0.88)",
-            border: "1px solid rgba(214, 218, 227, 0.8)",
-            boxShadow: "0 4px 20px rgba(85, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+            background: "rgba(255, 255, 255, 0.92)",
+            border: "1px solid rgba(226, 232, 240, 0.9)",
+            boxShadow: "0 4px 20px rgba(25, 40, 65, 0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",
             position: "relative",
@@ -205,8 +205,8 @@ export default function Navbar() {
               gap: 2,
               padding: 3,
               borderRadius: 999,
-              background: "rgba(85, 0, 0, 0.04)",
-              border: "1px solid rgba(214, 218, 227, 0.6)",
+              background: "rgba(25, 40, 65, 0.04)",
+              border: "1px solid rgba(226, 232, 240, 0.8)",
               position: "relative",
             }}
           >
@@ -219,8 +219,8 @@ export default function Navbar() {
                 top: 3,
                 bottom: 3,
                 borderRadius: 999,
-                background: "#72222B",
-                boxShadow: "0 2px 8px rgba(114, 34, 43, 0.25)",
+                background: "#192841",
+                boxShadow: "0 2px 8px rgba(25, 40, 65, 0.25)",
                 transition: "left 0.28s cubic-bezier(0.34,1.56,0.64,1), width 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease",
                 pointerEvents: "none",
                 zIndex: 0,
@@ -253,7 +253,7 @@ export default function Navbar() {
                     borderRadius: 999,
                     fontSize: 13,
                     fontWeight: 550,
-                    color: isActive ? "#FFFFFF" : "#5A6B85",
+                    color: isActive ? "#FFFFFF" : "#64748B",
                     cursor: "pointer",
                     textDecoration: "none",
                     display: "inline-block",
@@ -263,10 +263,10 @@ export default function Navbar() {
                     transition: "color 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#72222B";
+                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#192841";
                   }}
                   onMouseLeave={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#5A6B85";
+                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#64748B";
                   }}
                 >
                   {item}
@@ -287,14 +287,14 @@ export default function Navbar() {
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    background: "#72222B",
+                    background: "#192841",
                     color: "#FFFFFF",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 12,
                     fontWeight: 700,
-                    boxShadow: "0 2px 8px rgba(114, 34, 43, 0.2)",
+                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
                   }}
                 >
                   {user.name.charAt(0).toUpperCase()}
@@ -332,17 +332,17 @@ export default function Navbar() {
                     fontWeight: 600,
                     color: "#0F172A",
                     cursor: "pointer",
-                    border: "1px solid #D6DAE3",
+                    border: "1px solid #E2E8F0",
                     background: "#FFFFFF",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#72222B";
-                    e.currentTarget.style.background = "#F7F8FA";
+                    e.currentTarget.style.borderColor = "#192841";
+                    e.currentTarget.style.background = "#F7F9FC";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = "#D6DAE3";
+                    e.currentTarget.style.borderColor = "#E2E8F0";
                     e.currentTarget.style.background = "#FFFFFF";
                   }}
                 >
@@ -361,17 +361,17 @@ export default function Navbar() {
                     color: "#FFFFFF",
                     cursor: "pointer",
                     border: "none",
-                    background: "#72222B",
-                    boxShadow: "0 2px 8px rgba(114, 34, 43, 0.2)",
+                    background: "#192841",
+                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.2)",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#5B1B22";
+                    e.currentTarget.style.background = "#111C2E";
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#72222B";
+                    e.currentTarget.style.background = "#192841";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -396,8 +396,8 @@ export default function Navbar() {
                 left: 0,
                 borderRadius: 20,
                 background: "rgba(255, 255, 255, 0.98)",
-                border: "1px solid #D6DAE3",
-                boxShadow: "0 12px 32px rgba(85, 0, 0, 0.12)",
+                border: "1px solid #E2E8F0",
+                boxShadow: "0 12px 32px rgba(25, 40, 65, 0.12)",
                 backdropFilter: "blur(20px)",
                 padding: 12,
                 display: "flex",
@@ -424,8 +424,8 @@ export default function Navbar() {
                     cursor: "pointer",
                     textDecoration: "none",
                     display: "block",
-                    background: activeTab === item ? "#72222B" : "transparent",
-                    color: activeTab === item ? "#FFFFFF" : "#5A6B85",
+                    background: activeTab === item ? "#192841" : "transparent",
+                    color: activeTab === item ? "#FFFFFF" : "#64748B",
                     transition: "background 0.2s ease",
                   }}
                 >
@@ -436,7 +436,7 @@ export default function Navbar() {
               <div
                 style={{
                   height: "1px",
-                  background: "#D6DAE3",
+                  background: "#E2E8F0",
                   margin: "8px 0",
                 }}
               />
@@ -449,7 +449,7 @@ export default function Navbar() {
                         width: 32,
                         height: 32,
                         borderRadius: "50%",
-                        background: "#72222B",
+                        background: "#192841",
                         color: "#FFFFFF",
                         display: "flex",
                         alignItems: "center",
@@ -464,7 +464,7 @@ export default function Navbar() {
                       <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>
                         {user.name || "Explorer"}
                       </span>
-                      <span style={{ fontSize: 11, color: "#5A6B85" }}>
+                      <span style={{ fontSize: 11, color: "#64748B" }}>
                         {user.email}
                       </span>
                     </div>
@@ -506,7 +506,7 @@ export default function Navbar() {
                       fontSize: "13px",
                       fontWeight: 600,
                       color: "#0F172A",
-                      border: "1px solid #D6DAE3",
+                      border: "1px solid #E2E8F0",
                       background: "#FFFFFF",
                       cursor: "pointer",
                     }}
@@ -527,7 +527,7 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: "#FFFFFF",
                       border: "none",
-                      background: "#72222B",
+                      background: "#192841",
                       cursor: "pointer",
                     }}
                   >
