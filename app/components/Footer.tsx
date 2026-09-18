@@ -25,7 +25,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full bg-[#000000] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
+    <footer className="relative w-full bg-[#192841] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
       {/* Top Section: Logo/Description + Links Grid */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         
