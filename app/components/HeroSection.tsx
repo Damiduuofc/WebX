@@ -283,7 +283,7 @@ export default function HeroSection({
           y: [0, -15, 0],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -top-16 left-[2%] h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full bg-gradient-to-br from-[#72222B]/10 via-[#72222B]/5 to-transparent blur-[80px] sm:blur-[120px] z-0"
+        className="pointer-events-none absolute -top-16 left-[2%] h-[300px] w-[300px] sm:h-[480px] sm:w-[480px] rounded-full bg-gradient-to-br from-[#192841]/10 via-[#192841]/5 to-transparent blur-[80px] sm:blur-[120px] z-0"
       />
       <motion.div
         animate={{
@@ -292,7 +292,7 @@ export default function HeroSection({
           y: [0, 20, 0],
         }}
         transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -bottom-20 right-[2%] h-[340px] w-[340px] sm:h-[580px] sm:w-[580px] rounded-full bg-gradient-to-tl from-slate-400/10 via-[#72222B]/5 to-transparent blur-[90px] sm:blur-[140px] z-0"
+        className="pointer-events-none absolute -bottom-20 right-[2%] h-[340px] w-[340px] sm:h-[580px] sm:w-[580px] rounded-full bg-gradient-to-tl from-slate-400/10 via-[#192841]/5 to-transparent blur-[90px] sm:blur-[140px] z-0"
       />
 
       {/* Translucent Overlays for High Contrast Readability */}
@@ -319,14 +319,14 @@ export default function HeroSection({
               </span>
 
               <div className="flex items-center gap-2.5 sm:gap-3 my-1 sm:my-1.5">
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#72222B]/30" />
-                <span className="text-[#5A6B85] text-[11px] sm:text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em]">
+                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#192841]/30" />
+                <span className="text-[#64748B] text-[11px] sm:text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em]">
                   EVERY JOURNEY
                 </span>
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#72222B]/30" />
+                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#192841]/30" />
               </div>
 
-              <span className="text-[#72222B] block leading-tight">
+              <span className="text-[#192841] block leading-tight">
                 UNIVA{" "}
                 <span className="italic font-black text-2xl sm:text-4xl md:text-[46px] lg:text-[46px] xl:text-[48px]">
                    NETWORK
@@ -335,7 +335,7 @@ export default function HeroSection({
             </h1>
 
             {/* Narrative Description */}
-            <p className="text-[#5A6B85] text-xs sm:text-sm md:text-base leading-relaxed max-w-[580px] mb-6 sm:mb-8 font-normal">
+            <p className="text-[#64748B] text-xs sm:text-sm md:text-base leading-relaxed max-w-[580px] mb-6 sm:mb-8 font-normal">
               Connecting autonomous buses, elevated magnetic SkyRail, and smart-road vehicle pods into one seamless journey. Built for students, workers, tourists, and daily commuters — simple, accessible, and synchronized in real time.
             </p>
 
@@ -347,14 +347,14 @@ export default function HeroSection({
               <button
                 type="button"
                 onClick={handlePrimaryCTA}
-                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(114,34,43,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(114,34,43,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#72222B]/20 cursor-pointer overflow-hidden min-h-[48px]"
+                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.25)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.35)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#192841]/20 cursor-pointer overflow-hidden min-h-[48px]"
               >
                 {/* Dynamic Light Sweep Highlight on hover */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
 
                 {/* Luminous Pulsing Badge */}
                 <span className="relative flex h-2.5 w-2.5 sm:h-3 sm:w-3 shrink-0">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#2E7D5B] opacity-75" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22C55E] opacity-75" />
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-3 sm:w-3 bg-[#22C55E]" />
                 </span>
 
@@ -371,15 +371,15 @@ export default function HeroSection({
                 onClick={handleVoiceCTA}
                 className={`relative group w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer min-h-[48px] ${
                   isVoiceListening
-                    ? "bg-[#72222B] text-white ring-4 ring-[#72222B]/20 scale-[1.02] shadow-md"
-                    : "bg-white hover:bg-[#F7F8FA] text-[#0F172A] border border-[#D6DAE3] hover:border-[#72222B] shadow-xs hover:-translate-y-0.5 active:scale-[0.99]"
+                    ? "bg-[#192841] text-white ring-4 ring-[#192841]/20 scale-[1.02] shadow-md"
+                    : "bg-white hover:bg-[#F7F9FC] text-[#0F172A] border border-[#E2E8F0] hover:border-[#192841] shadow-xs hover:-translate-y-0.5 active:scale-[0.99]"
                 }`}
               >
                 <div
                   className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
                     isVoiceListening
-                      ? "bg-white text-[#72222B]"
-                      : "bg-[#72222B]/10 text-[#72222B] group-hover:bg-[#72222B] group-hover:text-white"
+                      ? "bg-white text-[#192841]"
+                      : "bg-[#192841]/10 text-[#192841] group-hover:bg-[#192841] group-hover:text-white"
                   }`}
                 >
                   <Mic size={15} className={isVoiceListening ? "animate-pulse" : ""} />
@@ -394,13 +394,13 @@ export default function HeroSection({
             {/* ========================================================================= */}
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full max-w-[620px] bg-white rounded-2xl border border-[#D6DAE3] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2"
+              className="w-full max-w-[620px] bg-white rounded-2xl border border-[#E2E8F0] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2"
             >
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                <div className="flex-1 flex items-center gap-2.5 px-3 py-2 bg-[#F7F8FA] rounded-xl border border-[#D6DAE3]/60">
-                  <Search size={18} className="text-[#72222B] shrink-0" />
+                <div className="flex-1 flex items-center gap-2.5 px-3 py-2 bg-[#F7F9FC] rounded-xl border border-[#E2E8F0]/60">
+                  <Search size={18} className="text-[#192841] shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <span className="block text-[10px] font-bold text-[#5A6B85] uppercase tracking-wider">
+                    <span className="block text-[10px] font-bold text-[#64748B] uppercase tracking-wider">
                       Where do you want to go?
                     </span>
                     <input
@@ -408,14 +408,14 @@ export default function HeroSection({
                       value={searchTo}
                       onChange={(e) => setSearchTo?.(e.target.value)}
                       placeholder="Search places, stations, universities..."
-                      className="w-full text-base sm:text-sm font-semibold text-[#0F172A] bg-transparent focus:outline-none placeholder:text-[#5A6B85]/60 truncate"
+                      className="w-full text-base sm:text-sm font-semibold text-[#0F172A] bg-transparent focus:outline-none placeholder:text-[#64748B]/60 truncate"
                     />
                   </div>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
                 >
                   <span>Find Routes</span>
                   <ArrowRight size={14} />
@@ -423,15 +423,15 @@ export default function HeroSection({
               </div>
 
               {/* Sub-bar: Departure Point & Quick Filters */}
-              <div className="flex flex-wrap items-center justify-between gap-2 px-1 pt-1.5 border-t border-[#D6DAE3]/50 text-[11px] text-[#5A6B85]">
+              <div className="flex flex-wrap items-center justify-between gap-2 px-1 pt-1.5 border-t border-[#E2E8F0]/50 text-[11px] text-[#64748B]">
                 <div className="flex items-center gap-1.5 truncate">
-                  <MapPin size={12} className="text-[#72222B] shrink-0" />
+                  <MapPin size={12} className="text-[#192841] shrink-0" />
                   <span>From:</span>
                   <input
                     type="text"
                     value={searchFrom}
                     onChange={(e) => setSearchFrom?.(e.target.value)}
-                    className="font-bold text-[#0F172A] bg-transparent focus:outline-none border-b border-dashed border-[#72222B]/40 max-w-[130px] sm:max-w-[170px] truncate"
+                    className="font-bold text-[#0F172A] bg-transparent focus:outline-none border-b border-dashed border-[#192841]/40 max-w-[130px] sm:max-w-[170px] truncate"
                   />
                 </div>
 
@@ -467,34 +467,34 @@ export default function HeroSection({
 
             {/* Quick Commuter Action Links: Pass Signup & Login */}
             {onOpenAuth && (
-              <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-[#5A6B85] mb-4">
-                <span>New rider?</span>
+              <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-[#64748B] mb-4">
+                <span>New passenger?</span>
                 <button
                   type="button"
                   onClick={() => onOpenAuth("signup")}
-                  className="text-[#72222B] font-bold underline hover:text-[#5B1B22] cursor-pointer"
+                  className="text-[#192841] font-bold underline hover:text-[#111C2E] cursor-pointer"
                 >
-                  Sign Up for Rider Pass
+                  Create Passenger Account
                 </button>
                 <span>•</span>
                 <button
                   type="button"
                   onClick={() => onOpenAuth("login")}
-                  className="text-[#72222B] font-bold hover:underline cursor-pointer"
+                  className="text-[#192841] font-bold hover:underline cursor-pointer"
                 >
-                  Log in to TapPass
+                  Log In
                 </button>
               </div>
             )}
 
             {/* Accessibility & High Reliability Trust Badges */}
-            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-semibold text-[#5A6B85] pt-1">
+            <div className="flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-semibold text-[#64748B] pt-1">
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 size={14} className="text-[#2E7D5B]" />
+                <CheckCircle2 size={14} className="text-[#22C55E]" />
                 <span>100% Step-Free Accessible</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Radio size={13} className="text-[#72222B]" />
+                <Radio size={13} className="text-[#192841]" />
                 <span>Live GPS Telemetry</span>
               </div>
               <div className="flex items-center gap-1.5">

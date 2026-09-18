@@ -3,16 +3,18 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import AuthModal from "./AuthModal";
+import { useAuth } from "../context/auth";
 
-const navItems = ["Home", "Live Route"];
+const navItems = ["Home", "Plan Journey", "Live Route"];
 
 const getHref = (item: string) => {
   switch (item) {
     case "Home":
       return "/";
+    case "Plan Journey":
+      return "/preferences";
     case "Live Route":
-      return "/liveroute";
+      return "/live-journey";
     default:
       return "/";
   }
@@ -20,46 +22,18 @@ const getHref = (item: string) => {
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user, isAuthenticated, logout } = useAuth();
   const [sliderStyle, setSliderStyle] = useState<React.CSSProperties>({});
   const [menuOpen, setMenuOpen] = useState(false);
-  const [authModal, setAuthModal] = useState<"login" | "signup" | null>(null);
-  const [user, setUser] = useState<{ name: string; email: string } | null>(null);
-
-  useEffect(() => {
-    const checkUser = () => {
-      try {
-        const stored = localStorage.getItem("univa_user");
-        if (stored) {
-          setUser(JSON.parse(stored));
-        } else {
-          setUser(null);
-        }
-      } catch {
-        setUser(null);
-      }
-    };
-
-    checkUser();
-    window.addEventListener("univa_auth_change", checkUser);
-    window.addEventListener("storage", checkUser);
-    return () => {
-      window.removeEventListener("univa_auth_change", checkUser);
-      window.removeEventListener("storage", checkUser);
-    };
-  }, []);
-
-  const handleLogout = () => {
-    try {
-      localStorage.removeItem("univa_user");
-      window.dispatchEvent(new Event("univa_auth_change"));
-      setUser(null);
-    } catch (err) {
-      console.error(err);
-    }
-  };
 
   const activeTab =
-    pathname === "/smartmetro" || pathname.startsWith("/smartmetro") || pathname === "/liveroute" || pathname.startsWith("/liveroute")
+    pathname.startsWith("/preferences") || pathname.startsWith("/journey-plan")
+      ? "Plan Journey"
+      : pathname.startsWith("/live-journey") ||
+        pathname.startsWith("/liveroute") ||
+        pathname.startsWith("/smartmetro") ||
+        pathname.startsWith("/complete") ||
+        pathname.startsWith("/feedback")
       ? "Live Route"
       : "Home";
 
@@ -118,7 +92,7 @@ export default function Navbar() {
         .nv-tab:focus-visible,
         .nv-auth-btn:focus-visible,
         .nv-burger:focus-visible {
-          outline: 2px solid rgba(114, 34, 43, 0.35);
+          outline: 2px solid rgba(25, 40, 65, 0.35);
           outline-offset: 2px;
         }
         @media (prefers-reduced-motion: reduce) {
@@ -154,9 +128,9 @@ export default function Navbar() {
             margin: "0 auto",
             padding: "10px 18px",
             borderRadius: "999px",
-            background: "rgba(255, 255, 255, 0.92)",
+            background: "rgba(255, 255, 255, 0.94)",
             border: "1px solid rgba(226, 232, 240, 0.9)",
-            boxShadow: "0 4px 20px rgba(15, 23, 42, 0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
+            boxShadow: "0 4px 20px rgba(25, 40, 65, 0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",
             position: "relative",
@@ -197,12 +171,12 @@ export default function Navbar() {
               gap: 2,
               padding: 3,
               borderRadius: 999,
-              background: "rgba(114, 34, 43, 0.05)",
+              background: "rgba(25, 40, 65, 0.05)",
               border: "1px solid rgba(226, 232, 240, 0.8)",
               position: "relative",
             }}
           >
-            {/* Animated solid crimson slider */}
+            {/* Animated solid Deep Navy slider */}
             <div
               aria-hidden="true"
               className="nv-slider"
@@ -211,9 +185,10 @@ export default function Navbar() {
                 top: 3,
                 bottom: 3,
                 borderRadius: 999,
-                background: "#72222B",
-                boxShadow: "0 2px 10px rgba(114, 34, 43, 0.35)",
-                transition: "left 0.28s cubic-bezier(0.34,1.56,0.64,1), width 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease",
+                background: "#192841",
+                boxShadow: "0 2px 10px rgba(25, 40, 65, 0.35)",
+                transition:
+                  "left 0.28s cubic-bezier(0.34,1.56,0.64,1), width 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease",
                 pointerEvents: "none",
                 zIndex: 0,
                 ...sliderStyle,
@@ -255,7 +230,7 @@ export default function Navbar() {
                     transition: "color 0.2s ease",
                   }}
                   onMouseEnter={(e) => {
-                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#72222B";
+                    if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#192841";
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive) (e.currentTarget as HTMLAnchorElement).style.color = "#64748B";
@@ -272,31 +247,31 @@ export default function Navbar() {
             className="nv-desktop-actions"
             style={{ display: "flex", alignItems: "center", gap: 10, flexShrink: 0 }}
           >
-            {user ? (
+            {isAuthenticated && user ? (
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <div
                   style={{
                     width: 32,
                     height: 32,
                     borderRadius: "50%",
-                    background: "#72222B",
+                    background: "#192841",
                     color: "#FFFFFF",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     fontSize: 12,
                     fontWeight: 700,
-                    boxShadow: "0 2px 8px rgba(114, 34, 43, 0.25)",
+                    boxShadow: "0 2px 8px rgba(25, 40, 65, 0.25)",
                   }}
                 >
-                  {user.name.charAt(0).toUpperCase()}
+                  {(user.name || "P").charAt(0).toUpperCase()}
                 </div>
                 <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>
                   {user.name}
                 </span>
                 <button
                   type="button"
-                  onClick={handleLogout}
+                  onClick={() => logout()}
                   style={{
                     padding: "4px 8px",
                     borderRadius: "6px",
@@ -313,9 +288,8 @@ export default function Navbar() {
               </div>
             ) : (
               <>
-                <button
-                  type="button"
-                  onClick={() => setAuthModal("login")}
+                <Link
+                  href="/login"
                   className="nv-auth-btn"
                   style={{
                     padding: "7px 16px",
@@ -328,10 +302,12 @@ export default function Navbar() {
                     background: "#FFFFFF",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
+                    textDecoration: "none",
+                    display: "inline-block",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = "#72222B";
-                    e.currentTarget.style.background = "#F7F8FA";
+                    e.currentTarget.style.borderColor = "#192841";
+                    e.currentTarget.style.background = "#F7F9FC";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.borderColor = "#E2E8F0";
@@ -339,11 +315,10 @@ export default function Navbar() {
                   }}
                 >
                   Log In
-                </button>
+                </Link>
 
-                <button
-                  type="button"
-                  onClick={() => setAuthModal("signup")}
+                <Link
+                  href="/signup"
                   className="nv-auth-btn"
                   style={{
                     padding: "7px 18px",
@@ -353,22 +328,24 @@ export default function Navbar() {
                     color: "#FFFFFF",
                     cursor: "pointer",
                     border: "none",
-                    background: "#72222B",
-                    boxShadow: "0 2px 10px rgba(114, 34, 43, 0.3)",
+                    background: "#192841",
+                    boxShadow: "0 2px 10px rgba(25, 40, 65, 0.3)",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
+                    textDecoration: "none",
+                    display: "inline-block",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#5B1B22";
+                    e.currentTarget.style.background = "#111C2E";
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#72222B";
+                    e.currentTarget.style.background = "#192841";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
-                  Sign Up
-                </button>
+                  Create Account
+                </Link>
               </>
             )}
           </div>
@@ -416,7 +393,7 @@ export default function Navbar() {
                     cursor: "pointer",
                     textDecoration: "none",
                     display: "block",
-                    background: activeTab === item ? "#72222B" : "transparent",
+                    background: activeTab === item ? "#192841" : "transparent",
                     color: activeTab === item ? "#FFFFFF" : "#64748B",
                     transition: "background 0.2s ease",
                   }}
@@ -433,7 +410,7 @@ export default function Navbar() {
                 }}
               />
 
-              {user ? (
+              {isAuthenticated && user ? (
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "6px 8px" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                     <div
@@ -441,7 +418,7 @@ export default function Navbar() {
                         width: 32,
                         height: 32,
                         borderRadius: "50%",
-                        background: "#72222B",
+                        background: "#192841",
                         color: "#FFFFFF",
                         display: "flex",
                         alignItems: "center",
@@ -450,11 +427,11 @@ export default function Navbar() {
                         fontWeight: 700,
                       }}
                     >
-                      {(user.name || user.email || "U").slice(0, 1).toUpperCase()}
+                      {(user.name || user.email || "P").slice(0, 1).toUpperCase()}
                     </div>
                     <div style={{ display: "flex", flexDirection: "column" }}>
                       <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>
-                        {user.name || "Explorer"}
+                        {user.name}
                       </span>
                       <span style={{ fontSize: 11, color: "#64748B" }}>
                         {user.email}
@@ -464,7 +441,7 @@ export default function Navbar() {
                   <button
                     type="button"
                     onClick={() => {
-                      handleLogout();
+                      logout();
                       setMenuOpen(false);
                     }}
                     style={{
@@ -485,12 +462,9 @@ export default function Navbar() {
                 </div>
               ) : (
                 <div style={{ display: "flex", gap: "8px", padding: "4px" }}>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthModal("login");
-                      setMenuOpen(false);
-                    }}
+                  <Link
+                    href="/login"
+                    onClick={() => setMenuOpen(false)}
                     style={{
                       flex: 1,
                       padding: "9px 12px",
@@ -501,16 +475,15 @@ export default function Navbar() {
                       border: "1px solid #E2E8F0",
                       background: "#FFFFFF",
                       cursor: "pointer",
+                      textAlign: "center",
+                      textDecoration: "none",
                     }}
                   >
                     Log In
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthModal("signup");
-                      setMenuOpen(false);
-                    }}
+                  </Link>
+                  <Link
+                    href="/signup"
+                    onClick={() => setMenuOpen(false)}
                     style={{
                       flex: 1,
                       padding: "9px 12px",
@@ -519,27 +492,20 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: "#FFFFFF",
                       border: "none",
-                      background: "#72222B",
+                      background: "#192841",
                       cursor: "pointer",
+                      textAlign: "center",
+                      textDecoration: "none",
                     }}
                   >
-                    Sign Up
-                  </button>
+                    Create Account
+                  </Link>
                 </div>
               )}
             </div>
           )}
         </nav>
       </div>
-
-      {/* Auth Modal */}
-      {authModal && (
-        <AuthModal
-          mode={authModal}
-          onClose={() => setAuthModal(null)}
-          onSwitchMode={(mode) => setAuthModal(mode)}
-        />
-      )}
     </>
   );
 }
@@ -557,8 +523,8 @@ function BurgerButton({ open, onToggle }: { open: boolean; onToggle: () => void 
         width: 36,
         height: 36,
         borderRadius: "50%",
-        border: "1px solid #D6DAE3",
-        background: "rgba(114, 34, 43, 0.04)",
+        border: "1px solid #E2E8F0",
+        background: "rgba(25, 40, 65, 0.04)",
         cursor: "pointer",
         alignItems: "center",
         justifyContent: "center",
@@ -576,7 +542,7 @@ function BurgerButton({ open, onToggle }: { open: boolean; onToggle: () => void 
               width: 16,
               height: 2,
               borderRadius: 2,
-              background: "#72222B",
+              background: "#192841",
               transformOrigin: "center",
               transition: "transform 0.2s ease, opacity 0.2s ease, top 0.2s ease",
               transform: open
