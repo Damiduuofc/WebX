@@ -234,7 +234,7 @@ export default function LiveRouteMap({
           type="button"
           onClick={() => handleZoom(0.25)}
           title="Zoom In"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#72222B] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
         >
           <ZoomIn size={16} />
         </button>
@@ -242,7 +242,7 @@ export default function LiveRouteMap({
           type="button"
           onClick={() => handleZoom(-0.25)}
           title="Zoom Out"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#72222B] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
         >
           <ZoomOut size={16} />
         </button>
@@ -250,7 +250,7 @@ export default function LiveRouteMap({
           type="button"
           onClick={handleResetView}
           title="Reset View"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#72222B] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
         >
           <Compass size={16} />
         </button>
@@ -272,7 +272,7 @@ export default function LiveRouteMap({
           type="button"
           onClick={toggleFullscreen}
           title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Map"}
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#72222B] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
         >
           {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
         </button>
@@ -308,14 +308,14 @@ export default function LiveRouteMap({
 
           {/* Route Polyline Multi-Stop Neon Gradient */}
           <linearGradient id="routeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#8F2D38" />
-            <stop offset="50%" stopColor="#72222B" />
+            <stop offset="0%" stopColor="#0284C7" />
+            <stop offset="50%" stopColor="#192841" />
             <stop offset="100%" stopColor="#22C55E" />
           </linearGradient>
 
           {/* Bus Icon Marker Filter */}
           <filter id="busGlow" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#72222B" floodOpacity="0.6" />
+            <feDropShadow dx="0" dy="2" stdDeviation="4" floodColor="#192841" floodOpacity="0.6" />
           </filter>
 
           <filter id="stopGlow" x="-20%" y="-20%" width="140%" height="140%">
@@ -412,7 +412,7 @@ export default function LiveRouteMap({
         <path
           d={routePathD}
           fill="none"
-          stroke="#72222B"
+          stroke="#192841"
           strokeWidth="12"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -491,8 +491,8 @@ export default function LiveRouteMap({
                 cx={stop.x}
                 cy={stop.y}
                 r={isTerminus ? 9 : 6.5}
-                fill={isTerminus ? "#72222B" : isSelected ? "#FFFFFF" : "#72222B"}
-                stroke={isTerminus ? "#FFFFFF" : isSelected ? "#72222B" : "#22C55E"}
+                fill={isTerminus ? "#192841" : isSelected ? "#FFFFFF" : "#192841"}
+                stroke={isTerminus ? "#FFFFFF" : isSelected ? "#192841" : "#22C55E"}
                 strokeWidth={isTerminus ? 3 : 2}
                 filter="url(#stopGlow)"
                 className="transition-transform group-hover:scale-125"
@@ -503,7 +503,7 @@ export default function LiveRouteMap({
                 cx={stop.x}
                 cy={stop.y}
                 r={isTerminus ? 3.5 : 2.5}
-                fill={isTerminus ? "#FFFFFF" : isSelected ? "#72222B" : "#FFFFFF"}
+                fill={isTerminus ? "#FFFFFF" : isSelected ? "#192841" : "#FFFFFF"}
               />
 
               {/* Station Label Badge */}
@@ -514,8 +514,8 @@ export default function LiveRouteMap({
                   width={stop.name.length * 6.6 + 10}
                   height="16"
                   rx="4"
-                  fill={isTerminus ? "rgba(114, 34, 43, 0.95)" : isSelected ? "#72222B" : "rgba(15, 20, 28, 0.85)"}
-                  stroke={isSelected ? "#72222B" : "rgba(255,255,255,0.15)"}
+                  fill={isTerminus ? "rgba(25, 40, 65, 0.95)" : isSelected ? "#192841" : "rgba(15, 20, 28, 0.85)"}
+                  stroke={isSelected ? "#192841" : "rgba(255,255,255,0.15)"}
                   strokeWidth="1"
                 />
                 <text
@@ -573,8 +573,8 @@ export default function LiveRouteMap({
               {/* Bus Outer Shield */}
               <circle
                 r={isSelected ? "16" : "13"}
-                fill={isSelected ? "#842833" : "#72222B"}
-                stroke={isSelected ? "#FFFFFF" : "#842833"}
+                fill={isSelected ? "#223454" : "#192841"}
+                stroke={isSelected ? "#FFFFFF" : "#223454"}
                 strokeWidth="2.5"
                 filter="url(#busGlow)"
               />
@@ -599,8 +599,8 @@ export default function LiveRouteMap({
                   width="68"
                   height="22"
                   rx="6"
-                  fill={isSelected ? "#72222B" : "rgba(15, 20, 28, 0.92)"}
-                  stroke={isSelected ? "#842833" : "rgba(255,255,255,0.2)"}
+                  fill={isSelected ? "#192841" : "rgba(15, 20, 28, 0.92)"}
+                  stroke={isSelected ? "#223454" : "rgba(255,255,255,0.2)"}
                   strokeWidth="1.5"
                 />
                 <text
@@ -640,7 +640,7 @@ export default function LiveRouteMap({
           >
             <div className="flex items-center justify-between pb-3 border-b border-white/10">
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#72222B] flex items-center justify-center text-white shadow-md">
+                <div className="w-9 h-9 rounded-xl bg-[#192841] flex items-center justify-center text-white shadow-md border border-white/10">
                   <Bus size={18} />
                 </div>
                 <div>
@@ -652,7 +652,7 @@ export default function LiveRouteMap({
                       {selectedBus.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#D6DAE3]">
+                  <p className="text-[11px] text-[#94A3B8]">
                     {selectedBus.driver} • SmartFleet Grid
                   </p>
                 </div>
@@ -702,7 +702,7 @@ export default function LiveRouteMap({
                   {selectedBus.nextStopName}
                 </strong>
               </div>
-              <div className="flex items-center justify-between text-[11px] text-[#D6DAE3]">
+              <div className="flex items-center justify-between text-[11px] text-[#94A3B8]">
                 <span className="flex items-center gap-1">
                   <ShieldCheck size={12} className="text-[#22C55E]" />
                   <span>Step-Free Ramp Active</span>
@@ -718,7 +718,7 @@ export default function LiveRouteMap({
               <button
                 type="button"
                 onClick={() => centerOnBus(selectedBus)}
-                className="flex-1 py-2 px-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
               >
                 <Navigation size={13} />
                 <span>Center on Bus</span>
@@ -758,7 +758,7 @@ export default function LiveRouteMap({
 
             <div className="py-2.5 space-y-1.5 text-xs text-white/80">
               {selectedStop.landmark && (
-                <p className="text-[11px] text-[#D6DAE3]">
+                <p className="text-[11px] text-[#94A3B8]">
                   📍 {selectedStop.landmark}
                 </p>
               )}
@@ -803,7 +803,7 @@ export default function LiveRouteMap({
       {/* Bottom Map Legend */}
       <div className="absolute bottom-4 right-4 z-10 hidden md:flex items-center gap-3 bg-[#0F141C]/90 backdrop-blur-md border border-white/10 px-3 py-1.5 rounded-full text-[10px] text-white/70">
         <div className="flex items-center gap-1.5">
-          <span className="w-2 h-2 rounded-full bg-[#72222B] border border-white/50" />
+          <span className="w-2 h-2 rounded-full bg-[#192841] border border-white/50" />
           <span>Active Bus</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -811,7 +811,7 @@ export default function LiveRouteMap({
           <span>Transit Stop</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-3 h-1 rounded-full bg-gradient-to-r from-[#72222B] to-[#22C55E]" />
+          <span className="w-3 h-1 rounded-full bg-gradient-to-r from-[#192841] to-[#22C55E]" />
           <span>Corridor Line</span>
         </div>
       </div>

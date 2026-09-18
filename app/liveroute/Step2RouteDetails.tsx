@@ -62,7 +62,7 @@ export default function Step2RouteDetails({
               <h2 className="text-base font-bold text-[#0F172A] tracking-tight">
                 Route Details
               </h2>
-              <span className="text-[11px] font-bold text-[#72222B] bg-[#72222B]/10 px-2.5 py-0.5 rounded-full border border-[#72222B]/20">
+              <span className="text-[11px] font-bold text-[#192841] bg-[#192841]/10 px-2.5 py-0.5 rounded-full border border-[#192841]/20">
                 {activePlan.title}
               </span>
             </div>
@@ -79,7 +79,7 @@ export default function Step2RouteDetails({
             onClick={() => setViewMode("combined")}
             className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               viewMode === "combined"
-                ? "bg-[#72222B] text-white shadow-xs font-bold"
+                ? "bg-[#192841] text-white shadow-xs font-bold"
                 : "text-[#5A6B85] hover:text-[#0F172A]"
             }`}
           >
@@ -91,7 +91,7 @@ export default function Step2RouteDetails({
             onClick={() => setViewMode("map")}
             className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               viewMode === "map"
-                ? "bg-[#72222B] text-white shadow-xs font-bold"
+                ? "bg-[#192841] text-white shadow-xs font-bold"
                 : "text-[#5A6B85] hover:text-[#0F172A]"
             }`}
           >
@@ -103,7 +103,7 @@ export default function Step2RouteDetails({
             onClick={() => setViewMode("timeline")}
             className={`px-2.5 py-1 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
               viewMode === "timeline"
-                ? "bg-[#72222B] text-white shadow-xs font-bold"
+                ? "bg-[#192841] text-white shadow-xs font-bold"
                 : "text-[#5A6B85] hover:text-[#0F172A]"
             }`}
           >
@@ -119,7 +119,7 @@ export default function Step2RouteDetails({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="bg-white p-3.5 rounded-2xl border border-[#D6DAE3] text-center space-y-0.5 shadow-2xs">
           <span className="text-xs text-[#5A6B85] font-semibold block">Price</span>
-          <div className="text-xl font-extrabold text-[#72222B]">LKR {activePlan.fareLkr}</div>
+          <div className="text-xl font-extrabold text-[#192841]">LKR {activePlan.fareLkr}</div>
           <span className="text-xs text-[#5A6B85]">{activePlan.farePoints} pts</span>
         </div>
 
@@ -422,7 +422,7 @@ export default function Step2RouteDetails({
         <button
           type="button"
           onClick={() => onStartJourney(activePlan)}
-          className="relative group flex-1 py-4 rounded-2xl bg-[#72222B] hover:bg-[#5B1B22] text-white text-sm sm:text-base font-bold transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(114,34,43,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(114,34,43,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#72222B]/20 overflow-hidden"
+          className="relative group flex-1 py-4 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white text-sm sm:text-base font-bold transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#192841]/20 overflow-hidden"
         >
           {/* Dynamic Light Sweep Highlight on hover */}
           <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />

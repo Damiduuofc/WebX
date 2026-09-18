@@ -36,7 +36,7 @@ export default function Step5ArrivalFeedback({
       
       {/* Celebratory Hero Card */}
       <div className="text-center py-6 px-4 bg-[#F7F8FA] rounded-2xl border border-[#D6DAE3] space-y-2 shadow-xs">
-        <span className="text-xs text-[#72222B] font-bold uppercase tracking-wider block">
+        <span className="text-xs text-[#192841] font-bold uppercase tracking-wider block">
           Journey Completed
         </span>
         <h2 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
@@ -106,7 +106,7 @@ export default function Step5ArrivalFeedback({
           value={feedbackText}
           onChange={(e) => setFeedbackText(e.target.value)}
           placeholder="Tell us what we could improve (optional)..."
-          className="w-full text-xs p-3.5 rounded-xl border border-[#D6DAE3] focus:border-[#72222B] focus:ring-2 focus:ring-[#72222B]/10 focus:outline-none bg-[#F7F8FA] placeholder:text-[#5A6B85]/60 text-[#0F172A] font-medium"
+          className="w-full text-xs p-3.5 rounded-xl border border-[#D6DAE3] focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/10 focus:outline-none bg-[#F7F8FA] placeholder:text-[#5A6B85]/60 text-[#0F172A] font-medium"
         />
       </div>
 
@@ -123,7 +123,7 @@ export default function Step5ArrivalFeedback({
         <button
           type="button"
           onClick={handleDoneClick}
-          className="relative group flex-1 w-full py-4 rounded-2xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(114,34,43,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(114,34,43,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#72222B]/20 overflow-hidden"
+          className="relative group flex-1 w-full py-4 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#192841]/20 overflow-hidden"
         >
           {/* Dynamic Light Sweep Highlight on hover */}
           <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />

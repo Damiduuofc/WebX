@@ -86,6 +86,15 @@ export default function Navbar() {
     }
   };
 
+  // Dedicated full-screen auth screens provide their own navigation and logo
+  if (
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/register"
+  ) {
+    return null;
+  }
+
   return (
     <>
       <style>{`

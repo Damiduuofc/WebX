@@ -22,33 +22,33 @@ export default function Button({
 
   const isDisabled = props.disabled;
 
-  let bg = "#72222B";
+  let bg = "#192841";
   let color = "#FFFFFF";
   let border = "none";
-  let shadow = "0 2px 8px rgba(114, 34, 43, 0.18)";
+  let shadow = "0 2px 8px rgba(25, 40, 65, 0.18)";
 
   if (isDisabled) {
     bg = "#9CA3AF";
     shadow = "none";
   } else if (variant === "highlight") {
-    bg = hovered ? "linear-gradient(135deg, #842833 0%, #72222B 100%)" : "linear-gradient(135deg, #72222B 0%, #5B1B22 100%)";
+    bg = hovered ? "linear-gradient(135deg, #223454 0%, #192841 100%)" : "linear-gradient(135deg, #192841 0%, #111C2E 100%)";
     shadow = hovered
-      ? "0 10px 24px rgba(114, 34, 43, 0.35)"
-      : "0 6px 18px rgba(114, 34, 43, 0.25)";
+      ? "0 10px 24px rgba(25, 40, 65, 0.35)"
+      : "0 6px 18px rgba(25, 40, 65, 0.25)";
     border = "1px solid rgba(255, 255, 255, 0.2)";
   } else if (variant === "secondary" || variant === "glass") {
     bg = hovered ? "#FFFFFF" : "rgba(255, 255, 255, 0.95)";
-    color = "#72222B";
-    border = hovered ? "1.5px solid #72222B" : "1.5px solid rgba(114, 34, 43, 0.2)";
-    shadow = hovered ? "0 6px 16px rgba(114, 34, 43, 0.1)" : "0 2px 8px rgba(114, 34, 43, 0.05)";
+    color = "#192841";
+    border = hovered ? "1.5px solid #192841" : "1.5px solid rgba(25, 40, 65, 0.2)";
+    shadow = hovered ? "0 6px 16px rgba(25, 40, 65, 0.1)" : "0 2px 8px rgba(25, 40, 65, 0.05)";
   } else if (variant === "outline") {
-    bg = hovered ? "rgba(114, 34, 43, 0.05)" : "transparent";
-    color = "#72222B";
-    border = "1.5px solid #72222B";
+    bg = hovered ? "rgba(25, 40, 65, 0.05)" : "transparent";
+    color = "#192841";
+    border = "1.5px solid #192841";
     shadow = "none";
   } else {
     // primary
-    bg = hovered ? "#5B1B22" : "#72222B";
+    bg = hovered ? "#111C2E" : "#192841";
   }
 
   const buttonStyle: React.CSSProperties = {

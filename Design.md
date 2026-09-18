@@ -1,6 +1,6 @@
-# NEXA — Design System
+# Univa — Design System
 
-A modern, minimalist visual language for the NEXA journey-planning app.
+A modern, minimalist visual language for the Univa journey-planning app.
 
 ---
 
@@ -8,7 +8,7 @@ A modern, minimalist visual language for the NEXA journey-planning app.
 
 | Role | Color | Hex | Usage |
 |---|---|---|---|
-| Primary | Architectural Crimson | `#72222B` | Primary buttons, active states, route accents, focus rings |
+| Primary | Deep Navy | `#192841` | Primary buttons, active states, route accents, focus rings |
 | Base Dark | Slate Charcoal / Black | `#0F172A` / `#000000` | Headings, primary text on light backgrounds, high-contrast elements |
 | Base Light | White | `#FFFFFF` | Backgrounds, cards, elevated surfaces |
 
@@ -16,15 +16,15 @@ A modern, minimalist visual language for the NEXA journey-planning app.
 
 | Name | Hex | Usage |
 |---|---|---|
-| Crimson 90% | `#5B1B22` | Hover state on primary buttons |
-| Crimson Soft Tint | `#72222B`/10 | Active pill badges, subtle highlights |
-| Slate 60% | `#5A6B85` | Secondary text, inactive icons |
-| Slate 20% | `#D6DAE3` | Dividers, input borders, disabled states |
+| Navy Hover | `#111C2E` | Hover state on primary buttons |
+| Navy Soft Tint | `#192841`/10 | Active pill badges, subtle highlights |
+| Secondary Text | `#64748B` | Secondary text, inactive icons |
+| Border Slate | `#E2E8F0` | Dividers, input borders, disabled states |
 | Off-White | `#F7F9FC` | Page background (clean and soft, reducing eye strain) |
 | Success Green | `#22C55E` | On-time / arrived states (used sparingly) |
 | Alert Amber | `#F59E0B` | Delays / warnings (used sparingly) |
 
-**Rule of thumb:** Architectural Crimson is applied with minimalist restraint for active states, primary CTA buttons, and telemetry lines. All headings and body text remain crisp neutral slate/charcoal (`#0F172A`). Accent colors (green/amber) are functional only — never decorative.
+**Rule of thumb:** Deep Navy is applied with minimalist restraint for active states, primary CTA buttons, and telemetry lines. All headings and body text remain crisp neutral slate/charcoal (`#0F172A`). Accent colors (green/amber) are functional only — never decorative. Avoid overusing blue across card surfaces.
 
 ---
 

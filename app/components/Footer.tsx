@@ -2,9 +2,21 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { ArrowUpRight, Phone, Mail, MapPin } from "lucide-react";
 
 export default function Footer() {
+  const pathname = usePathname();
+
+  // Full-screen auth pages have their own dedicated footer/layout
+  if (
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/register"
+  ) {
+    return null;
+  }
+
   const wordmarkParts = [
     "UNIVA RIDER",
     "URBAN TRANSIT",
@@ -13,7 +25,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full bg-[#000000] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-[#72222B]/20 mt-20">
+    <footer className="relative w-full bg-[#000000] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
       {/* Top Section: Logo/Description + Links Grid */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         
