@@ -14,7 +14,7 @@ const getHref = (item: string) => {
     case "Plan Journey":
       return "/preferences";
     case "Live Route":
-      return "/live-journey";
+      return "/smartmetro";
     default:
       return "/";
   }

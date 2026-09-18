@@ -19,15 +19,11 @@ import {
   CheckCircle2,
   AlertCircle,
   Footprints,
-  Train,
   Mic,
   Volume2,
   QrCode,
   CreditCard,
-  ChevronRight,
   Info,
-  Layers,
-  ChevronDown,
 } from "lucide-react";
 import LiveRouteMap, { StopPoint, LiveBus } from "../components/LiveRouteMap";
 
@@ -194,7 +190,7 @@ export default function SmartMetroLivePage() {
   const [selectedRouteKey, setSelectedRouteKey] = useState<string>("CM01");
   const [direction, setDirection] = useState<"outbound" | "inbound">("outbound");
   const [buses, setBuses] = useState<Record<string, LiveBus[]>>(INITIAL_BUSES);
-  const [selectedBusId, setSelectedBusId] = useState<string | null>("b1");
+  const [selectedBusIdState, setSelectedBusId] = useState<string | null>(null);
   const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [activeTab, setActiveTab] = useState<"fleet" | "stops">("fleet");
@@ -203,8 +199,8 @@ export default function SmartMetroLivePage() {
   const [refreshCountdown, setRefreshCountdown] = useState(6);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [voiceTranscript, setVoiceTranscript] = useState<string | null>(null);
-  const [fareStopFrom, setFareStopFrom] = useState<string>("");
-  const [fareStopTo, setFareStopTo] = useState<string>("");
+  const [customFareStopFrom, setFareStopFrom] = useState<string | null>(null);
+  const [customFareStopTo, setFareStopTo] = useState<string | null>(null);
 
   const currentRoute = TRANSIT_ROUTES[selectedRouteKey] || TRANSIT_ROUTES.CM01;
 
@@ -219,18 +215,20 @@ export default function SmartMetroLivePage() {
     return (buses[selectedRouteKey] || []).filter((b) => b.direction === direction);
   }, [buses, selectedRouteKey, direction]);
 
-  // Set default fare stops when route changes
-  useEffect(() => {
-    if (activeStops.length > 0) {
-      setFareStopFrom(activeStops[0].name);
-      setFareStopTo(activeStops[Math.min(activeStops.length - 1, 8)].name);
-    }
-    // Select first bus of route
-    const firstBus = (buses[selectedRouteKey] || [])[0];
-    if (firstBus) {
-      setSelectedBusId(firstBus.id);
-    }
-  }, [selectedRouteKey, direction]);
+  const fareStopFrom =
+    customFareStopFrom && activeStops.some((s) => s.name === customFareStopFrom)
+      ? customFareStopFrom
+      : activeStops[0]?.name || "";
+
+  const fareStopTo =
+    customFareStopTo && activeStops.some((s) => s.name === customFareStopTo)
+      ? customFareStopTo
+      : activeStops[Math.min(activeStops.length - 1, 8)]?.name || "";
+
+  const selectedBusId =
+    selectedBusIdState && currentBuses.some((b) => b.id === selectedBusIdState)
+      ? selectedBusIdState
+      : currentBuses[0]?.id || null;
 
   // Live Telemetry Simulation Engine: increments progress & updates countdown every 2s
   useEffect(() => {
@@ -451,6 +449,16 @@ export default function SmartMetroLivePage() {
               <Mic size={14} />
               <span>{isVoiceActive ? "Listening..." : "Tell Univa (Voice)"}</span>
             </button>
+
+            {/* Plan Personalized Journey Link */}
+            <Link
+              href="/preferences"
+              className="px-3.5 py-2 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
+              title="Plan personalized journey"
+            >
+              <span>Plan Journey</span>
+              <ArrowRight size={13} />
+            </Link>
           </div>
         </div>
 
@@ -667,7 +675,7 @@ export default function SmartMetroLivePage() {
             {/* TAB CONTENT 2: STATIONS & LIVE ETAS */}
             {activeTab === "stops" && (
               <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-                {filteredStops.map((stop, idx) => {
+                {filteredStops.map((stop) => {
                   const isSelected = selectedStopId === stop.id;
                   const approachingBus = currentBuses.find(
                     (b) => b.nextStopName === stop.name

@@ -48,7 +48,7 @@ export default function Step3Payment({
   const handlePay = () => {
     setIsProcessing(true);
     setTimeout(() => {
-      let finalWallet = { ...wallet };
+      const finalWallet = { ...wallet };
       if (selectedMethod === "points") {
         finalWallet.pointsBalance = remainingBalance;
       }
