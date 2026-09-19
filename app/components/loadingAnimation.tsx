@@ -6,12 +6,18 @@ interface LoadingAnimationProps {
   loop?: boolean;
   loopDuration?: number; // in seconds
   onComplete?: () => void;
+  message?: string;
+  subMessage?: string;
+  zIndex?: string;
 }
 
 export default function LoadingAnimation({
   loop = true,
   loopDuration = 4.0,
   onComplete,
+  message,
+  subMessage,
+  zIndex,
 }: LoadingAnimationProps) {
   const [progress, setProgress] = useState<number>(0);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -147,7 +153,7 @@ export default function LoadingAnimation({
   );
 
   return (
-    <div className="fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-[#FFFFFF] overflow-hidden select-none">
+    <div className={`fixed inset-0 w-full h-full flex flex-col items-center justify-center bg-[#FFFFFF] overflow-hidden select-none ${zIndex || "z-50"}`}>
       {/* 1. Dynamic Atmosphere & Interactive Radial Glow */}
       <div
         className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,180,216,0.06)_0%,transparent_60%)] pointer-events-none transition-transform duration-300"
@@ -406,6 +412,22 @@ export default function LoadingAnimation({
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]" />
           </div>
         </div>
+
+        {/* 5. Optional Completion/Welcome Message */}
+        {(message || subMessage) && (
+          <div className="mt-7 text-center px-4 max-w-sm sm:max-w-md select-text">
+            {message && (
+              <h3 className="text-xl sm:text-2xl font-black text-[#0F172A] tracking-tight">
+                {message}
+              </h3>
+            )}
+            {subMessage && (
+              <p className="text-xs sm:text-sm font-semibold text-[#64748B] mt-1.5 leading-relaxed">
+                {subMessage}
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

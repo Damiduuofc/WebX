@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, Eye, EyeOff, X, Check, ShieldCheck, Zap } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import LoadingAnimation from "./loadingAnimation";
 
 interface AuthCardProps {
   initialMode?: "login" | "signup";
@@ -118,13 +119,14 @@ export default function AuthCard({
       onSuccess(userData);
     }
 
+    // Safety fallback timer if tab is backgrounded
     setTimeout(() => {
       if (onClose) {
         onClose();
       } else {
         router.push(redirect);
       }
-    }, 1100);
+    }, 3600);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -140,6 +142,27 @@ export default function AuthCard({
   if (isFullScreen) {
     return (
       <div className="w-full min-h-screen bg-white flex flex-col overflow-x-hidden">
+        {/* Full-Screen Branded Univa Loading Animation on Auth Completion */}
+        {isSuccess && (
+          <LoadingAnimation
+            loop={false}
+            loopDuration={2.6}
+            zIndex="z-[9999]"
+            message={`Welcome, ${successUser?.name || "Rider"}!`}
+            subMessage={
+              mode === "signup"
+                ? "Your Rider Account has been created • Initializing Univa Pass..."
+                : "You have logged in successfully • Initializing live transit telemetry..."
+            }
+            onComplete={() => {
+              if (onClose) {
+                onClose();
+              } else {
+                router.push(redirect);
+              }
+            }}
+          />
+        )}
         {/* ========================================================================= */}
         {/* MOBILE VIEW LAYOUT (Exact match to reference image media_1789824213599)    */}
         {/* ========================================================================= */}
@@ -974,6 +997,27 @@ export default function AuthCard({
   // =========================================================================
   return (
     <div className="relative w-full max-w-[980px] bg-white rounded-[32px] sm:rounded-[36px] shadow-[0_24px_70px_rgba(25,40,65,0.22)] border border-[#E2E8F0] overflow-hidden p-6 sm:p-8 md:p-10 transition-all">
+      {/* Full-Screen Branded Univa Loading Animation on Auth Completion */}
+      {isSuccess && (
+        <LoadingAnimation
+          loop={false}
+          loopDuration={2.6}
+          zIndex="z-[9999]"
+          message={`Welcome, ${successUser?.name || "Rider"}!`}
+          subMessage={
+            mode === "signup"
+              ? "Your Rider Account has been created • Initializing Univa Pass..."
+              : "You have logged in successfully • Initializing live transit telemetry..."
+          }
+          onComplete={() => {
+            if (onClose) {
+              onClose();
+            } else {
+              router.push(redirect);
+            }
+          }}
+        />
+      )}
       {/* Optional Close Button for Modals */}
       {isModal && onClose && (
         <button
