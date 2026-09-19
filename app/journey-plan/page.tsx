@@ -10,7 +10,6 @@ import {
   Footprints,
   Train,
   Zap,
-  CheckCircle2,
   ShieldCheck,
 } from "lucide-react";
 import { AuthGuard, useAuth } from "../context/auth";
@@ -52,7 +51,7 @@ function JourneyPlanContent() {
 
         {/* Status Pill */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto">
-          <CheckCircle2 size={14} className="text-emerald-600" />
+          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
           <span>Synchronized & On Time</span>
         </div>
       </div>
@@ -104,7 +103,7 @@ function JourneyPlanContent() {
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Clock size={18} />
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight">
+          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
             {journey.arrivalTime}
           </div>
           <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -117,7 +116,7 @@ function JourneyPlanContent() {
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Zap size={18} />
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight">
+          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
             {journey.durationMins} min
           </div>
           <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -130,7 +129,7 @@ function JourneyPlanContent() {
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Train size={18} />
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight">
+          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
             {journey.transfersCount}
           </div>
           <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -143,7 +142,7 @@ function JourneyPlanContent() {
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Footprints size={18} />
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight">
+          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
             {journey.walkingMins} min
           </div>
           <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -176,7 +175,7 @@ function JourneyPlanContent() {
 
           {/* ITEM 1: Current Location */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
+            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white u-glow-strong">
               📍
             </div>
             <div>
@@ -311,7 +310,7 @@ function JourneyPlanContent() {
           <button
             type="button"
             onClick={handleStartJourney}
-            className="w-full sm:flex-1 py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
+            className="w-full sm:flex-1 py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
           >
             <span>Start Journey</span>
             <ArrowRight size={18} />

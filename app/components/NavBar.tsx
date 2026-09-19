@@ -328,19 +328,19 @@ export default function Navbar() {
                     color: "#FFFFFF",
                     cursor: "pointer",
                     border: "none",
-                    background: "#192841",
-                    boxShadow: "0 2px 10px rgba(25, 40, 65, 0.3)",
+                    background: "#4F6EF7",
+                    boxShadow: "0 2px 10px rgba(79, 110, 247, 0.35)",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
                     textDecoration: "none",
                     display: "inline-block",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#111C2E";
+                    e.currentTarget.style.background = "#3B4FE0";
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#192841";
+                    e.currentTarget.style.background = "#4F6EF7";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -492,7 +492,7 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: "#FFFFFF",
                       border: "none",
-                      background: "#192841",
+                      background: "#4F6EF7",
                       cursor: "pointer",
                       textAlign: "center",
                       textDecoration: "none",

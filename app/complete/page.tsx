@@ -29,7 +29,7 @@ function CompleteContent() {
       {/* SECTION 26: CELEBRATORY SUCCESS HERO                                      */}
       {/* ========================================================================= */}
       <div className="bg-white rounded-3xl border border-[#E2E8F0] p-8 sm:p-12 shadow-[0_12px_40px_rgba(25,40,65,0.06)] text-center space-y-4 relative overflow-hidden">
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-[#192841]/10 text-4xl flex items-center justify-center shadow-inner">
+        <div className="w-20 h-20 mx-auto rounded-3xl bg-[#192841]/10 text-4xl flex items-center justify-center shadow-inner u-glow">
           🎉
         </div>
 
@@ -41,6 +41,7 @@ function CompleteContent() {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F172A] tracking-tight">
             You&apos;ve arrived!
           </h1>
+          <div className="u-accent-line w-16 mx-auto" />
           <p className="text-sm sm:text-base text-[#64748B] max-w-md mx-auto">
             Welcome to <strong className="text-[#0F172A]">{journey.destination}</strong>.
           </p>
@@ -60,7 +61,7 @@ function CompleteContent() {
             <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
               <Clock size={16} />
             </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A]">
+            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
               42 min
             </div>
             <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -72,7 +73,7 @@ function CompleteContent() {
             <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
               <Navigation size={16} />
             </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A]">
+            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
               18.4 km
             </div>
             <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -84,7 +85,7 @@ function CompleteContent() {
             <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
               <Train size={16} />
             </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A]">
+            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
               2
             </div>
             <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -96,7 +97,7 @@ function CompleteContent() {
             <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
               <Footprints size={16} />
             </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A]">
+            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
               6 min
             </div>
             <div className="text-xs font-semibold text-[#64748B] mt-0.5">
@@ -190,7 +191,7 @@ function CompleteContent() {
         <button
           type="button"
           onClick={handleGiveFeedback}
-          className="w-full py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
+          className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
         >
           <span>How was your journey? Give Feedback</span>
           <ArrowRight size={18} />

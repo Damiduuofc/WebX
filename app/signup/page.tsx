@@ -92,15 +92,16 @@ function SignUpContent() {
   };
 
   return (
-    <div className="w-full max-w-md bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-[0_12px_40px_rgba(25,40,65,0.06)] space-y-6 my-4">
+    <div className="w-full max-w-md bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-[0_12px_40px_rgba(25,40,65,0.06)] space-y-6 my-4 u-glow">
       {/* Brand Header */}
       <div className="text-center space-y-2">
-        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#192841] text-white font-black text-xl shadow-md">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-[#192841] text-white font-black text-xl shadow-md u-glow">
           U
         </div>
         <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
           Create Passenger Account
         </h1>
+        <div className="u-accent-line w-12 mx-auto" />
         <p className="text-xs sm:text-sm text-[#64748B] font-medium">
           Join Univa for synchronized multi-modal travel
         </p>
@@ -273,7 +274,7 @@ function SignUpContent() {
         <button
           type="submit"
           disabled={isLoading || success}
-          className="w-full py-3.5 px-6 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
+          className="w-full py-3.5 px-6 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-60"
         >
           {isLoading ? (
             <span>Creating account...</span>
@@ -314,7 +315,7 @@ function SignUpContent() {
 
 export default function SignUpPage() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center pt-24 sm:pt-28 pb-12 p-4 sm:p-6 md:p-10 bg-[#F7F9FC]">
+    <div className="min-h-screen w-full flex items-center justify-center pt-24 sm:pt-28 pb-12 p-4 sm:p-6 md:p-10 bg-[#F7F9FC] u-grid-bg">
       <Suspense fallback={<div className="text-sm font-semibold text-[#64748B]">Loading registration...</div>}>
         <SignUpContent />
       </Suspense>

@@ -27,6 +27,125 @@ import {
   Plane,
 } from "lucide-react";
 
+interface OrbitVehicle {
+  key: string;
+  /** Container width per breakpoint = length of the vehicle, so sizes differ. */
+  sizeClass: string;
+  /** --half (half rendered width incl. depth scale), --ry (vertical radius) per breakpoint. */
+  vars: string;
+  rxMax: number;
+  phase: number;
+}
+
+interface VehicleView {
+  src: string;
+  width: number;
+  height: number;
+  /** Rendered width as a % of the vehicle length, so every view shares one height. */
+  widthPct: number;
+}
+
+// Views of the Gravity Weaver concept vehicle, cut out from the reference poster.
+// Widths are chosen so the vehicle keeps the same height in every view.
+const VEHICLE_VIEWS: Record<"front" | "hero" | "side" | "rear", VehicleView> = {
+  front: { src: "/images/vehicle-front.webp", width: 326, height: 175, widthPct: 67.8 },
+  hero: { src: "/images/vehicle-hero.webp", width: 637, height: 284, widthPct: 100 },
+  side: { src: "/images/vehicle-side.webp", width: 365, height: 133, widthPct: 100 },
+  rear: { src: "/images/vehicle-rear.webp", width: 350, height: 158, widthPct: 80.7 },
+};
+
+// One shared orbit period and fixed phase offsets keep the vehicles a constant
+// distance apart in time, so they can never meet (verified for 640px-1920px).
+const ORBIT_SECONDS = 40;
+
+const ORBIT_VEHICLES: OrbitVehicle[] = [
+  {
+    key: "large",
+    sizeClass: "w-[120px] sm:w-[200px] lg:w-[250px]",
+    vars: "[--half:70px] sm:[--half:116px] lg:[--half:145px] [--ry:26px] sm:[--ry:60px] lg:[--ry:86px]",
+    rxMax: 470,
+    phase: 0,
+  },
+  {
+    key: "medium",
+    sizeClass: "hidden sm:block sm:w-[130px] lg:w-[170px]",
+    vars: "sm:[--half:75px] lg:[--half:99px] sm:[--ry:46px] lg:[--ry:64px]",
+    rxMax: 420,
+    phase: 0.5417,
+  },
+  {
+    key: "small",
+    sizeClass: "hidden sm:block sm:w-[85px] lg:w-[110px]",
+    vars: "sm:[--half:49px] lg:[--half:64px] sm:[--ry:78px] lg:[--ry:100px]",
+    rxMax: 360,
+    phase: 0.2917,
+  },
+];
+
+/**
+ * One vehicle flying an elliptical loop around the section heading. It is
+ * never mirrored or flipped: as it goes round it is shown from real angles
+ * (front, front-3/4, side, rear) that cross-fade in step with its heading,
+ * so the turns read as a real vehicle banking round.
+ * All motion is CSS (see .u-orbit-* and .u-view-* in globals.css).
+ */
+function OrbitingVehicle({ vehicle }: { vehicle: OrbitVehicle }) {
+  const style = {
+    "--dur": `${ORBIT_SECONDS}s`,
+    "--ph": vehicle.phase,
+    "--rxmax": `${vehicle.rxMax}px`,
+  } as React.CSSProperties;
+
+  // Heading sequence over one lap: front -> 3/4 -> side (moving right) -> rear
+  // -> side (moving left) -> 3/4 -> front. Right-facing views are the same
+  // vehicle seen from the other side.
+  const layers: { cls: string; view: keyof typeof VEHICLE_VIEWS; mirror: boolean }[] = [
+    { cls: "u-view-front", view: "front", mirror: false },
+    { cls: "u-view-hero-a", view: "hero", mirror: true },
+    { cls: "u-view-side-a", view: "side", mirror: true },
+    { cls: "u-view-rear", view: "rear", mirror: false },
+    { cls: "u-view-side-b", view: "side", mirror: false },
+    { cls: "u-view-hero-b", view: "hero", mirror: false },
+  ];
+
+  return (
+    <div
+      className={`u-orbit-z absolute left-1/2 top-[92px] sm:top-[126px] -translate-x-1/2 -translate-y-1/2 [--zf:0] sm:[--zf:20] ${vehicle.sizeClass} ${vehicle.vars}`}
+      style={style}
+    >
+      <div className="u-orbit-x">
+        <div className="u-orbit-ys">
+          <div
+            className="relative w-full aspect-[100/45]"
+            style={{ filter: "drop-shadow(0 16px 18px rgba(15,23,42,0.12))" }}
+          >
+            {layers.map((layer) => {
+              const v = VEHICLE_VIEWS[layer.view];
+              return (
+                <div
+                  key={layer.cls}
+                  className={`${layer.cls} absolute bottom-0 left-1/2 -translate-x-1/2`}
+                  style={{ width: `${v.widthPct}%` }}
+                >
+                  <Image
+                    src={v.src}
+                    alt=""
+                    width={v.width}
+                    height={v.height}
+                    draggable={false}
+                    className="w-full h-auto select-none"
+                    style={layer.mirror ? { transform: "scaleX(-1)" } : undefined}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HomeContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -238,14 +357,17 @@ function HomeContent() {
                   </div>
                   <div>
                     <span className="font-bold text-[#0F172A] block">{user?.name}</span>
-                    <span className="text-[10px] text-emerald-600 font-semibold">● Passenger Account Active</span>
+                    <span className="text-[10px] text-emerald-600 font-semibold inline-flex items-center gap-1.5">
+                      <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                      Passenger Account Active
+                    </span>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Link
                     href="/signup"
-                    className="px-4 py-2 rounded-xl bg-[#192841] text-white text-xs font-bold shadow-xs hover:bg-[#111C2E] transition-all"
+                    className="px-4 py-2 rounded-xl bg-[#4F6EF7] text-white text-xs font-bold shadow-xs hover:bg-[#3B4FE0] transition-all"
                   >
                     Create Account
                   </Link>
@@ -353,8 +475,18 @@ function HomeContent() {
         {/* ========================================================================= */}
         {/* SECTION 2: RIDER SERVICES SHOWCASE & BRAND STATEMENT                      */}
         {/* ========================================================================= */}
-        <section className="space-y-10">
-          <div className="text-center max-w-3xl mx-auto space-y-4">
+        <section className="space-y-10 u-grid-bg">
+          {/* Vehicles flying around the brand statement */}
+          <div
+            className="u-orbit-stage absolute inset-x-0 top-0 h-[200px] sm:h-[240px] pointer-events-none"
+            aria-hidden="true"
+          >
+            {ORBIT_VEHICLES.map((vehicle) => (
+              <OrbitingVehicle key={vehicle.key} vehicle={vehicle} />
+            ))}
+          </div>
+
+          <div className="relative z-10 text-center max-w-3xl mx-auto space-y-4">
             <h2 className="text-4xl sm:text-6xl font-black tracking-tight text-[#0F172A] leading-tight">
               Univa means <br />
               <span className="text-[#192841] relative inline-block">
@@ -375,7 +507,7 @@ function HomeContent() {
           </div>
 
           {/* Services Showcase Cards */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
+          <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
             {/* Left Narrative */}
             <div className="lg:col-span-4 bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
               <div className="space-y-4">
@@ -412,7 +544,7 @@ function HomeContent() {
                 <button
                   type="button"
                   onClick={() => handleStartPlanning()}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Plan Your Journey</span>
                   <ArrowRight size={16} />
@@ -435,7 +567,7 @@ function HomeContent() {
                       onClick={() => setActiveServiceIndex(idx)}
                       className={`cursor-pointer bg-white rounded-3xl border ${
                         isSelected
-                          ? "border-[#192841] shadow-md ring-2 ring-[#192841]/20"
+                          ? "border-[#192841] shadow-md ring-2 ring-[#192841]/20 u-glow"
                           : "border-[#E2E8F0] shadow-xs hover:border-[#192841]/40"
                       } p-5 flex flex-col justify-between space-y-4 transition-all group`}
                     >
@@ -557,7 +689,10 @@ function HomeContent() {
                   <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">Bus 245 + SkyRail</span>
-                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">On Time</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px] inline-flex items-center gap-1.5">
+                        <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                        On Time
+                      </span>
                     </div>
 
                     <div className="space-y-0.5">
@@ -586,7 +721,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("General Sir John Kotelawala Defence University (KDU)")}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />
@@ -616,7 +751,10 @@ function HomeContent() {
                   <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">SkyRail Line 01</span>
-                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">Non-Stop</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px] inline-flex items-center gap-1.5">
+                        <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                        Non-Stop
+                      </span>
                     </div>
 
                     <div className="space-y-0.5">
@@ -645,7 +783,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("Bandaranaike International Airport (BIA)")}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />
@@ -675,7 +813,10 @@ function HomeContent() {
                   <div className="absolute inset-0 p-4 text-white flex flex-col justify-between pointer-events-none">
                     <div className="flex items-center justify-between text-xs font-semibold">
                       <span className="bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 text-[11px] font-bold">Smart Road Pod</span>
-                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px]">Zero Emiss</span>
+                      <span className="text-[#22C55E] bg-white/95 px-2 py-0.5 rounded-full font-bold shadow-xs text-[10px] inline-flex items-center gap-1.5">
+                        <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                        Zero Emiss
+                      </span>
                     </div>
 
                     <div className="space-y-0.5">
@@ -704,7 +845,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("Marine Drive Promenade, Kollupitiya")}
-                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />

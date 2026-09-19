@@ -199,7 +199,7 @@ function LiveJourneyContent() {
 
         {/* Status Indicator (Section 19: Status: 🟢 On Time) */}
         <div className="flex items-center gap-2.5 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold shadow-xs">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#22C55E] animate-pulse" />
+          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
           <span>🟢 On Time • Synchronized Telemetry</span>
         </div>
       </div>
@@ -260,14 +260,14 @@ function LiveJourneyContent() {
         {/* Progress Bar Track */}
         <div className="relative w-full h-3 bg-slate-100 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-[#192841] via-sky-600 to-[#22C55E] transition-all duration-300 rounded-full"
+            className="h-full bg-gradient-to-r from-[#192841] via-sky-600 to-[#22C55E] transition-all duration-300 rounded-full u-shimmer"
             style={{ width: `${Math.min(100, Math.round(progress * 100))}%` }}
           />
         </div>
 
         <div className="flex items-center justify-between text-[11px] text-[#64748B]">
-          <span>{Math.round(progress * 100)}% route completed</span>
-          <span>{currentLeg.remainingTotalMins} min remaining until destination</span>
+          <span className="u-digital-num">{Math.round(progress * 100)}% route completed</span>
+          <span className="u-digital-num">{currentLeg.remainingTotalMins} min remaining until destination</span>
         </div>
       </div>
 
@@ -276,7 +276,7 @@ function LiveJourneyContent() {
         {/* ========================================================================= */}
         {/* SECTION 20: LIVE MAP (Main portion of the screen)                         */}
         {/* ========================================================================= */}
-        <div className="lg:col-span-8 bg-[#0F172A] rounded-3xl border border-[#E2E8F0] p-4 sm:p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[500px]">
+        <div className="lg:col-span-8 bg-[#0F172A] rounded-3xl border border-[#E2E8F0] p-4 sm:p-6 shadow-md relative overflow-hidden flex flex-col justify-between min-h-[440px] sm:min-h-[500px] u-glow-strong">
           {/* Subtle Grid Map Canvas Pattern */}
           <div
             className="absolute inset-0 opacity-20 pointer-events-none"
@@ -336,7 +336,7 @@ function LiveJourneyContent() {
                 <Navigation size={13} className="text-sky-400" />
                 <span>GPS Telemetry Active</span>
               </span>
-              <span className="hidden sm:inline-block px-3 py-1.5 rounded-full bg-[#192841]/90 backdrop-blur-md border border-white/20 font-semibold text-slate-300">
+              <span className="hidden sm:inline-block px-3 py-1.5 rounded-full bg-[#192841]/90 backdrop-blur-md border border-white/20 font-semibold text-slate-300 u-digital-num">
                 Speed: {currentLeg.speedKmH} km/h
               </span>
             </div>
@@ -419,7 +419,7 @@ function LiveJourneyContent() {
                   You&apos;re on this vehicle
                 </p>
                 <div className="text-xs text-[#64748B] pt-0.5">
-                  <strong className="text-[#0F172A]">{currentLeg.etaMins} min</strong> remaining on this leg
+                  <strong className="text-[#0F172A] u-digital-num">{currentLeg.etaMins} min</strong> remaining on this leg
                 </div>
               </div>
             </div>
@@ -433,13 +433,13 @@ function LiveJourneyContent() {
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-[#64748B]">Guideway Speed:</span>
-                <span className="font-bold text-[#192841]">{currentLeg.speedKmH} km/h</span>
+                <span className="font-bold text-[#192841] u-digital-num">{currentLeg.speedKmH} km/h</span>
               </div>
             </div>
           </div>
 
           {/* SECTION 22: NEXT STOP CARD (Highly visible) */}
-          <div className="bg-white rounded-3xl border-2 border-[#192841] p-6 shadow-sm space-y-2">
+          <div className="bg-white rounded-3xl border-2 border-[#192841] p-6 shadow-sm space-y-2 u-glow">
             <div className="flex items-center justify-between">
               <span className="text-xs font-bold text-[#192841] uppercase tracking-wider">
                 Next Stop
@@ -470,7 +470,7 @@ function LiveJourneyContent() {
               onClick={handleVoiceQuery}
               className={`w-full py-3.5 px-5 rounded-2xl font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer ${
                 isVoiceListening
-                  ? "bg-[#192841] text-white ring-4 ring-[#192841]/20 animate-pulse"
+                  ? "bg-[#4F6EF7] text-white ring-4 ring-[#4F6EF7]/20 animate-pulse"
                   : "bg-[#F7F9FC] hover:bg-slate-100 text-[#192841] border border-[#E2E8F0]"
               }`}
             >
@@ -502,7 +502,7 @@ function LiveJourneyContent() {
               <button
                 type="button"
                 onClick={handleArriveNow}
-                className="py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-[11px] font-bold text-white transition-colors flex items-center justify-center gap-1"
+                className="py-2 px-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-[11px] font-bold text-white transition-colors flex items-center justify-center gap-1"
               >
                 <span>Fast-forward Arrive</span>
                 <ArrowRight size={12} />

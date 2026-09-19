@@ -57,6 +57,7 @@ function FeedbackContent() {
         <h1 className="text-2xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
           How was your journey?
         </h1>
+        <div className="u-accent-line w-14 mx-auto" />
         <p className="text-xs sm:text-sm text-[#64748B]">
           Your feedback helps Univa optimize routes and autonomous fleet dispatches.
         </p>
@@ -64,7 +65,7 @@ function FeedbackContent() {
 
       {submitted ? (
         <div className="bg-white rounded-3xl border border-[#E2E8F0] p-8 text-center space-y-4 shadow-sm animate-fadeIn">
-          <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center">
+          <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center u-glow">
             <CheckCircle2 size={32} />
           </div>
           <h2 className="text-xl font-bold text-[#0F172A]">Thank You!</h2>
@@ -152,7 +153,7 @@ function FeedbackContent() {
           <button
             type="button"
             onClick={handleDone}
-            className="w-full py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Done</span>
             <CheckCircle2 size={18} />

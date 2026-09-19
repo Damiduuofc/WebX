@@ -14,6 +14,18 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full bg-[#000000] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-[#72222B]/20 mt-20">
+      {/* Faint telemetry grid texture, restrained futuristic accent */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.05] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+          maskImage: "radial-gradient(ellipse 70% 60% at 20% 0%, #000 0%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 20% 0%, #000 0%, transparent 75%)",
+        }}
+      />
+
       {/* Top Section: Logo/Description + Links Grid */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         

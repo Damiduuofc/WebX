@@ -61,3 +61,258 @@ body {
     animation: none;
   }
 }
+
+/* ==========================================================================
+   Univa futuristic accent system
+   Restrained sci-fi cues layered on top of the core brand system: a faint
+   circuit/grid texture, soft navy glow, a live-status pulse ring, and a
+   shimmer sweep for progress/route lines. Kept subtle per brand guidance
+   (no heavy glassmorphism, no loud gradients, no constant motion).
+   ========================================================================== */
+
+:root {
+  --glow-navy: rgba(25, 40, 65, 0.22);
+  --glow-navy-soft: rgba(25, 40, 65, 0.12);
+}
+
+/* Faint dot-grid texture for section backgrounds (map panels, live journey,
+   hero-adjacent sections). Extremely low opacity so it reads as texture,
+   not decoration. */
+.u-grid-bg {
+  position: relative;
+  isolation: isolate;
+}
+
+.u-grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(circle, rgba(25, 40, 65, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Soft ambient glow used on active/live surfaces (current-vehicle card,
+   live map frame, primary CTA on hover). */
+.u-glow {
+  box-shadow: 0 0 0 1px rgba(25, 40, 65, 0.06), 0 10px 30px -6px var(--glow-navy-soft);
+}
+
+.u-glow-strong {
+  box-shadow: 0 0 0 1px rgba(25, 40, 65, 0.08), 0 0 0 4px rgba(25, 40, 65, 0.05), 0 14px 36px -8px var(--glow-navy);
+}
+
+/* Thin gradient accent rule, e.g. under a heading or across a card top edge. */
+.u-accent-line {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #192841 0%, rgba(25, 40, 65, 0.15) 65%, transparent 100%);
+}
+
+/* Live status pulse: a small solid dot with an expanding ring behind it.
+   Used for "On Time" / live-tracking indicators instead of a plain dot. */
+.u-pulse-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--pulse-color, #22C55E);
+  flex-shrink: 0;
+}
+
+.u-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--pulse-color, #22C55E);
+  animation: u-pulse-ring 1.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+@keyframes u-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* Shimmer sweep for progress bars / active route lines: a soft highlight
+   that travels once across the element to suggest live motion/telemetry. */
+.u-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.u-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: u-shimmer-sweep 2.6s ease-in-out infinite;
+}
+
+@keyframes u-shimmer-sweep {
+  0%, 15% {
+    transform: translateX(-100%);
+  }
+  55%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Tabular, evenly-tracked numerals for live readouts (ETA, countdowns,
+   distances) so they feel like a live instrument rather than static copy. */
+.u-digital-num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-pulse-dot::after,
+  .u-shimmer::after {
+    animation: none;
+  }
+}
+
+/* Laser-style route lines: a steady bright core plus a colored dash
+   pattern that travels along the path, like a pulse of light moving
+   down a beam. Pair with a blurred duplicate path for the glow halo. */
+.u-laser-flow {
+  animation: u-laser-flow 1.8s linear infinite;
+}
+
+@keyframes u-laser-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-laser-flow {
+    animation: none;
+  }
+}
+
+/* Orbiting vehicles: each vehicle flies a full ellipse around a centre point.
+   Two sine-eased alternating translations, a quarter period out of phase,
+   trace the ellipse (x = rx*cos, y = ry*sin). The y-phase also drives scale
+   and opacity so the vehicle grows as it swings to the "front" (bottom arc)
+   and recedes on the "back" arc, and z-index swaps at the far left/right so
+   it passes behind then in front of the content.
+
+   Per-vehicle inputs (custom properties): --dur (orbit time), --ph (0-1
+   starting phase), --rx / --ry (radii), --sb / --sf (back / front scale),
+   --zf (front z-index). Pure CSS, so there is no SSR/client mismatch risk. */
+.u-orbit-z {
+  --rx: min(calc(50vw - var(--half, 100px) - 24px), var(--rxmax, 460px));
+  animation: u-orbit-z var(--dur) steps(1, end) infinite;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+}
+
+@keyframes u-orbit-z {
+  0%, 49.99% { z-index: var(--zf, 20); }
+  50%, 100% { z-index: 1; }
+}
+
+.u-orbit-x {
+  animation: u-orbit-x calc(var(--dur) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+  will-change: transform;
+}
+
+@keyframes u-orbit-x {
+  from { transform: translateX(calc(var(--rx) * -1)); }
+  to { transform: translateX(var(--rx)); }
+}
+
+.u-orbit-ys {
+  animation: u-orbit-ys calc(var(--dur) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: calc(var(--dur) * (var(--ph) + 0.25) * -1);
+  will-change: transform, opacity;
+}
+
+@keyframes u-orbit-ys {
+  from { transform: translateY(calc(var(--ry) * -1)) scale(var(--sb, 0.72)); opacity: var(--ob, 0.38); }
+  to { transform: translateY(var(--ry)) scale(var(--sf, 1.1)); opacity: var(--of, 0.8); }
+}
+
+/* Viewing angle: the vehicle is never flipped. Over one lap (0% = far left end,
+   heading toward the viewer) it is seen from its front, then front-3/4, side
+   (moving right), rear (far right end, heading away), side (moving left),
+   front-3/4 and back to front. Adjacent angles cross-fade with symmetric easing
+   on identical intervals, so the turn is continuous and the vehicle appears to
+   swing round through real angles rather than snap over. Layers share the
+   orbit's phase (same delay as .u-orbit-x). */
+.u-view-front,
+.u-view-hero-a,
+.u-view-side-a,
+.u-view-rear,
+.u-view-side-b,
+.u-view-hero-b {
+  opacity: 0;
+  animation-duration: var(--dur);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+}
+
+.u-view-front { animation-name: u-view-front; }
+.u-view-hero-a { animation-name: u-view-hero-a; }
+.u-view-side-a { animation-name: u-view-side-a; }
+.u-view-rear { animation-name: u-view-rear; }
+.u-view-side-b { animation-name: u-view-side-b; }
+.u-view-hero-b { animation-name: u-view-hero-b; }
+
+@keyframes u-view-front {
+  0% { opacity: 1; }
+  12.5%, 87.5% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes u-view-hero-a {
+  0% { opacity: 0; }
+  12.5% { opacity: 1; }
+  25%, 100% { opacity: 0; }
+}
+
+@keyframes u-view-side-a {
+  0%, 12.5% { opacity: 0; }
+  25% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes u-view-rear {
+  0%, 25% { opacity: 0; }
+  50% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+@keyframes u-view-side-b {
+  0%, 50% { opacity: 0; }
+  75% { opacity: 1; }
+  87.5%, 100% { opacity: 0; }
+}
+
+@keyframes u-view-hero-b {
+  0%, 75% { opacity: 0; }
+  87.5% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-orbit-stage {
+    display: none;
+  }
+}

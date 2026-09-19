@@ -170,7 +170,7 @@ function PreferencesContent() {
 
         {/* Status Pill */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
           <span>Autonomous Network Active</span>
         </div>
       </div>
@@ -336,7 +336,7 @@ function PreferencesContent() {
           <button
             type="button"
             onClick={handleFindRoutes}
-            className="w-full py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
+            className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
           >
             <span>Find Routes</span>
             <ArrowRight size={18} />
@@ -357,7 +357,7 @@ function PreferencesContent() {
             </div>
 
             {/* Simplified Map Visual */}
-            <div className="relative w-full h-72 sm:h-80 rounded-2xl bg-[#0F172A] border border-[#E2E8F0] overflow-hidden p-4 flex flex-col justify-between">
+            <div className="relative w-full h-72 sm:h-80 rounded-2xl bg-[#0F172A] border border-[#E2E8F0] overflow-hidden p-4 flex flex-col justify-between u-glow-strong">
               {/* Subtle Grid Map Canvas Pattern */}
               <div
                 className="absolute inset-0 opacity-20 pointer-events-none"
@@ -371,21 +371,58 @@ function PreferencesContent() {
 
               {/* Vector SVG Transit Route overlay */}
               <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {/* Autonomous Bus Route (Origin to Interchange) */}
+                {/* Autonomous Bus Route (Origin to Interchange) — laser beam */}
                 <path
                   d="M 60 220 C 100 180, 120 160, 180 150"
                   fill="none"
                   stroke="#38BDF8"
-                  strokeWidth="4"
-                  strokeDasharray="4 4"
-                  className="animate-pulse"
+                  strokeWidth="10"
+                  opacity={0.35}
+                  style={{ filter: "blur(5px)" }}
                 />
-                {/* SkyRail Guideway Line (Interchange to Destination) */}
+                <path
+                  d="M 60 220 C 100 180, 120 160, 180 150"
+                  fill="none"
+                  stroke="#38BDF8"
+                  strokeWidth="3"
+                  strokeDasharray="10 14"
+                  strokeLinecap="round"
+                  className="u-laser-flow"
+                  style={{ filter: "drop-shadow(0 0 4px #38BDF8)" }}
+                />
+                <path
+                  d="M 60 220 C 100 180, 120 160, 180 150"
+                  fill="none"
+                  stroke="#E6F6FF"
+                  strokeWidth="1"
+                  opacity={0.9}
+                />
+
+                {/* SkyRail Guideway Line (Interchange to Destination) — laser beam */}
                 <path
                   d="M 180 150 C 230 140, 270 90, 320 60"
                   fill="none"
                   stroke="#22C55E"
-                  strokeWidth="5"
+                  strokeWidth="11"
+                  opacity={0.35}
+                  style={{ filter: "blur(5px)" }}
+                />
+                <path
+                  d="M 180 150 C 230 140, 270 90, 320 60"
+                  fill="none"
+                  stroke="#22C55E"
+                  strokeWidth="3"
+                  strokeDasharray="10 14"
+                  strokeLinecap="round"
+                  className="u-laser-flow"
+                  style={{ filter: "drop-shadow(0 0 4px #22C55E)", animationDirection: "reverse" }}
+                />
+                <path
+                  d="M 180 150 C 230 140, 270 90, 320 60"
+                  fill="none"
+                  stroke="#E9FFF1"
+                  strokeWidth="1"
+                  opacity={0.9}
                 />
 
                 {/* Stations */}
@@ -400,7 +437,7 @@ function PreferencesContent() {
               {/* Floating Map Badges */}
               <div className="relative z-10 flex items-center justify-between text-white text-xs">
                 <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-bold flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+                  <span className="u-pulse-dot" style={{ "--pulse-color": "#34D399" } as React.CSSProperties} />
                   Live GPS Corridor
                 </span>
                 <span className="px-2.5 py-1 rounded-full bg-[#192841]/90 backdrop-blur-md border border-white/20 text-[11px] font-semibold">

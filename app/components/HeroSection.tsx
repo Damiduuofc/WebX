@@ -347,7 +347,7 @@ export default function HeroSection({
               <button
                 type="button"
                 onClick={handlePrimaryCTA}
-                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.25)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.35)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#192841]/20 cursor-pointer overflow-hidden min-h-[48px]"
+                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(79,110,247,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(79,110,247,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#4F6EF7]/20 cursor-pointer overflow-hidden min-h-[48px]"
               >
                 {/* Dynamic Light Sweep Highlight on hover */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
@@ -371,14 +371,14 @@ export default function HeroSection({
                 onClick={handleVoiceCTA}
                 className={`relative group w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer min-h-[48px] ${
                   isVoiceListening
-                    ? "bg-[#192841] text-white ring-4 ring-[#192841]/20 scale-[1.02] shadow-md"
+                    ? "bg-[#4F6EF7] text-white ring-4 ring-[#4F6EF7]/20 scale-[1.02] shadow-md"
                     : "bg-white hover:bg-[#F7F9FC] text-[#0F172A] border border-[#E2E8F0] hover:border-[#192841] shadow-xs hover:-translate-y-0.5 active:scale-[0.99]"
                 }`}
               >
                 <div
                   className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
                     isVoiceListening
-                      ? "bg-white text-[#192841]"
+                      ? "bg-white text-[#4F6EF7]"
                       : "bg-[#192841]/10 text-[#192841] group-hover:bg-[#192841] group-hover:text-white"
                   }`}
                 >
@@ -415,7 +415,7 @@ export default function HeroSection({
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
                 >
                   <span>Find Routes</span>
                   <ArrowRight size={14} />

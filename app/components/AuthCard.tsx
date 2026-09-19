@@ -205,6 +205,7 @@ export default function AuthCard({
                   <h2 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
                     {mode === "signup" ? "Create an account" : "Welcome back"}
                   </h2>
+                  <div className="u-accent-line w-14" />
                   <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
                     {mode === "signup"
                       ? "Start exploring and utilizing all the resources that will help you elevate every journey you make."
@@ -399,13 +400,25 @@ export default function AuthCard({
         <div className="md:col-span-6 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-5 sm:p-7 flex flex-col justify-between min-h-[500px] sm:min-h-[560px] shadow-inner">
           {/* Rich brand Architectural Crimson & Deep Navy gradient backdrop */}
           <div className="absolute inset-0 bg-gradient-to-br from-[#8C2B38] via-[#72222B] to-[#3A0F14] z-0 pointer-events-none" />
-          
+
           {/* Fluid Ambient Light Contours in matching crimson & navy tones */}
           <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-[#B83A4A]/35 blur-3xl pointer-events-none" />
           <div className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-[#192841]/55 blur-3xl pointer-events-none" />
-          
+
           {/* Subtle diagonal highlight wave */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(255,255,255,0.25)_0%,_transparent_70%)] pointer-events-none" />
+
+          {/* Faint telemetry grid texture for a restrained futuristic surface */}
+          <div
+            className="absolute inset-0 opacity-[0.12] pointer-events-none"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(255,255,255,0.7) 1px, transparent 1px)",
+              backgroundSize: "20px 20px",
+              maskImage: "radial-gradient(ellipse 90% 60% at 50% 0%, #000 0%, transparent 80%)",
+              WebkitMaskImage: "radial-gradient(ellipse 90% 60% at 50% 0%, #000 0%, transparent 80%)",
+            }}
+          />
 
           {/* Top Pill Tags & Slide Counter */}
           <div className="relative z-10 flex items-center justify-between gap-2">
@@ -455,7 +468,7 @@ export default function AuthCard({
                     </span>
 
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-[#0F172A] shadow-xs">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
+                      <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
                       <span>{currentItem.status}</span>
                     </span>
                   </div>

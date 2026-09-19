@@ -259,7 +259,7 @@ export function AuthGuard({
           <div className="space-y-2.5 pt-2">
             <Link
               href={`/signup?redirect=${encodeURIComponent(pathname)}`}
-              className="w-full py-3.5 px-6 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-3.5 px-6 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
             >
               <span>Create Account</span>
               <ArrowRight size={16} />

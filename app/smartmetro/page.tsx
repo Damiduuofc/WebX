@@ -371,10 +371,10 @@ export default function SmartMetroLivePage() {
           <div className="flex items-center gap-3 self-start md:self-auto">
             <div className="flex flex-col text-right text-xs">
               <span className="font-bold text-[#0F172A] flex items-center justify-end gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
+                <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
                 <span>Live Feed Active</span>
               </span>
-              <span className="text-[11px] text-[#5A6B85]">
+              <span className="text-[11px] text-[#5A6B85] u-digital-num">
                 Refreshed {lastRefreshSeconds}s ago • Auto-refresh in {refreshCountdown}s
               </span>
             </div>
@@ -609,7 +609,7 @@ export default function SmartMetroLivePage() {
                           </div>
 
                           <div className="text-right">
-                            <div className="text-base font-black text-[#22C55E]">
+                            <div className="text-base font-black text-[#22C55E] u-digital-num">
                               {bus.speed} km/h
                             </div>
                             <div className="text-[10px] text-[#5A6B85]">
@@ -629,7 +629,7 @@ export default function SmartMetroLivePage() {
                             </span>
                           </div>
                           <span
-                            className="font-black text-xs shrink-0 ml-2 text-[#72222B]"
+                            className="font-black text-xs shrink-0 ml-2 text-[#72222B] u-digital-num"
                           >
                             ~{bus.etaMinutes} min
                           </span>
@@ -716,8 +716,8 @@ export default function SmartMetroLivePage() {
                       <div className="text-right">
                         {approachingBus ? (
                           <div className="flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping" />
-                            <span className="text-xs font-extrabold text-[#22C55E]">
+                            <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                            <span className="text-xs font-extrabold text-[#22C55E] u-digital-num">
                               {approachingBus.etaMinutes} min
                             </span>
                           </div>
@@ -795,10 +795,10 @@ export default function SmartMetroLivePage() {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#0F172A] text-white flex items-center justify-between">
+            <div className="p-3.5 rounded-2xl bg-[#0F172A] text-white flex items-center justify-between u-glow">
               <div>
                 <div className="text-[11px] text-[#D6DAE3]">Digital TapPass Fare</div>
-                <div className="text-xl font-black text-white">LKR {calculatedFare}.00</div>
+                <div className="text-xl font-black text-white u-digital-num">LKR {calculatedFare}.00</div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -845,7 +845,7 @@ export default function SmartMetroLivePage() {
           />
 
           {/* Under-Map Mobile App Banner) */}
-          <div className="bg-[#0C1017] border border-[#72222B]/30 rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
+          <div className="bg-[#0C1017] border border-[#72222B]/30 rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg u-glow-strong">
             <div className="space-y-1 text-center sm:text-left">
               <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#22C55E]">
                 <QrCode size={13} />
