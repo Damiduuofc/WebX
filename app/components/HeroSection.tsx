@@ -157,9 +157,9 @@ export function HeroImageGrid() {
     <div className="w-full max-w-[720px] mx-auto">
       {/* Container with liquid depth & responsive viewport framing */}
       <div className="relative w-full h-[320px] sm:h-[420px] md:h-[500px] lg:h-[580px] xl:h-[620px] overflow-hidden rounded-2xl sm:rounded-3xl">
-        {/* Soft edge masking gradients blending seamlessly into page bg #F7F8FA */}
-        <div className="absolute top-0 inset-x-0 h-10 sm:h-14 bg-gradient-to-b from-[#F7F8FA] to-transparent z-20 pointer-events-none" />
-        <div className="absolute bottom-0 inset-x-0 h-12 sm:h-16 bg-gradient-to-t from-[#F7F8FA] to-transparent z-20 pointer-events-none" />
+        {/* Soft edge masking gradients blending seamlessly into page bg #F7F9FC */}
+        <div className="absolute top-0 inset-x-0 h-10 sm:h-14 bg-gradient-to-b from-[#F7F9FC] to-transparent z-20 pointer-events-none" />
+        <div className="absolute bottom-0 inset-x-0 h-12 sm:h-16 bg-gradient-to-t from-[#F7F9FC] to-transparent z-20 pointer-events-none" />
 
         <div className="grid grid-cols-2 gap-3 sm:gap-5 h-full">
           {/* LEFT COLUMN: Scrolls Up */}
@@ -262,7 +262,7 @@ export default function HeroSection({
   };
 
   return (
-    <section className="relative w-full overflow-x-hidden overflow-y-hidden bg-[#F7F8FA] font-sans text-[#0F172A] pt-20 sm:pt-24 lg:pt-24 pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
+    <section className="relative w-full overflow-x-hidden overflow-y-hidden bg-[#F7F9FC] font-sans text-[#0F172A] pt-20 sm:pt-24 lg:pt-24 pb-8 sm:pb-12 lg:pb-14 px-4 sm:px-6 md:px-10 lg:px-12 xl:px-16">
       {/* Full-width Background Liquid Glass Artwork */}
       <div className="absolute inset-0 pointer-events-none z-0">
         <Image
@@ -297,7 +297,7 @@ export default function HeroSection({
 
       {/* Translucent Overlays for High Contrast Readability */}
       <div className="absolute inset-0 bg-white/20 backdrop-blur-[2px] z-0 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#F7F8FA] via-[#F7F8FA]/60 to-transparent z-0 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#F7F9FC] via-[#F7F9FC]/60 to-transparent z-0 pointer-events-none" />
 
       {/* Main Centered Content Container */}
       <div className="relative z-10 mx-auto w-full max-w-[1600px]">
@@ -347,7 +347,7 @@ export default function HeroSection({
               <button
                 type="button"
                 onClick={handlePrimaryCTA}
-                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(79,110,247,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(79,110,247,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#4F6EF7]/20 cursor-pointer overflow-hidden min-h-[48px]"
+                className="relative group w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.25)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.35)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2.5 sm:gap-3 ring-2 ring-[#192841]/20 cursor-pointer overflow-hidden min-h-[48px]"
               >
                 {/* Dynamic Light Sweep Highlight on hover */}
                 <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
@@ -371,14 +371,14 @@ export default function HeroSection({
                 onClick={handleVoiceCTA}
                 className={`relative group w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 rounded-full font-bold text-sm sm:text-base transition-all duration-300 flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer min-h-[48px] ${
                   isVoiceListening
-                    ? "bg-[#4F6EF7] text-white ring-4 ring-[#4F6EF7]/20 scale-[1.02] shadow-md"
+                    ? "bg-[#192841] text-white ring-4 ring-[#192841]/20 scale-[1.02] shadow-md"
                     : "bg-white hover:bg-[#F7F9FC] text-[#0F172A] border border-[#E2E8F0] hover:border-[#192841] shadow-xs hover:-translate-y-0.5 active:scale-[0.99]"
                 }`}
               >
                 <div
                   className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center transition-colors shrink-0 ${
                     isVoiceListening
-                      ? "bg-white text-[#4F6EF7]"
+                      ? "bg-white text-[#192841]"
                       : "bg-[#192841]/10 text-[#192841] group-hover:bg-[#192841] group-hover:text-white"
                   }`}
                 >
@@ -394,13 +394,13 @@ export default function HeroSection({
             {/* ========================================================================= */}
             <form
               onSubmit={handleSearchSubmit}
-              className="w-full max-w-[620px] bg-white rounded-2xl border border-[#E2E8F0] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2"
+              className="w-full max-w-[620px] bg-white rounded-2xl border border-[#E2E8F0] p-2.5 sm:p-3 shadow-md mb-4 sm:mb-5 flex flex-col gap-2 u-surface"
             >
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <div className="flex-1 flex items-center gap-2.5 px-3 py-2 bg-[#F7F9FC] rounded-xl border border-[#E2E8F0]/60">
                   <Search size={18} className="text-[#192841] shrink-0" />
                   <div className="flex-1 min-w-0">
-                    <span className="block text-[10px] font-bold text-[#64748B] uppercase tracking-wider">
+                    <span className="block text-[10px] font-bold text-[#64748B] uppercase tracking-wider u-mono">
                       Where do you want to go?
                     </span>
                     <input
@@ -415,7 +415,7 @@ export default function HeroSection({
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs sm:text-sm transition-all shadow-sm flex items-center justify-center gap-1.5 cursor-pointer shrink-0 min-h-[44px]"
                 >
                   <span>Find Routes</span>
                   <ArrowRight size={14} />

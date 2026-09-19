@@ -51,6 +51,8 @@ export interface LiveBus {
   driver: string;
   status: "In Transit" | "Approaching Stop" | "At Station" | "Slight Delay";
   heading: number; // degrees
+  /** Shown in the HUD title instead of "Bus" (e.g. "SkyRail", "Pod"). */
+  vehicleType?: string;
 }
 
 interface LiveRouteMapProps {
@@ -643,7 +645,7 @@ export default function LiveRouteMap({
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-extrabold tracking-tight">
-                      Bus {selectedBus.plate}
+                      {selectedBus.vehicleType ?? "Bus"} {selectedBus.plate}
                     </h4>
                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/30">
                       {selectedBus.status}
@@ -715,7 +717,7 @@ export default function LiveRouteMap({
               <button
                 type="button"
                 onClick={() => centerOnBus(selectedBus)}
-                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
+                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
               >
                 <Navigation size={13} />
                 <span>Center on Bus</span>

@@ -229,6 +229,7 @@ export default function AuthCard({
                     <h2 className="text-3xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
                       {mode === "signup" ? "Create an account" : "Welcome back"}
                     </h2>
+                    <div className="u-accent-line w-14" />
                     <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
                       {mode === "signup"
                         ? "Start exploring and utilizing all the resources that will help you elevate every journey you make."
@@ -274,7 +275,7 @@ export default function AuthCard({
                             ? "rider@univa2100.org"
                             : "Enter username or email"
                         }
-                        className="w-full px-4 py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] focus:bg-white text-base sm:text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                        className="w-full px-4 py-3.5 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-[#F7F9FC] focus:bg-white text-base sm:text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
                       />
                     </div>
 
@@ -304,7 +305,7 @@ export default function AuthCard({
                               ? "Create a secure password"
                               : "Enter your password"
                           }
-                          className="w-full px-4 py-3.5 pr-11 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] focus:bg-white text-base sm:text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                          className="w-full px-4 py-3.5 pr-11 rounded-xl sm:rounded-2xl border border-[#E2E8F0] bg-[#F7F9FC] focus:bg-white text-base sm:text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
                         />
                         <button
                           type="button"
@@ -321,7 +322,7 @@ export default function AuthCard({
                     <div className="pt-2">
                       <button
                         type="submit"
-                        className="w-full py-4 px-6 rounded-xl sm:rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
+                        className="w-full py-4 px-6 rounded-xl sm:rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
                       >
                         <span>
                           {mode === "signup"
@@ -336,7 +337,7 @@ export default function AuthCard({
                   {/* OR Divider Line */}
                   <div className="relative flex items-center justify-center pt-2">
                     <div className="w-full border-t border-[#E2E8F0]" />
-                    <span className="absolute bg-white px-3 text-[11px] font-bold text-[#94A3B8] uppercase tracking-wider">
+                    <span className="absolute bg-white px-3 text-[11px] font-bold text-[#94A3B8] uppercase tracking-wider u-mono">
                       OR
                     </span>
                   </div>
@@ -724,7 +725,7 @@ export default function AuthCard({
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Your name"
-                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7F8FA] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                        className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7F9FC] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
                       />
                     </motion.div>
                   )}
@@ -740,7 +741,7 @@ export default function AuthCard({
                       placeholder={
                         mode === "signup" ? "Your email" : "Enter username or email"
                       }
-                      className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7F8FA] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                      className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7F9FC] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
                     />
                   </div>
 
@@ -769,7 +770,7 @@ export default function AuthCard({
                             ? "Create a password"
                             : "Enter your password"
                         }
-                        className="w-full px-4 py-3 pr-11 rounded-xl border border-[#E2E8F0] bg-[#F7F8FA] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
+                        className="w-full px-4 py-3 pr-11 rounded-xl border border-[#E2E8F0] bg-[#F7F9FC] focus:bg-white text-sm text-[#0F172A] placeholder:text-[#94A3B8] focus:outline-none focus:border-[#192841] focus:ring-2 focus:ring-[#192841]/15 transition-all"
                       />
                       <button
                         type="button"
@@ -785,7 +786,7 @@ export default function AuthCard({
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 px-6 rounded-xl sm:rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
+                      className="w-full py-3.5 px-6 rounded-xl sm:rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-sm sm:text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer flex items-center justify-center gap-2"
                     >
                       <span>
                         {mode === "signup" ? "Create Account" : "Sign In to Univa"}
@@ -797,7 +798,7 @@ export default function AuthCard({
 
                 <div className="relative flex items-center justify-center pt-1">
                   <div className="w-full border-t border-[#E2E8F0]" />
-                  <span className="absolute bg-white px-3 text-[11px] font-bold text-[#94A3B8] uppercase tracking-wider">
+                  <span className="absolute bg-white px-3 text-[11px] font-bold text-[#94A3B8] uppercase tracking-wider u-mono">
                     OR
                   </span>
                 </div>

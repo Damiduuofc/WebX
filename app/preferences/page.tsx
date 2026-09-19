@@ -1,10 +1,8 @@
 "use client";
 
-import React, { useState, Suspense } from "react";
-import Link from "next/link";
+import React, { useState, useRef, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
-  ArrowLeft,
   ArrowRight,
   MapPin,
   ArrowUpDown,
@@ -13,13 +11,13 @@ import {
   Accessibility,
   Coins,
   Footprints,
-  Train,
-  Bus,
   Search,
   SlidersHorizontal,
   Info,
 } from "lucide-react";
 import { AuthGuard, useAuth, RoutePreference } from "../context/auth";
+import RoutePreviewMap from "../components/RoutePreviewMap";
+import FlowHeader from "../components/FlowHeader";
 
 const PREFERENCE_OPTIONS: {
   id: RoutePreference;
@@ -87,6 +85,18 @@ function PreferencesContent() {
   const [toLocation, setToLocation] = useState(paramTo || journey.destination || "Bandaranaike International Airport (BIA)");
   const [selectedPref, setSelectedPref] = useState<RoutePreference>(journey.preference || "fastest");
   const [isChangingFrom, setIsChangingFrom] = useState(false);
+  const toInputRef = useRef<HTMLInputElement>(null);
+
+  const focusDestination = () => {
+    toInputRef.current?.focus();
+    toInputRef.current?.select();
+  };
+
+  // "Change Destination" on the journey plan lands here with the destination ready to edit
+  const shouldFocusDestination = searchParams.get("focus") === "destination";
+  useEffect(() => {
+    if (shouldFocusDestination) focusDestination();
+  }, [shouldFocusDestination]);
 
   const handleSwap = () => {
     const temp = fromLocation;
@@ -144,36 +154,14 @@ function PreferencesContent() {
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
       {/* Top Header & Breadcrumb */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="p-2.5 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-[#0F172A] transition-all shadow-xs"
-            title="Return to Home Dashboard"
-          >
-            <ArrowLeft size={18} />
-          </Link>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
-                Plan your Journey
-              </h1>
-              <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold">
-                Step 1 of 4
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-[#64748B]">
-              Define starting point, destination, and multi-modal routing preferences.
-            </p>
-          </div>
-        </div>
-
-        {/* Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto">
-          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-          <span>Autonomous Network Active</span>
-        </div>
-      </div>
+      <FlowHeader
+        backHref="/"
+        backTitle="Return to Home Dashboard"
+        title="Plan your Journey"
+        step="Step 1 of 4"
+        subtitle="Define starting point, destination, and multi-modal routing preferences."
+        status="Autonomous Network Active"
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* ========================================================================= */}
@@ -181,9 +169,9 @@ function PreferencesContent() {
         {/* ========================================================================= */}
         <div className="lg:col-span-7 space-y-6">
           {/* Origin & Destination Inputs Card */}
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4 u-surface u-hud">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+              <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider u-mono">
                 Origin & Destination
               </span>
               <button
@@ -206,7 +194,7 @@ function PreferencesContent() {
                   <MapPin size={16} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block u-mono">
                     From (Current Location)
                   </span>
                   {isChangingFrom ? (
@@ -215,6 +203,9 @@ function PreferencesContent() {
                       value={fromLocation}
                       onChange={(e) => setFromLocation(e.target.value)}
                       onBlur={() => setIsChangingFrom(false)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") setIsChangingFrom(false);
+                      }}
                       autoFocus
                       className="w-full text-sm font-bold text-[#0F172A] bg-white border border-[#192841] rounded-lg px-2 py-1 outline-none"
                     />
@@ -226,6 +217,9 @@ function PreferencesContent() {
                 </div>
                 <button
                   type="button"
+                  // Keep the input focused until the click lands; otherwise its blur
+                  // closes the editor first and this click would reopen it ("Done" did nothing).
+                  onMouseDown={(e) => e.preventDefault()}
                   onClick={() => setIsChangingFrom(!isChangingFrom)}
                   className="px-3 py-1.5 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-xs font-bold text-[#192841] transition-all cursor-pointer shrink-0"
                 >
@@ -239,10 +233,11 @@ function PreferencesContent() {
                   <Search size={16} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+                  <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block u-mono">
                     To (Destination)
                   </span>
                   <input
+                    ref={toInputRef}
                     type="text"
                     value={toLocation}
                     onChange={(e) => setToLocation(e.target.value)}
@@ -250,12 +245,19 @@ function PreferencesContent() {
                     className="w-full text-sm font-bold text-[#0F172A] bg-transparent outline-none truncate placeholder:text-[#64748B]/60"
                   />
                 </div>
+                <button
+                  type="button"
+                  onClick={focusDestination}
+                  className="px-3 py-1.5 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-xs font-bold text-[#192841] transition-all cursor-pointer shrink-0"
+                >
+                  Change
+                </button>
               </div>
             </div>
           </div>
 
           {/* Route Preferences Selection (Section 14) */}
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4 u-surface u-hud">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-bold text-[#0F172A]">
@@ -336,7 +338,7 @@ function PreferencesContent() {
           <button
             type="button"
             onClick={handleFindRoutes}
-            className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
+            className="w-full py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
           >
             <span>Find Routes</span>
             <ArrowRight size={18} />
@@ -348,121 +350,16 @@ function PreferencesContent() {
         {/* ========================================================================= */}
         <div className="lg:col-span-5 space-y-6">
           {/* Map Preview Card (Section 13) */}
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4 u-surface u-hud">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider">
+              <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider u-mono">
                 Synchronized Map Preview
               </span>
               <span className="text-xs font-semibold text-[#192841]">18.4 km Total</span>
             </div>
 
-            {/* Simplified Map Visual */}
-            <div className="relative w-full h-72 sm:h-80 rounded-2xl bg-[#0F172A] border border-[#E2E8F0] overflow-hidden p-4 flex flex-col justify-between u-glow-strong">
-              {/* Subtle Grid Map Canvas Pattern */}
-              <div
-                className="absolute inset-0 opacity-20 pointer-events-none"
-                style={{
-                  backgroundImage:
-                    "radial-gradient(#94A3B8 1px, transparent 1px), radial-gradient(#94A3B8 1px, #0F172A 1px)",
-                  backgroundSize: "24px 24px",
-                  backgroundPosition: "0 0, 12px 12px",
-                }}
-              />
-
-              {/* Vector SVG Transit Route overlay */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                {/* Autonomous Bus Route (Origin to Interchange) — laser beam */}
-                <path
-                  d="M 60 220 C 100 180, 120 160, 180 150"
-                  fill="none"
-                  stroke="#38BDF8"
-                  strokeWidth="10"
-                  opacity={0.35}
-                  style={{ filter: "blur(5px)" }}
-                />
-                <path
-                  d="M 60 220 C 100 180, 120 160, 180 150"
-                  fill="none"
-                  stroke="#38BDF8"
-                  strokeWidth="3"
-                  strokeDasharray="10 14"
-                  strokeLinecap="round"
-                  className="u-laser-flow"
-                  style={{ filter: "drop-shadow(0 0 4px #38BDF8)" }}
-                />
-                <path
-                  d="M 60 220 C 100 180, 120 160, 180 150"
-                  fill="none"
-                  stroke="#E6F6FF"
-                  strokeWidth="1"
-                  opacity={0.9}
-                />
-
-                {/* SkyRail Guideway Line (Interchange to Destination) — laser beam */}
-                <path
-                  d="M 180 150 C 230 140, 270 90, 320 60"
-                  fill="none"
-                  stroke="#22C55E"
-                  strokeWidth="11"
-                  opacity={0.35}
-                  style={{ filter: "blur(5px)" }}
-                />
-                <path
-                  d="M 180 150 C 230 140, 270 90, 320 60"
-                  fill="none"
-                  stroke="#22C55E"
-                  strokeWidth="3"
-                  strokeDasharray="10 14"
-                  strokeLinecap="round"
-                  className="u-laser-flow"
-                  style={{ filter: "drop-shadow(0 0 4px #22C55E)", animationDirection: "reverse" }}
-                />
-                <path
-                  d="M 180 150 C 230 140, 270 90, 320 60"
-                  fill="none"
-                  stroke="#E9FFF1"
-                  strokeWidth="1"
-                  opacity={0.9}
-                />
-
-                {/* Stations */}
-                {/* Origin */}
-                <circle cx="60" cy="220" r="7" fill="#FFFFFF" stroke="#38BDF8" strokeWidth="3" />
-                {/* Interchange */}
-                <circle cx="180" cy="150" r="9" fill="#FFFFFF" stroke="#F59E0B" strokeWidth="4" />
-                {/* Destination */}
-                <circle cx="320" cy="60" r="8" fill="#FFFFFF" stroke="#22C55E" strokeWidth="4" />
-              </svg>
-
-              {/* Floating Map Badges */}
-              <div className="relative z-10 flex items-center justify-between text-white text-xs">
-                <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 font-bold flex items-center gap-1.5">
-                  <span className="u-pulse-dot" style={{ "--pulse-color": "#34D399" } as React.CSSProperties} />
-                  Live GPS Corridor
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-[#192841]/90 backdrop-blur-md border border-white/20 text-[11px] font-semibold">
-                  2 Transfers
-                </span>
-              </div>
-
-              {/* Station Map Overlay Tags */}
-              <div className="relative z-10 space-y-2 pointer-events-none">
-                <div className="bg-black/75 backdrop-blur-md rounded-xl p-2.5 border border-white/10 text-white text-xs space-y-1">
-                  <div className="flex items-center justify-between font-bold">
-                    <span className="flex items-center gap-1 text-sky-400">
-                      <Bus size={13} /> Bus 245
-                    </span>
-                    <span className="text-[#64748B]">→</span>
-                    <span className="flex items-center gap-1 text-emerald-400">
-                      <Train size={13} /> SkyRail 02
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-300">
-                    Step-free transfer at <strong>Central Station Hub</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
+            {/* Route preview, drawn from the same route data as the live map */}
+            <RoutePreviewMap />
 
             {/* Micro Details */}
             <div className="grid grid-cols-2 gap-3 pt-1 text-xs">
@@ -470,7 +367,7 @@ function PreferencesContent() {
                 <span className="text-[#64748B] block text-[11px]">Primary Guideway</span>
                 <span className="font-bold text-[#0F172A] mt-0.5 block">SkyRail Maglev Line 02</span>
               </div>
-              <div className="p-3 rounded-xl bg-[#F7F8FA] border border-[#E2E8F0]">
+              <div className="p-3 rounded-xl bg-[#F7F9FC] border border-[#E2E8F0]">
                 <span className="text-[#64748B] block text-[11px]">Feeder Fleet</span>
                 <span className="font-bold text-[#0F172A] mt-0.5 block">Autonomous Bus 245</span>
               </div>

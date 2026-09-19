@@ -31,82 +31,89 @@ interface OrbitVehicle {
   key: string;
   /** Container width per breakpoint = length of the vehicle, so sizes differ. */
   sizeClass: string;
-  /** --half (half rendered width incl. depth scale), --ry (vertical radius) per breakpoint. */
+  /**
+   * Per-breakpoint orbit inputs as custom properties: --half (half the rendered
+   * width incl. depth scale), --ry / --rxmax (orbit radii) and --ph (start phase).
+   */
   vars: string;
-  rxMax: number;
-  phase: number;
+  /** Offsets the hover bob so the vehicles don't bob in unison. */
+  bobDelaySec: number;
 }
 
 interface VehicleView {
   src: string;
   width: number;
   height: number;
-  /** Rendered width as a % of the vehicle length, so every view shares one height. */
+  /** Rendered width as a % of the vehicle length; every view shares one body height. */
   widthPct: number;
+  /** Top offset (% of the container) that puts the body's centre on the container's centre. */
+  topPct: number;
 }
 
 // Views of the Gravity Weaver concept vehicle, cut out from the reference poster.
-// Widths are chosen so the vehicle keeps the same height in every view.
+// Widths and offsets are measured so the body keeps the same size and the same
+// height above the ground in every view - otherwise the vehicle would appear to
+// jump when the angle changes.
 const VEHICLE_VIEWS: Record<"front" | "hero" | "side" | "rear", VehicleView> = {
-  front: { src: "/images/vehicle-front.webp", width: 326, height: 175, widthPct: 67.8 },
-  hero: { src: "/images/vehicle-hero.webp", width: 637, height: 284, widthPct: 100 },
-  side: { src: "/images/vehicle-side.webp", width: 365, height: 133, widthPct: 100 },
-  rear: { src: "/images/vehicle-rear.webp", width: 350, height: 158, widthPct: 80.7 },
+  front: { src: "/images/vehicle-front.webp", width: 326, height: 175, widthPct: 67.8, topPct: 9.7 },
+  hero: { src: "/images/vehicle-hero.webp", width: 637, height: 284, widthPct: 100, topPct: 1.1 },
+  side: { src: "/images/vehicle-side.webp", width: 365, height: 133, widthPct: 100, topPct: 12.4 },
+  rear: { src: "/images/vehicle-rear.webp", width: 350, height: 158, widthPct: 80.7, topPct: 9.7 },
 };
 
+// Heading sequence over one lap: front -> 3/4 -> side (moving right) -> rear ->
+// side (moving left) -> 3/4 -> front. Right-facing views are the same vehicle
+// seen from its other side. "fa"/"fb" are the same front view, duplicated so the
+// loop point is seamless. Each id matches the .u-vo-* / .u-vs-* keyframes.
+const VEHICLE_LAYERS: { id: string; view: keyof typeof VEHICLE_VIEWS; mirror: boolean }[] = [
+  { id: "fa", view: "front", mirror: false },
+  { id: "h1", view: "hero", mirror: true },
+  { id: "s1", view: "side", mirror: true },
+  { id: "r", view: "rear", mirror: false },
+  { id: "s2", view: "side", mirror: false },
+  { id: "h2", view: "hero", mirror: false },
+  { id: "fb", view: "front", mirror: false },
+];
+
 // One shared orbit period and fixed phase offsets keep the vehicles a constant
-// distance apart in time, so they can never meet (verified for 640px-1920px).
+// distance apart in time, so they can never meet (verified for 320px-1920px).
 const ORBIT_SECONDS = 40;
 
 const ORBIT_VEHICLES: OrbitVehicle[] = [
   {
     key: "large",
-    sizeClass: "w-[120px] sm:w-[200px] lg:w-[250px]",
-    vars: "[--half:70px] sm:[--half:116px] lg:[--half:145px] [--ry:26px] sm:[--ry:60px] lg:[--ry:86px]",
-    rxMax: 470,
-    phase: 0,
+    sizeClass: "w-[110px] sm:w-[200px] lg:w-[250px]",
+    vars: "[--ph:0] [--rxmax:470px] [--half:64px] sm:[--half:116px] lg:[--half:145px] [--ry:40px] sm:[--ry:60px] lg:[--ry:86px]",
+    bobDelaySec: 0,
   },
   {
+    // Phones get a small second vehicle on its own, taller path (phase 0.5) so
+    // the two stay clear of each other at every width from 320px up.
     key: "medium",
-    sizeClass: "hidden sm:block sm:w-[130px] lg:w-[170px]",
-    vars: "sm:[--half:75px] lg:[--half:99px] sm:[--ry:46px] lg:[--ry:64px]",
-    rxMax: 420,
-    phase: 0.5417,
+    sizeClass: "w-[56px] sm:w-[130px] lg:w-[170px]",
+    vars: "[--ph:0.5] sm:[--ph:0.5417] [--rxmax:300px] sm:[--rxmax:420px] [--half:33px] sm:[--half:75px] lg:[--half:99px] [--ry:56px] sm:[--ry:46px] lg:[--ry:64px]",
+    bobDelaySec: -1.2,
   },
   {
     key: "small",
     sizeClass: "hidden sm:block sm:w-[85px] lg:w-[110px]",
-    vars: "sm:[--half:49px] lg:[--half:64px] sm:[--ry:78px] lg:[--ry:100px]",
-    rxMax: 360,
-    phase: 0.2917,
+    vars: "sm:[--ph:0.2917] sm:[--rxmax:360px] sm:[--half:49px] lg:[--half:64px] sm:[--ry:78px] lg:[--ry:100px]",
+    bobDelaySec: -2.4,
   },
 ];
 
 /**
  * One vehicle flying an elliptical loop around the section heading. It is
- * never mirrored or flipped: as it goes round it is shown from real angles
- * (front, front-3/4, side, rear) that cross-fade in step with its heading,
- * so the turns read as a real vehicle banking round.
- * All motion is CSS (see .u-orbit-* and .u-view-* in globals.css).
+ * never mirrored or flipped mid-flight: as it goes round it is shown from real
+ * angles (front, front-3/4, side, rear) that blend in step with its heading,
+ * so the turns read as a real vehicle banking round, and a slow bob keeps it
+ * hovering. All motion is CSS (see .u-orbit-*, .u-vo-* and .u-vs-* in globals.css).
  */
 function OrbitingVehicle({ vehicle }: { vehicle: OrbitVehicle }) {
   const style = {
     "--dur": `${ORBIT_SECONDS}s`,
-    "--ph": vehicle.phase,
-    "--rxmax": `${vehicle.rxMax}px`,
+    "--bd": `${vehicle.bobDelaySec}s`,
   } as React.CSSProperties;
-
-  // Heading sequence over one lap: front -> 3/4 -> side (moving right) -> rear
-  // -> side (moving left) -> 3/4 -> front. Right-facing views are the same
-  // vehicle seen from the other side.
-  const layers: { cls: string; view: keyof typeof VEHICLE_VIEWS; mirror: boolean }[] = [
-    { cls: "u-view-front", view: "front", mirror: false },
-    { cls: "u-view-hero-a", view: "hero", mirror: true },
-    { cls: "u-view-side-a", view: "side", mirror: true },
-    { cls: "u-view-rear", view: "rear", mirror: false },
-    { cls: "u-view-side-b", view: "side", mirror: false },
-    { cls: "u-view-hero-b", view: "hero", mirror: false },
-  ];
 
   return (
     <div
@@ -115,30 +122,34 @@ function OrbitingVehicle({ vehicle }: { vehicle: OrbitVehicle }) {
     >
       <div className="u-orbit-x">
         <div className="u-orbit-ys">
-          <div
-            className="relative w-full aspect-[100/45]"
-            style={{ filter: "drop-shadow(0 16px 18px rgba(15,23,42,0.12))" }}
-          >
-            {layers.map((layer) => {
-              const v = VEHICLE_VIEWS[layer.view];
-              return (
-                <div
-                  key={layer.cls}
-                  className={`${layer.cls} absolute bottom-0 left-1/2 -translate-x-1/2`}
-                  style={{ width: `${v.widthPct}%` }}
-                >
-                  <Image
-                    src={v.src}
-                    alt=""
-                    width={v.width}
-                    height={v.height}
-                    draggable={false}
-                    className="w-full h-auto select-none"
-                    style={layer.mirror ? { transform: "scaleX(-1)" } : undefined}
-                  />
-                </div>
-              );
-            })}
+          <div className="u-orbit-bob">
+            <div className="relative w-full aspect-[2/1]">
+              {VEHICLE_LAYERS.map((layer) => {
+                const v = VEHICLE_VIEWS[layer.view];
+                return (
+                  <div
+                    key={layer.id}
+                    className={`u-vo-${layer.id} absolute left-1/2 -translate-x-1/2`}
+                    style={{ width: `${v.widthPct}%`, top: `${v.topPct}%` }}
+                  >
+                    <div className={`u-vs-${layer.id}`}>
+                      <Image
+                        src={v.src}
+                        alt=""
+                        width={v.width}
+                        height={v.height}
+                        draggable={false}
+                        className="w-full h-auto select-none"
+                        style={{
+                          filter: "drop-shadow(0 16px 18px rgba(15,23,42,0.12))",
+                          transform: layer.mirror ? "scaleX(-1)" : undefined,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
@@ -324,7 +335,7 @@ function HomeContent() {
 
       {voiceTranscript && (
         <div className="max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-          <div className="p-3.5 bg-white rounded-2xl border border-[#E2E8F0] shadow-sm flex items-center gap-2.5 text-xs text-[#0F172A]">
+          <div className="p-3.5 bg-white rounded-2xl border border-[#E2E8F0] shadow-sm flex items-center gap-2.5 text-xs text-[#0F172A] u-surface">
             <Volume2 size={16} className="text-[#192841] shrink-0" />
             <span className="font-semibold">{voiceTranscript}</span>
           </div>
@@ -339,7 +350,7 @@ function HomeContent() {
         <section className="space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider mb-2">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider mb-2 u-mono">
                 <Navigation size={14} className="text-[#192841]" />
                 <span>Quick Transit Access</span>
               </div>
@@ -351,7 +362,7 @@ function HomeContent() {
             {/* Passenger Authentication Status Card */}
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
-                <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs text-xs">
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl bg-white border border-[#E2E8F0] shadow-xs text-xs u-surface">
                   <div className="w-7 h-7 rounded-xl bg-[#192841] text-white flex items-center justify-center font-bold">
                     {user?.name?.charAt(0) || "P"}
                   </div>
@@ -367,7 +378,7 @@ function HomeContent() {
                 <div className="flex items-center gap-2">
                   <Link
                     href="/signup"
-                    className="px-4 py-2 rounded-xl bg-[#4F6EF7] text-white text-xs font-bold shadow-xs hover:bg-[#3B4FE0] transition-all"
+                    className="px-4 py-2 rounded-xl bg-[#192841] text-white text-xs font-bold shadow-xs hover:bg-[#111C2E] u-btn transition-all"
                   >
                     Create Account
                   </Link>
@@ -413,7 +424,7 @@ function HomeContent() {
           </div>
 
           {/* SECTION 12: SAVED PLACES */}
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-6 shadow-sm space-y-4 u-surface u-hud">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-2xl bg-[#192841] text-white flex items-center justify-center shrink-0">
@@ -509,9 +520,9 @@ function HomeContent() {
           {/* Services Showcase Cards */}
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pt-4">
             {/* Left Narrative */}
-            <div className="lg:col-span-4 bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-4 bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-xs flex flex-col justify-between space-y-6 u-surface u-hud">
               <div className="space-y-4">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider u-mono">
                   <span className="w-2 h-2 rounded-full bg-[#192841]" />
                   <span>01 Rider Services</span>
                 </div>
@@ -533,7 +544,7 @@ function HomeContent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                   <div className="absolute bottom-2.5 left-3.5 right-3.5 flex items-center justify-between text-white pointer-events-none">
                     <div>
-                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">Unified Fleet</span>
+                      <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block u-mono">Unified Fleet</span>
                       <span className="text-xs font-bold">Synchronized Autonomous Grid</span>
                     </div>
                   </div>
@@ -544,7 +555,7 @@ function HomeContent() {
                 <button
                   type="button"
                   onClick={() => handleStartPlanning()}
-                  className="w-full py-3.5 px-6 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-6 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-sm transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Plan Your Journey</span>
                   <ArrowRight size={16} />
@@ -591,7 +602,7 @@ function HomeContent() {
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent pointer-events-none" />
                           <div className="absolute bottom-2.5 left-3 right-3 text-white pointer-events-none">
-                            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
+                            <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block u-mono">
                               {svc.tag}
                             </span>
                             <h4 className="text-sm font-extrabold text-white leading-tight drop-shadow-sm truncate">
@@ -651,7 +662,7 @@ function HomeContent() {
         <section id="routes-section" className="space-y-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold uppercase tracking-wider u-mono">
                 <span className="w-2 h-2 rounded-full bg-[#192841]" />
                 <span>Popular Commuter Routes</span>
               </div>
@@ -667,7 +678,7 @@ function HomeContent() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* CARD 1: KDU Campus */}
-            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all">
+            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all u-surface u-surface-hover u-hud">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-[#0F172A]">KDU Defence University</span>
@@ -721,7 +732,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("General Sir John Kotelawala Defence University (KDU)")}
-                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />
@@ -729,7 +740,7 @@ function HomeContent() {
             </div>
 
             {/* CARD 2: Airport */}
-            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all">
+            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all u-surface u-surface-hover u-hud">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-[#0F172A]">Bandaranaike Airport</span>
@@ -783,7 +794,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("Bandaranaike International Airport (BIA)")}
-                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />
@@ -791,7 +802,7 @@ function HomeContent() {
             </div>
 
             {/* CARD 3: Marine Drive */}
-            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm hover:shadow-md flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all">
+            <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-sm flex flex-col justify-between space-y-4 hover:border-[#192841]/60 transition-all u-surface u-surface-hover u-hud">
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-[#0F172A]">Marine Drive Promenade</span>
@@ -845,7 +856,7 @@ function HomeContent() {
               <button
                 type="button"
                 onClick={() => handleStartPlanning("Marine Drive Promenade, Kollupitiya")}
-                className="w-full py-3 rounded-xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
+                className="w-full py-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-xs"
               >
                 <span>Select & Plan Journey</span>
                 <ArrowRight size={14} />

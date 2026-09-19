@@ -134,24 +134,25 @@ function JourneyCompleteContent() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#F7F8FA] text-[#0F172A] flex items-center justify-center px-4 sm:px-6 lg:px-10 pt-24 pb-12 lg:pt-28 lg:pb-16">
+    <div className="w-full min-h-screen text-[#0F172A] flex items-center justify-center px-4 sm:px-6 lg:px-10 pt-24 pb-12 lg:pt-28 lg:pb-16">
       <div className="w-full max-w-3xl grid grid-cols-1 gap-6">
         {/* ===================================================================== */}
         {/* CELEBRATORY HEADER                                                     */}
         {/* ===================================================================== */}
-        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(25,40,65,0.06)] text-center space-y-4">
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(25,40,65,0.06)] text-center space-y-4 u-surface u-hud">
           <div className="mx-auto w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
             <CheckCircle2 size={34} className="text-[#22C55E] lg:w-11 lg:h-11" strokeWidth={2} />
           </div>
 
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-[11px] font-extrabold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-[11px] font-extrabold uppercase tracking-wider u-mono">
               <Sparkles size={12} />
               <span>Journey Complete</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0F172A]">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0F172A] u-title">
               You&apos;ve arrived 🎉
             </h1>
+            <div className="u-accent-line w-16 mx-auto" />
             <p className="text-sm lg:text-base text-[#64748B] font-bold">
               {currentJourney.origin.split(",")[0]} to {currentJourney.destination.split(",")[0]}
             </p>
@@ -161,7 +162,7 @@ function JourneyCompleteContent() {
         {/* ===================================================================== */}
         {/* TRIP SUMMARY STATS                                                     */}
         {/* ===================================================================== */}
-        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5">
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5 u-surface u-hud">
           <h2 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wide">
             Trip Summary
           </h2>
@@ -172,14 +173,14 @@ function JourneyCompleteContent() {
               return (
                 <div
                   key={stat.label}
-                  className="p-4 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] flex flex-col gap-2"
+                  className="p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0] flex flex-col gap-2"
                 >
                   <Icon size={18} className="text-[#192841]" strokeWidth={1.75} />
                   <div>
                     <div className="text-[10px] font-bold text-[#64748B] uppercase tracking-wide">
                       {stat.label}
                     </div>
-                    <div className="text-sm font-extrabold text-[#0F172A] mt-0.5 leading-snug">
+                    <div className="text-sm font-extrabold text-[#0F172A] mt-0.5 leading-snug u-digital-num">
                       {stat.value}
                     </div>
                   </div>
@@ -192,7 +193,7 @@ function JourneyCompleteContent() {
               <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wide">
                 Fare Charged
               </div>
-              <div className="text-lg font-black">LKR {currentJourney.fare}.00</div>
+              <div className="text-lg font-black u-digital-num">LKR {currentJourney.fare}.00</div>
             </div>
           </div>
         </div>
@@ -201,7 +202,7 @@ function JourneyCompleteContent() {
         {/* RATING & FEEDBACK                                                      */}
         {/* ===================================================================== */}
         {!submitted ? (
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-9 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-9 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5 u-surface u-hud">
             <div className="space-y-1">
               <h2 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wide">
                 Rate Your Trip
@@ -255,7 +256,7 @@ function JourneyCompleteContent() {
                     className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
                       isSelected
                         ? "bg-[#192841] text-white border-[#192841]"
-                        : "bg-[#F7F8FA] text-[#64748B] border-[#E2E8F0] hover:border-[#192841] hover:text-[#0F172A]"
+                        : "bg-[#F7F9FC] text-[#64748B] border-[#E2E8F0] hover:border-[#192841] hover:text-[#0F172A]"
                     }`}
                   >
                     {tag}
@@ -270,7 +271,7 @@ function JourneyCompleteContent() {
               onChange={(e) => setFeedback(e.target.value)}
               placeholder="Add a comment (optional)..."
               rows={3}
-              className="w-full p-3.5 rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] text-xs font-semibold text-[#0F172A] placeholder:text-[#64748B]/70 focus:outline-none focus:border-[#192841] focus:bg-white transition-all resize-none"
+              className="w-full p-3.5 rounded-2xl border border-[#E2E8F0] bg-[#F7F9FC] text-xs font-semibold text-[#0F172A] placeholder:text-[#64748B]/70 focus:outline-none focus:border-[#192841] focus:bg-white transition-all resize-none"
             />
 
             {/* Done Button */}
@@ -278,7 +279,7 @@ function JourneyCompleteContent() {
               <button
                 type="button"
                 onClick={handleDone}
-                className="w-full max-w-64 mx-auto flex justify-center py-3.5 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-extrabold text-sm transition-all cursor-pointer shadow-[0_4px_16px_rgba(25,40,65,0.25)] active:scale-[0.99]"
+                className="w-full max-w-64 mx-auto flex justify-center py-3.5 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-extrabold text-sm transition-all cursor-pointer shadow-[0_4px_16px_rgba(25,40,65,0.25)] active:scale-[0.99]"
               >
                 Done
               </button>
@@ -288,7 +289,7 @@ function JourneyCompleteContent() {
           /* ===================================================================== */
           /* POST-SUBMIT CONFIRMATION                                               */
           /* ===================================================================== */
-          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 shadow-[0_4px_20px_rgba(25,40,65,0.06)] text-center space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 shadow-[0_4px_20px_rgba(25,40,65,0.06)] text-center space-y-4 u-surface u-hud">
             <div className="mx-auto w-14 h-14 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
               <CheckCircle2 size={28} className="text-[#22C55E]" />
             </div>
@@ -305,7 +306,7 @@ function JourneyCompleteContent() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
                 <Link
                   href="/"
-                  className="w-[90%] sm:w-64 py-3 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                  className="w-[90%] sm:w-64 py-3 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 >
                   <Home size={16} />
                   <span>Back to Home</span>

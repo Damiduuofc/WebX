@@ -4,7 +4,6 @@ import React, { Suspense } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ArrowLeft,
   ArrowRight,
   Clock,
   Footprints,
@@ -13,6 +12,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { AuthGuard, useAuth } from "../context/auth";
+import FlowHeader from "../components/FlowHeader";
 
 function JourneyPlanContent() {
   const router = useRouter();
@@ -25,39 +25,17 @@ function JourneyPlanContent() {
   return (
     <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
       {/* Top Header & Breadcrumbs */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/preferences"
-            className="p-2.5 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-[#0F172A] transition-all shadow-xs"
-            title="Back to Route Preferences"
-          >
-            <ArrowLeft size={18} />
-          </Link>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
-                Your Journey
-              </h1>
-              <span className="hidden sm:inline-block px-2.5 py-0.5 rounded-full bg-[#192841]/10 text-[#192841] text-xs font-bold">
-                Step 2 of 4
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm text-[#64748B]">
-              Review your synchronized multi-modal itinerary before starting live transit.
-            </p>
-          </div>
-        </div>
-
-        {/* Status Pill */}
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold self-start sm:self-auto">
-          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-          <span>Synchronized & On Time</span>
-        </div>
-      </div>
+      <FlowHeader
+        backHref="/preferences"
+        backTitle="Back to Route Preferences"
+        title="Your Journey"
+        step="Step 2 of 4"
+        subtitle="Review your synchronized multi-modal itinerary before starting live transit."
+        status="Synchronized & On Time"
+      />
 
       {/* From & To Route Card */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6 u-surface u-hud">
         <div className="flex items-center gap-4">
           <div className="flex flex-col items-center gap-1">
             <div className="w-4 h-4 rounded-full bg-[#192841] border-2 border-white ring-2 ring-[#192841]/30" />
@@ -66,7 +44,7 @@ function JourneyPlanContent() {
           </div>
           <div className="space-y-3">
             <div>
-              <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+              <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block u-mono">
                 From
               </span>
               <div className="text-base font-bold text-[#0F172A]">
@@ -74,7 +52,7 @@ function JourneyPlanContent() {
               </div>
             </div>
             <div>
-              <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block">
+              <span className="text-[10px] font-bold text-[#64748B] uppercase tracking-wider block u-mono">
                 To
               </span>
               <div className="text-base font-bold text-[#0F172A]">
@@ -86,7 +64,7 @@ function JourneyPlanContent() {
 
         <div className="flex flex-wrap items-center gap-3">
           <Link
-            href="/preferences"
+            href="/preferences?focus=destination"
             className="px-4 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-[#E2E8F0] text-xs font-bold text-[#192841] transition-all"
           >
             Change Destination
@@ -99,7 +77,7 @@ function JourneyPlanContent() {
       {/* ========================================================================= */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Arrival */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs">
+        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Clock size={18} />
           </div>
@@ -112,7 +90,7 @@ function JourneyPlanContent() {
         </div>
 
         {/* Journey Time */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs">
+        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Zap size={18} />
           </div>
@@ -125,7 +103,7 @@ function JourneyPlanContent() {
         </div>
 
         {/* Transfers */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs">
+        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Train size={18} />
           </div>
@@ -138,7 +116,7 @@ function JourneyPlanContent() {
         </div>
 
         {/* Walking */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs">
+        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
           <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
             <Footprints size={18} />
           </div>
@@ -154,7 +132,7 @@ function JourneyPlanContent() {
       {/* ========================================================================= */}
       {/* SECTION 17: JOURNEY TIMELINE (Exact Specification from AGENTS.md)          */}
       {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6 u-surface u-hud">
         <div className="flex items-center justify-between pb-4 border-b border-[#E2E8F0]">
           <div>
             <h3 className="text-lg font-bold text-[#0F172A]">
@@ -201,7 +179,7 @@ function JourneyPlanContent() {
             <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
               🚌
             </div>
-            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1">
+            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-[#192841]">10:01 AM → 10:16 AM</span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
@@ -227,9 +205,9 @@ function JourneyPlanContent() {
                   Transfer Hub
                 </span>
               </div>
-              <h4 className="text-sm font-bold text-amber-950">Central Station Interchange</h4>
+              <h4 className="text-sm font-bold text-amber-950">Colombo Fort Multimodal Hub</h4>
               <p className="text-xs text-amber-800">
-                Change to SkyRail Line 02. Walk 120m to Platform 2 (Elevator access available).
+                Change to SkyRail Line 02. Follow the Platform 3 SkyGuideway Link (Elevator access available).
               </p>
             </div>
           </div>
@@ -239,7 +217,7 @@ function JourneyPlanContent() {
             <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
               🚄
             </div>
-            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1">
+            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-[#192841]">10:28 AM → 10:34 AM</span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
@@ -258,7 +236,7 @@ function JourneyPlanContent() {
             <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
               🛣
             </div>
-            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1">
+            <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-black text-[#192841]">10:34 AM → 10:42 AM</span>
                 <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
@@ -289,10 +267,10 @@ function JourneyPlanContent() {
       {/* ========================================================================= */}
       {/* SECTION 18: TRANSPORT INFORMATION & ACTIONS (CTAs)                         */}
       {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6">
+      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6 u-surface u-hud">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
           <div>
-            <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider block">
+            <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider block u-mono">
               Digital Transit Pass
             </span>
             <div className="text-xl font-extrabold text-[#0F172A] mt-0.5">
@@ -310,7 +288,7 @@ function JourneyPlanContent() {
           <button
             type="button"
             onClick={handleStartJourney}
-            className="w-full sm:flex-1 py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
+            className="w-full sm:flex-1 py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
           >
             <span>Start Journey</span>
             <ArrowRight size={18} />

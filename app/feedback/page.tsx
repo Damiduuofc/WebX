@@ -54,7 +54,7 @@ function FeedbackContent() {
         <span className="text-xs font-bold text-[#192841] bg-[#192841]/10 px-3 py-1 rounded-full">
           Step 4 of 4 • Rider Feedback
         </span>
-        <h1 className="text-2xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
+        <h1 className="text-2xl sm:text-4xl font-black text-[#0F172A] tracking-tight u-title">
           How was your journey?
         </h1>
         <div className="u-accent-line w-14 mx-auto" />
@@ -64,7 +64,7 @@ function FeedbackContent() {
       </div>
 
       {submitted ? (
-        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-8 text-center space-y-4 shadow-sm animate-fadeIn">
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-8 text-center space-y-4 shadow-sm animate-fadeIn u-surface u-hud">
           <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center u-glow">
             <CheckCircle2 size={32} />
           </div>
@@ -74,7 +74,7 @@ function FeedbackContent() {
           </p>
         </div>
       ) : (
-        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6">
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-6 u-surface u-hud">
           {/* 1-5 Star Interactive Selector */}
           <div className="text-center space-y-3">
             <div className="flex items-center justify-center gap-2">
@@ -137,7 +137,7 @@ function FeedbackContent() {
 
           {/* Optional Text Field (Section 29) */}
           <div className="space-y-2 pt-2 border-t border-[#E2E8F0]">
-            <label className="text-xs font-bold text-[#0F172A] block uppercase tracking-wider">
+            <label className="text-xs font-bold text-[#0F172A] block uppercase tracking-wider u-mono">
               Tell us what we could improve (Optional)
             </label>
             <textarea
@@ -153,7 +153,7 @@ function FeedbackContent() {
           <button
             type="button"
             onClick={handleDone}
-            className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full py-4 px-8 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
           >
             <span>Done</span>
             <CheckCircle2 size={18} />

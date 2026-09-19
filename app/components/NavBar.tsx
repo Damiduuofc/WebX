@@ -128,6 +128,7 @@ export default function Navbar() {
       >
         <nav
           aria-label="Primary"
+          className="u-nav"
           style={{
             display: "flex",
             alignItems: "center",
@@ -139,7 +140,7 @@ export default function Navbar() {
             borderRadius: "999px",
             background: "rgba(255, 255, 255, 0.94)",
             border: "1px solid rgba(226, 232, 240, 0.9)",
-            boxShadow: "0 4px 20px rgba(25, 40, 65, 0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+            boxShadow: "0 0 0 1px rgba(25, 40, 65, 0.03), 0 8px 28px -8px rgba(25, 40, 65, 0.18), inset 0 1px 0 rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",
             position: "relative",
@@ -337,19 +338,19 @@ export default function Navbar() {
                     color: "#FFFFFF",
                     cursor: "pointer",
                     border: "none",
-                    background: "#4F6EF7",
-                    boxShadow: "0 2px 10px rgba(79, 110, 247, 0.35)",
+                    background: "#192841",
+                    boxShadow: "0 2px 10px rgba(25, 40, 65, 0.3)",
                     transition: "all 0.2s ease",
                     whiteSpace: "nowrap",
                     textDecoration: "none",
                     display: "inline-block",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = "#3B4FE0";
+                    e.currentTarget.style.background = "#111C2E";
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = "#4F6EF7";
+                    e.currentTarget.style.background = "#192841";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -501,7 +502,7 @@ export default function Navbar() {
                       fontWeight: 600,
                       color: "#FFFFFF",
                       border: "none",
-                      background: "#4F6EF7",
+                      background: "#192841",
                       cursor: "pointer",
                       textAlign: "center",
                       textDecoration: "none",
