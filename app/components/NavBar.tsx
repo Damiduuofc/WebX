@@ -116,7 +116,7 @@ export default function Navbar() {
       `}</style>
 
       <div
-        className={pathname === "/live-journey" ? "hidden lg:block" : ""}
+        className={pathname === "/live-journey" || pathname === "/preferences" ? "hidden lg:block" : ""}
         style={{
           position: "fixed",
           top: "16px",

@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useState, useRef, useEffect, Suspense } from "react";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  ArrowLeft,
   ArrowRight,
   MapPin,
   ArrowUpDown,
@@ -14,10 +16,18 @@ import {
   Search,
   SlidersHorizontal,
   Info,
+  Mic,
+  Navigation,
 } from "lucide-react";
 import { AuthGuard, useAuth, RoutePreference } from "../context/auth";
 import RoutePreviewMap from "../components/RoutePreviewMap";
+import LiveRouteMap from "../components/LiveRouteMap";
 import FlowHeader from "../components/FlowHeader";
+import { TRANSIT_ROUTES, INITIAL_BUSES } from "../data/smartMetroData";
+
+const ROUTE = TRANSIT_ROUTES.UN01;
+const STOPS = ROUTE.stops;
+const BUSES = INITIAL_BUSES.UN01;
 
 const PREFERENCE_OPTIONS: {
   id: RoutePreference;
@@ -151,17 +161,200 @@ function PreferencesContent() {
     router.push("/journey-plan");
   };
 
+  const selectedPrefObj = PREFERENCE_OPTIONS.find((p) => p.id === selectedPref) || PREFERENCE_OPTIONS[0];
+
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
-      {/* Top Header & Breadcrumb */}
-      <FlowHeader
-        backHref="/"
-        backTitle="Return to Home Dashboard"
-        title="Plan your Journey"
-        step="Step 1 of 4"
-        subtitle="Define starting point, destination, and multi-modal routing preferences."
-        status="Autonomous Network Active"
-      />
+    <div className="relative w-full">
+      {/* ========================================================================= */}
+      {/* 1. MOBILE VIEW: IMMERSIVE FULL-VIEW MAP & ERGONOMIC BOTTOM SHEET           */}
+      {/* ========================================================================= */}
+      <div className="lg:hidden fixed inset-0 z-40 flex flex-col bg-[#0B0F17] overflow-hidden">
+        {/* Floating Top Controls over the Map */}
+        <div className="absolute top-4 inset-x-4 z-30 flex items-center justify-between pointer-events-none">
+          {/* Floating Round Back Button */}
+          <Link
+            href="/"
+            className="w-11 h-11 rounded-full bg-white/95 backdrop-blur-md shadow-lg border border-slate-200/80 flex items-center justify-center text-[#192841] hover:bg-white active:scale-95 transition-all pointer-events-auto cursor-pointer"
+            title="Return to Home"
+            aria-label="Return to Home"
+          >
+            <ArrowLeft size={20} />
+          </Link>
+
+          {/* Floating Route Status Badge */}
+          <div className="flex items-center gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3.5 py-2 rounded-full shadow-lg text-white text-xs font-bold pointer-events-auto">
+            <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+            <span>Plan Journey • 18.4 km</span>
+          </div>
+
+          {/* Floating Search / Focus Button */}
+          <button
+            type="button"
+            onClick={focusDestination}
+            className="w-11 h-11 rounded-full bg-white/95 backdrop-blur-md shadow-lg border border-slate-200/80 flex items-center justify-center text-[#192841] hover:bg-white active:scale-95 transition-all pointer-events-auto cursor-pointer"
+            title="Search Destination"
+            aria-label="Search Destination"
+          >
+            <Search size={18} />
+          </button>
+        </div>
+
+        {/* Map Container: Fills upper viewport edge-to-edge */}
+        <div className="flex-1 w-full relative min-h-[280px]">
+          <LiveRouteMap
+            stops={STOPS}
+            buses={BUSES}
+            routeName={ROUTE.title}
+            routeId={ROUTE.id}
+            selectedBusId={null}
+            onSelectBus={() => {}}
+            selectedStopId={null}
+            onSelectStop={() => {}}
+            showTraffic={true}
+            isSimulating={true}
+            heightClass="h-full"
+            className="rounded-none border-0 shadow-none"
+            hideTopOverlay={true}
+          />
+        </div>
+
+        {/* DOCKED BOTTOM SHEET: Compact, accessible inputs & preferences */}
+        <div className="relative z-30 w-full bg-white rounded-t-[28px] border-t border-slate-200/80 shadow-[0_-12px_36px_rgba(15,23,42,0.16)] px-4 pt-3 pb-5 space-y-3 shrink-0 max-h-[60vh] overflow-y-auto">
+          {/* Drag Handle Pill */}
+          <div className="w-10 h-1 bg-slate-300 rounded-full mx-auto" />
+
+          {/* From & To Card with Swap */}
+          <div className="bg-[#F7F9FC] rounded-2xl border border-[#E2E8F0] p-3 space-y-2 relative">
+            {/* Line connector */}
+            <div className="absolute left-[21px] top-6 bottom-6 w-0.5 bg-gradient-to-b from-[#192841] via-slate-300 to-[#192841] pointer-events-none" />
+
+            {/* From Input */}
+            <div className="flex items-center gap-2.5 relative z-10">
+              <div className="w-7 h-7 rounded-lg bg-[#192841] text-white flex items-center justify-center shrink-0 shadow-xs">
+                <MapPin size={14} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="text-[9px] font-bold text-[#64748B] uppercase block u-mono">From</span>
+                {isChangingFrom ? (
+                  <input
+                    type="text"
+                    value={fromLocation}
+                    onChange={(e) => setFromLocation(e.target.value)}
+                    onBlur={() => setIsChangingFrom(false)}
+                    onKeyDown={(e) => e.key === "Enter" && setIsChangingFrom(false)}
+                    autoFocus
+                    className="w-full text-xs font-bold text-[#0F172A] bg-white border border-[#192841] rounded px-1.5 py-0.5 outline-none"
+                  />
+                ) : (
+                  <div className="text-xs font-bold text-[#0F172A] truncate">{fromLocation}</div>
+                )}
+              </div>
+              <button
+                type="button"
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => setIsChangingFrom(!isChangingFrom)}
+                className="text-[11px] font-bold text-[#192841] px-2 py-1 rounded-lg bg-white border border-[#E2E8F0] shrink-0 cursor-pointer"
+              >
+                {isChangingFrom ? "Done" : "Change"}
+              </button>
+            </div>
+
+            {/* To Input */}
+            <div className="flex items-center gap-2.5 relative z-10">
+              <div className="w-7 h-7 rounded-lg bg-white border border-[#192841] text-[#192841] flex items-center justify-center shrink-0 shadow-xs">
+                <Search size={14} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <span className="text-[9px] font-bold text-[#64748B] uppercase block u-mono">To</span>
+                <input
+                  ref={toInputRef}
+                  type="text"
+                  value={toLocation}
+                  onChange={(e) => setToLocation(e.target.value)}
+                  placeholder="Where do you want to go?"
+                  className="w-full text-xs font-bold text-[#0F172A] bg-transparent outline-none truncate placeholder:text-[#64748B]/60"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handleSwap}
+                className="text-[11px] font-bold text-[#192841] px-2 py-1 rounded-lg bg-white border border-[#E2E8F0] flex items-center gap-1 shrink-0 cursor-pointer"
+                title="Swap locations"
+              >
+                <ArrowUpDown size={11} />
+                <span>Swap</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Route Preferences Selection (Horizontal scrollable pill list) */}
+          <div className="space-y-1.5">
+            <div className="flex items-center justify-between text-xs font-bold">
+              <span className="text-[#0F172A]">Route Preference</span>
+              <span className="text-[11px] text-[#22C55E] font-semibold">100% Step-Free</span>
+            </div>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1 -mx-1 px-1">
+              {PREFERENCE_OPTIONS.map((opt) => {
+                const Icon = opt.icon;
+                const isSelected = selectedPref === opt.id;
+                return (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setSelectedPref(opt.id)}
+                    className={`flex items-center gap-2 px-3.5 py-2.5 rounded-2xl border transition-all shrink-0 cursor-pointer text-left min-h-[44px] ${
+                      isSelected
+                        ? "bg-[#192841] text-white border-[#192841] shadow-sm"
+                        : "bg-[#F7F9FC] text-[#0F172A] border-[#E2E8F0] hover:border-slate-300"
+                    }`}
+                  >
+                    <Icon size={16} className={isSelected ? "text-amber-300" : opt.iconColor} />
+                    <div>
+                      <div className="text-xs font-extrabold leading-tight">{opt.title}</div>
+                      <div className={`text-[10px] font-medium leading-tight ${isSelected ? "text-slate-200" : "text-[#64748B]"}`}>
+                        {opt.badge}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Dynamic Stats Banner */}
+          <div className="flex items-center justify-between px-3 py-2 bg-[#F1F5F9] rounded-xl text-xs font-semibold text-[#192841]">
+            <div className="flex items-center gap-1.5 truncate">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] shrink-0" />
+              <span className="truncate">{selectedPrefObj.stats}</span>
+            </div>
+            <span className="font-extrabold u-mono shrink-0 ml-2">{selectedPrefObj.badge}</span>
+          </div>
+
+          {/* Primary CTA: Find Routes */}
+          <button
+            type="button"
+            onClick={handleFindRoutes}
+            className="w-full py-3.5 px-6 rounded-2xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-sm sm:text-base transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer min-h-[48px]"
+          >
+            <span>Find Routes</span>
+            <ArrowRight size={18} />
+          </button>
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* 2. DESKTOP VIEW: 2-COLUMN SPATIOUS LAYOUT (hidden lg:block)               */}
+      {/* ========================================================================= */}
+      <div className="hidden lg:block min-h-screen pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto space-y-8">
+        {/* Top Header & Breadcrumb */}
+        <FlowHeader
+          backHref="/"
+          backTitle="Return to Home Dashboard"
+          title="Plan your Journey"
+          step="Step 1 of 4"
+          subtitle="Define starting point, destination, and multi-modal routing preferences."
+          status="Autonomous Network Active"
+        />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* ========================================================================= */}
@@ -383,6 +576,7 @@ function PreferencesContent() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

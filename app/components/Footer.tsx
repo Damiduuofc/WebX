@@ -26,7 +26,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative w-full bg-[#192841] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
+    <footer className={`relative w-full bg-[#192841] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20 ${pathname === "/preferences" ? "hidden lg:block" : ""}`}>
       {/* Faint telemetry grid + lit top edge, matching the rest of the app */}
       <div
         aria-hidden="true"
