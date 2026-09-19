@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2 } from "lucide-react";
 import Step1Search from "./Step1Search";
@@ -114,15 +115,21 @@ export default function JourneyPlanModal({
         {/* Top Header Bar */}
         <div className="px-6 py-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-2xl bg-[#72222B] text-white flex items-center justify-center font-black text-sm shadow-sm">
-              U
+            <div className="w-9 h-9 rounded-2xl bg-white border border-[#E2E8F0] flex items-center justify-center p-1 shadow-sm">
+              <Image
+                src="/logo.png"
+                alt="Univa"
+                width={28}
+                height={28}
+                className="h-6 w-auto object-contain"
+              />
             </div>
             <div>
               <span className="font-extrabold text-sm text-[#0F172A] tracking-tight block">
                 Univa Journey Planner
               </span>
               <div className="flex items-center gap-2 text-xs text-[#5A6B85]">
-                <span className="font-bold text-[#72222B]">Step {currentStep} of 5: {stepLabels[currentStep - 1]}</span>
+                <span className="font-bold text-[#192841]">Step {currentStep} of 5: {stepLabels[currentStep - 1]}</span>
                 <span>•</span>
                 <span className="text-[#2E7D5B] font-semibold">💎 {wallet.pointsBalance} pts</span>
               </div>
@@ -137,7 +144,7 @@ export default function JourneyPlanModal({
                   key={s}
                   className={`w-2.5 h-2.5 rounded-full transition-all ${
                     s === currentStep
-                      ? "bg-[#72222B] scale-125 shadow-xs"
+                      ? "bg-[#192841] scale-125 shadow-xs"
                       : s < currentStep
                       ? "bg-[#2E7D5B]"
                       : "bg-[#D6DAE3]"

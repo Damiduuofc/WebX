@@ -14,7 +14,7 @@ const getHref = (item: string) => {
     case "Plan Journey":
       return "/preferences";
     case "Live Route":
-      return "/live-journey";
+      return "/smartmetro";
     default:
       return "/";
   }
@@ -85,6 +85,15 @@ export default function Navbar() {
       tabRefs.current[nextItem]?.focus();
     }
   };
+
+  // Dedicated full-screen auth screens provide their own navigation and logo
+  if (
+    pathname === "/login" ||
+    pathname === "/signup" ||
+    pathname === "/register"
+  ) {
+    return null;
+  }
 
   return (
     <>

@@ -6,28 +6,18 @@ import {
   Bus,
   MapPin,
   Clock,
-  Navigation,
   Search,
-  Zap,
   ShieldCheck,
   Radio,
   ArrowRight,
   ArrowLeftRight,
   RefreshCw,
-  SlidersHorizontal,
-  Sliders,
   CheckCircle2,
-  AlertCircle,
-  Footprints,
-  Train,
   Mic,
   Volume2,
   QrCode,
   CreditCard,
-  ChevronRight,
   Info,
-  Layers,
-  ChevronDown,
 } from "lucide-react";
 import LiveRouteMap, { StopPoint, LiveBus } from "../components/LiveRouteMap";
 
@@ -122,7 +112,7 @@ const TRANSIT_ROUTES: Record<string, TransitRoute> = {
     frequency: "Every 4 mins",
     hours: "05:00 AM – 11:30 PM",
     tag: "High Frequency",
-    color: "#72222B",
+    color: "#192841",
     stops: CM01_STOPS,
   },
   CM02: {
@@ -140,7 +130,7 @@ const TRANSIT_ROUTES: Record<string, TransitRoute> = {
     frequency: "Every 5 mins",
     hours: "05:15 AM – 11:45 PM",
     tag: "Express Link",
-    color: "#22C55E",
+    color: "#0284C7",
     stops: CM02_STOPS,
   },
   UN01: {
@@ -158,7 +148,7 @@ const TRANSIT_ROUTES: Record<string, TransitRoute> = {
     frequency: "Every 6 mins",
     hours: "24 Hours Service",
     tag: "SkyRail Arterial",
-    color: "#72222B",
+    color: "#059669",
     stops: UN01_STOPS,
   },
 };
@@ -194,7 +184,7 @@ export default function SmartMetroLivePage() {
   const [selectedRouteKey, setSelectedRouteKey] = useState<string>("CM01");
   const [direction, setDirection] = useState<"outbound" | "inbound">("outbound");
   const [buses, setBuses] = useState<Record<string, LiveBus[]>>(INITIAL_BUSES);
-  const [selectedBusId, setSelectedBusId] = useState<string | null>("b1");
+  const [selectedBusIdState, setSelectedBusId] = useState<string | null>(null);
   const [selectedStopId, setSelectedStopId] = useState<string | null>(null);
   const [searchFilter, setSearchFilter] = useState("");
   const [activeTab, setActiveTab] = useState<"fleet" | "stops">("fleet");
@@ -203,8 +193,8 @@ export default function SmartMetroLivePage() {
   const [refreshCountdown, setRefreshCountdown] = useState(6);
   const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [voiceTranscript, setVoiceTranscript] = useState<string | null>(null);
-  const [fareStopFrom, setFareStopFrom] = useState<string>("");
-  const [fareStopTo, setFareStopTo] = useState<string>("");
+  const [customFareStopFrom, setFareStopFrom] = useState<string | null>(null);
+  const [customFareStopTo, setFareStopTo] = useState<string | null>(null);
 
   const currentRoute = TRANSIT_ROUTES[selectedRouteKey] || TRANSIT_ROUTES.CM01;
 
@@ -219,18 +209,20 @@ export default function SmartMetroLivePage() {
     return (buses[selectedRouteKey] || []).filter((b) => b.direction === direction);
   }, [buses, selectedRouteKey, direction]);
 
-  // Set default fare stops when route changes
-  useEffect(() => {
-    if (activeStops.length > 0) {
-      setFareStopFrom(activeStops[0].name);
-      setFareStopTo(activeStops[Math.min(activeStops.length - 1, 8)].name);
-    }
-    // Select first bus of route
-    const firstBus = (buses[selectedRouteKey] || [])[0];
-    if (firstBus) {
-      setSelectedBusId(firstBus.id);
-    }
-  }, [selectedRouteKey, direction]);
+  const fareStopFrom =
+    customFareStopFrom && activeStops.some((s) => s.name === customFareStopFrom)
+      ? customFareStopFrom
+      : activeStops[0]?.name || "";
+
+  const fareStopTo =
+    customFareStopTo && activeStops.some((s) => s.name === customFareStopTo)
+      ? customFareStopTo
+      : activeStops[Math.min(activeStops.length - 1, 8)]?.name || "";
+
+  const selectedBusId =
+    selectedBusIdState && currentBuses.some((b) => b.id === selectedBusIdState)
+      ? selectedBusIdState
+      : currentBuses[0]?.id || null;
 
   // Live Telemetry Simulation Engine: increments progress & updates countdown every 2s
   useEffect(() => {
@@ -338,13 +330,13 @@ export default function SmartMetroLivePage() {
       {/* ========================================================================= */}
       {/* 1. TOP HEADER & TELEMETRY CONTROL BAR                                      */}
       {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 sm:p-7 shadow-[0_4px_24px_rgba(114,34,43,0.04)] space-y-5">
+      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 sm:p-7 shadow-[0_4px_24px_rgba(25,40,65,0.04)] space-y-5">
         
         {/* Row 1: Brand Identifier & Real-Time Sync Indicator */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#D6DAE3]/70">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#E2E8F0]">
           <div className="space-y-1">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#72222B] text-white text-[11px] font-extrabold uppercase tracking-wider shadow-xs">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841] text-white text-[11px] font-extrabold uppercase tracking-wider shadow-xs">
                 <Radio size={12} className="text-[#22C55E] animate-pulse" />
                 <span>SmartMetro™ Live Tracker</span>
               </span>
@@ -354,15 +346,15 @@ export default function SmartMetroLivePage() {
                 <span>GPS Telemetry Calibrated</span>
               </span>
 
-              <span className="text-xs text-[#5A6B85] font-semibold hidden sm:inline">
-                Year  Multimodal Transit Grid
+              <span className="text-xs text-[#64748B] font-semibold hidden sm:inline">
+                Year 2100 Multimodal Transit Grid
               </span>
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black text-[#0F172A] tracking-tight">
               Live Bus & Route Telemetry
             </h1>
-            <p className="text-xs sm:text-sm text-[#5A6B85]">
+            <p className="text-xs sm:text-sm text-[#64748B]">
               Real-time vehicle GPS positions, active passenger occupancy, step-free access, and stop-by-stop arrival countdowns.
             </p>
           </div>
@@ -371,10 +363,10 @@ export default function SmartMetroLivePage() {
           <div className="flex items-center gap-3 self-start md:self-auto">
             <div className="flex flex-col text-right text-xs">
               <span className="font-bold text-[#0F172A] flex items-center justify-end gap-1.5">
-                <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+                <span className="w-2 h-2 rounded-full bg-[#22C55E]" />
                 <span>Live Feed Active</span>
               </span>
-              <span className="text-[11px] text-[#5A6B85] u-digital-num">
+              <span className="text-[11px] text-[#64748B]">
                 Refreshed {lastRefreshSeconds}s ago • Auto-refresh in {refreshCountdown}s
               </span>
             </div>
@@ -383,7 +375,7 @@ export default function SmartMetroLivePage() {
               type="button"
               onClick={handleManualRefresh}
               title="Refresh Fleet Data"
-              className="w-10 h-10 rounded-2xl border border-[#D6DAE3] bg-[#F7F8FA] hover:bg-white hover:border-[#72222B] text-[#0F172A] flex items-center justify-center transition-all shadow-xs cursor-pointer active:rotate-180 duration-300"
+              className="w-10 h-10 rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] hover:bg-white hover:border-[#192841] text-[#0F172A] flex items-center justify-center transition-all shadow-xs cursor-pointer active:rotate-180 duration-300"
             >
               <RefreshCw size={16} />
             </button>
@@ -402,15 +394,15 @@ export default function SmartMetroLivePage() {
                   onClick={() => setSelectedRouteKey(r.id)}
                   className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-extrabold transition-all cursor-pointer flex items-center gap-2.5 ${
                     isSelected
-                      ? "bg-[#72222B] text-white shadow-sm scale-[1.01]"
-                      : "bg-[#F7F8FA] border border-[#D6DAE3] text-[#5A6B85] hover:text-[#0F172A] hover:bg-white"
+                      ? "bg-[#192841] text-white shadow-sm scale-[1.01]"
+                      : "bg-[#F7F8FA] border border-[#E2E8F0] text-[#64748B] hover:text-[#0F172A] hover:bg-white"
                   }`}
                 >
-                  <Bus size={16} className={isSelected ? "text-white" : "text-[#5A6B85]"} />
+                  <Bus size={16} className={isSelected ? "text-white" : "text-[#64748B]"} />
                   <span>{r.code}</span>
                   <span
                     className={`text-[10px] px-2 py-0.5 rounded-full font-bold uppercase tracking-wider ${
-                      isSelected ? "bg-white/20 text-white" : "bg-[#72222B]/10 text-[#72222B]"
+                      isSelected ? "bg-white/20 text-white" : "bg-slate-200/80 text-[#0F172A]"
                     }`}
                   >
                     {r.tag}
@@ -427,12 +419,12 @@ export default function SmartMetroLivePage() {
               onClick={() =>
                 setDirection((prev) => (prev === "outbound" ? "inbound" : "outbound"))
               }
-              className="px-4 py-2 rounded-xl bg-white border border-[#D6DAE3] hover:border-[#72222B] text-xs font-bold text-[#0F172A] flex items-center gap-2 transition-all shadow-xs cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-xs font-bold text-[#0F172A] flex items-center gap-2 transition-all shadow-xs cursor-pointer"
             >
-              <ArrowLeftRight size={14} className="text-[#72222B]" />
+              <ArrowLeftRight size={14} className="text-[#192841]" />
               <span>
                 Direction:{" "}
-                <strong className="text-[#72222B] uppercase">
+                <strong className="text-[#192841] uppercase">
                   {direction === "outbound" ? "Outbound" : "Inbound"}
                 </strong>
               </span>
@@ -444,50 +436,60 @@ export default function SmartMetroLivePage() {
               onClick={handleVoiceAssistant}
               className={`px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all shadow-xs cursor-pointer ${
                 isVoiceActive
-                  ? "bg-[#72222B] text-white animate-pulse"
-                  : "bg-[#72222B]/5 hover:bg-[#72222B]/10 text-[#72222B]"
+                  ? "bg-[#192841] text-white animate-pulse"
+                  : "bg-[#192841]/10 hover:bg-[#192841]/15 text-[#192841]"
               }`}
             >
               <Mic size={14} />
               <span>{isVoiceActive ? "Listening..." : "Tell Univa (Voice)"}</span>
             </button>
+
+            {/* Plan Personalized Journey Link */}
+            <Link
+              href="/preferences"
+              className="px-3.5 py-2 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs"
+              title="Plan personalized journey"
+            >
+              <span>Plan Journey</span>
+              <ArrowRight size={13} />
+            </Link>
           </div>
         </div>
 
         {/* Voice Assistant Transcript Notification */}
         {voiceTranscript && (
-          <div className="p-3 bg-[#72222B]/5 border border-[#72222B]/20 rounded-2xl text-xs font-semibold text-[#0F172A] flex items-center gap-2.5">
-            <Volume2 size={16} className="text-[#72222B] shrink-0" />
+          <div className="p-3 bg-[#192841]/5 border border-[#192841]/20 rounded-2xl text-xs font-semibold text-[#0F172A] flex items-center gap-2.5">
+            <Volume2 size={16} className="text-[#192841] shrink-0" />
             <span>{voiceTranscript}</span>
           </div>
         )}
 
         {/* Route Details Ribbon */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2 text-xs">
-          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#D6DAE3]/60">
-            <div className="text-[10px] font-bold text-[#5A6B85] uppercase">Terminus Points</div>
+          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0]">
+            <div className="text-[10px] font-bold text-[#64748B] uppercase">Terminus Points</div>
             <div className="text-xs font-extrabold text-[#0F172A] truncate mt-0.5">
               {currentRoute.origin.split(" ")[0]} ⇄ {currentRoute.destination.split(" ")[0]}
             </div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#D6DAE3]/60">
-            <div className="text-[10px] font-bold text-[#5A6B85] uppercase">Corridor Length</div>
+          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0]">
+            <div className="text-[10px] font-bold text-[#64748B] uppercase">Corridor Length</div>
             <div className="text-xs font-extrabold text-[#0F172A] mt-0.5">
               {currentRoute.distance} (~{currentRoute.avgDuration})
             </div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#D6DAE3]/60">
-            <div className="text-[10px] font-bold text-[#5A6B85] uppercase">Scheduled Headway</div>
+          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0]">
+            <div className="text-[10px] font-bold text-[#64748B] uppercase">Scheduled Headway</div>
             <div className="text-xs font-extrabold text-[#22C55E] mt-0.5">
               {currentRoute.frequency} High Frequency
             </div>
           </div>
 
-          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#D6DAE3]/60">
-            <div className="text-[10px] font-bold text-[#5A6B85] uppercase">Active Fleet</div>
-            <div className="text-xs font-extrabold text-[#72222B] mt-0.5">
+          <div className="p-3 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0]">
+            <div className="text-[10px] font-bold text-[#64748B] uppercase">Active Fleet</div>
+            <div className="text-xs font-extrabold text-[#192841] mt-0.5">
               {currentBuses.length} Vehicles In Corridor
             </div>
           </div>
@@ -505,23 +507,23 @@ export default function SmartMetroLivePage() {
         <div className="lg:col-span-5 flex flex-col space-y-5 order-2 lg:order-1">
           
           {/* Panel Tabs: Active Fleet vs Stop Sequence */}
-          <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-[0_4px_20px_rgba(85,0,0,0.06)] space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-[0_4px_20px_rgba(25,40,65,0.04)] space-y-4">
             
             {/* Search Filter Input */}
             <div className="relative">
-              <Search size={16} className="absolute left-3.5 top-3.5 text-[#5A6B85]" />
+              <Search size={16} className="absolute left-3.5 top-3.5 text-[#64748B]" />
               <input
                 type="text"
                 placeholder="Filter stops by name or landmark (e.g. Nugegoda, Borella)..."
                 value={searchFilter}
                 onChange={(e) => setSearchFilter(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-[#D6DAE3] bg-[#F7F8FA] text-xs font-semibold text-[#0F172A] placeholder:text-[#5A6B85]/70 focus:outline-none focus:border-[#72222B] focus:bg-white transition-all"
+                className="w-full pl-10 pr-4 py-2.5 rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] text-xs font-semibold text-[#0F172A] placeholder:text-[#64748B]/70 focus:outline-none focus:border-[#192841] focus:bg-white transition-all"
               />
               {searchFilter && (
                 <button
                   type="button"
                   onClick={() => setSearchFilter("")}
-                  className="absolute right-3.5 top-2.5 text-xs text-[#5A6B85] hover:text-[#72222B]"
+                  className="absolute right-3.5 top-2.5 text-xs text-[#64748B] hover:text-[#192841]"
                 >
                   Clear
                 </button>
@@ -529,14 +531,14 @@ export default function SmartMetroLivePage() {
             </div>
 
             {/* Tab Buttons */}
-            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-[#F7F8FA] border border-[#D6DAE3]/70 text-xs font-extrabold">
+            <div className="grid grid-cols-2 gap-2 p-1 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] text-xs font-extrabold">
               <button
                 type="button"
                 onClick={() => setActiveTab("fleet")}
                 className={`py-2 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   activeTab === "fleet"
-                    ? "bg-[#72222B] text-white shadow-sm"
-                    : "text-[#5A6B85] hover:text-[#0F172A]"
+                    ? "bg-[#192841] text-white shadow-sm"
+                    : "text-[#64748B] hover:text-[#0F172A]"
                 }`}
               >
                 <Bus size={14} />
@@ -548,8 +550,8 @@ export default function SmartMetroLivePage() {
                 onClick={() => setActiveTab("stops")}
                 className={`py-2 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                   activeTab === "stops"
-                    ? "bg-[#72222B] text-white shadow-sm"
-                    : "text-[#5A6B85] hover:text-[#0F172A]"
+                    ? "bg-[#192841] text-white shadow-sm"
+                    : "text-[#64748B] hover:text-[#0F172A]"
                 }`}
               >
                 <MapPin size={14} />
@@ -561,7 +563,7 @@ export default function SmartMetroLivePage() {
             {activeTab === "fleet" && (
               <div className="space-y-3 max-h-[500px] overflow-y-auto pr-1">
                 {currentBuses.length === 0 ? (
-                  <div className="p-8 text-center text-xs text-[#5A6B85]">
+                  <div className="p-8 text-center text-xs text-[#64748B]">
                     No active buses currently in this direction.
                   </div>
                 ) : (
@@ -576,8 +578,8 @@ export default function SmartMetroLivePage() {
                         }}
                         className={`p-4 rounded-2xl border transition-all cursor-pointer flex flex-col space-y-3 ${
                           isSelected
-                            ? "bg-white border-[#72222B] shadow-md ring-2 ring-[#72222B]/20 text-[#0F172A]"
-                            : "bg-[#F7F8FA] hover:bg-white border-[#D6DAE3] text-[#0F172A]"
+                            ? "bg-white border-[#192841] shadow-md ring-2 ring-[#192841]/20 text-[#0F172A]"
+                            : "bg-[#F7F8FA] hover:bg-white border-[#E2E8F0] text-[#0F172A]"
                         }`}
                       >
                         <div className="flex items-center justify-between">
@@ -585,8 +587,8 @@ export default function SmartMetroLivePage() {
                             <div
                               className={`w-9 h-9 rounded-xl flex items-center justify-center font-black text-xs ${
                                 isSelected
-                                  ? "bg-[#72222B] text-white shadow-sm"
-                                  : "bg-[#72222B]/10 text-[#72222B]"
+                                  ? "bg-[#192841] text-white shadow-sm"
+                                  : "bg-white border border-[#E2E8F0] text-[#192841]"
                               }`}
                             >
                               <Bus size={16} />
@@ -602,17 +604,17 @@ export default function SmartMetroLivePage() {
                                   {bus.status}
                                 </span>
                               </div>
-                              <p className="text-[11px] text-[#5A6B85]">
+                              <p className="text-[11px] text-[#64748B]">
                                 {bus.driver}
                               </p>
                             </div>
                           </div>
 
                           <div className="text-right">
-                            <div className="text-base font-black text-[#22C55E] u-digital-num">
+                            <div className="text-base font-black text-[#22C55E]">
                               {bus.speed} km/h
                             </div>
-                            <div className="text-[10px] text-[#5A6B85]">
+                            <div className="text-[10px] text-[#64748B]">
                               Live Speed
                             </div>
                           </div>
@@ -620,16 +622,16 @@ export default function SmartMetroLivePage() {
 
                         {/* Next Stop Bar */}
                         <div
-                          className="p-2.5 rounded-xl flex items-center justify-between text-xs bg-white border border-[#D6DAE3]/80 text-[#0F172A]"
+                          className="p-2.5 rounded-xl flex items-center justify-between text-xs bg-white border border-[#E2E8F0] text-[#0F172A]"
                         >
                           <div className="flex items-center gap-2 truncate">
-                            <Clock size={13} className="text-[#72222B] shrink-0" />
+                            <Clock size={13} className="text-[#192841] shrink-0" />
                             <span className="truncate">
                               Next: <strong className="text-[#0F172A]">{bus.nextStopName}</strong>
                             </span>
                           </div>
                           <span
-                            className="font-black text-xs shrink-0 ml-2 text-[#72222B] u-digital-num"
+                            className="font-black text-xs shrink-0 ml-2 text-[#192841]"
                           >
                             ~{bus.etaMinutes} min
                           </span>
@@ -647,7 +649,7 @@ export default function SmartMetroLivePage() {
                                   : "bg-[#22C55E]"
                               }`}
                             />
-                            <span className={isSelected ? "text-white/80" : "text-[#5A6B85]"}>
+                            <span className={isSelected ? "text-[#0F172A]" : "text-[#64748B]"}>
                               Occupancy: <strong>{bus.occupancyPercent}%</strong> ({bus.seatsAvailable} seats free)
                             </span>
                           </div>
@@ -667,7 +669,7 @@ export default function SmartMetroLivePage() {
             {/* TAB CONTENT 2: STATIONS & LIVE ETAS */}
             {activeTab === "stops" && (
               <div className="space-y-2 max-h-[500px] overflow-y-auto pr-1">
-                {filteredStops.map((stop, idx) => {
+                {filteredStops.map((stop) => {
                   const isSelected = selectedStopId === stop.id;
                   const approachingBus = currentBuses.find(
                     (b) => b.nextStopName === stop.name
@@ -682,16 +684,16 @@ export default function SmartMetroLivePage() {
                       }}
                       className={`p-3 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
                         isSelected
-                          ? "bg-white border-[#72222B] shadow-sm ring-1 ring-[#72222B]/30 text-[#0F172A]"
-                          : "bg-white hover:bg-[#F7F8FA] border-[#D6DAE3] text-[#0F172A]"
+                          ? "bg-white border-[#192841] shadow-sm ring-1 ring-[#192841]/30 text-[#0F172A]"
+                          : "bg-white hover:bg-[#F7F8FA] border-[#E2E8F0] text-[#0F172A]"
                       }`}
                     >
                       <div className="flex items-center gap-3">
                         <span
                           className={`w-7 h-7 rounded-xl flex items-center justify-center font-black text-xs ${
                             isSelected
-                              ? "bg-[#72222B] text-white"
-                              : "bg-[#F7F8FA] border border-[#D6DAE3] text-[#5A6B85]"
+                              ? "bg-[#192841] text-white"
+                              : "bg-[#F7F8FA] border border-[#E2E8F0] text-[#64748B]"
                           }`}
                         >
                           {stop.seq}
@@ -703,7 +705,7 @@ export default function SmartMetroLivePage() {
                           {stop.landmark && (
                             <div
                               className={`text-[10px] mt-0.5 truncate max-w-[200px] ${
-                                isSelected ? "text-white/70" : "text-[#5A6B85]"
+                                isSelected ? "text-[#192841] font-semibold" : "text-[#64748B]"
                               }`}
                             >
                               {stop.landmark}
@@ -716,15 +718,15 @@ export default function SmartMetroLivePage() {
                       <div className="text-right">
                         {approachingBus ? (
                           <div className="flex items-center gap-1.5">
-                            <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-                            <span className="text-xs font-extrabold text-[#22C55E] u-digital-num">
+                            <span className="w-2 h-2 rounded-full bg-[#22C55E] animate-ping" />
+                            <span className="text-xs font-extrabold text-[#22C55E]">
                               {approachingBus.etaMinutes} min
                             </span>
                           </div>
                         ) : (
                           <span
                             className={`text-[11px] font-semibold ${
-                              isSelected ? "text-white/60" : "text-[#5A6B85]"
+                              isSelected ? "text-[#192841]" : "text-[#64748B]"
                             }`}
                           >
                             Every {currentRoute.frequency.replace("Every ", "")}
@@ -732,7 +734,7 @@ export default function SmartMetroLivePage() {
                         )}
                         {stop.isTransferHub && (
                           <span className={`text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded block mt-0.5 ${
-                            isSelected ? "bg-[#72222B] text-white" : "bg-[#72222B]/10 text-[#72222B]"
+                            isSelected ? "bg-[#192841] text-white" : "bg-slate-200 text-[#0F172A]"
                           }`}>
                             Hub Link
                           </span>
@@ -746,10 +748,10 @@ export default function SmartMetroLivePage() {
           </div>
 
           {/* TapPass QR Fare Calculator Card */}
-          <div className="bg-white rounded-3xl border border-[#D6DAE3] p-5 shadow-[0_4px_20px_rgba(114,34,43,0.04)] space-y-4">
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-5 shadow-[0_4px_20px_rgba(25,40,65,0.04)] space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <CreditCard size={18} className="text-[#72222B]" />
+                <CreditCard size={18} className="text-[#192841]" />
                 <h3 className="font-extrabold text-sm text-[#0F172A]">
                   TapPass™ Fare & Trip Estimator
                 </h3>
@@ -761,13 +763,13 @@ export default function SmartMetroLivePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
               <div>
-                <label className="block text-[10px] font-bold text-[#5A6B85] uppercase mb-1">
+                <label className="block text-[10px] font-bold text-[#64748B] uppercase mb-1">
                   Boarding Station
                 </label>
                 <select
                   value={fareStopFrom}
                   onChange={(e) => setFareStopFrom(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-[#D6DAE3] bg-[#F7F8FA] font-semibold text-[#0F172A] text-xs focus:outline-none focus:border-[#72222B]"
+                  className="w-full p-2.5 rounded-xl border border-[#E2E8F0] bg-[#F7F8FA] font-semibold text-[#0F172A] text-xs focus:outline-none focus:border-[#192841]"
                 >
                   {activeStops.map((s) => (
                     <option key={s.id} value={s.name}>
@@ -778,13 +780,13 @@ export default function SmartMetroLivePage() {
               </div>
 
               <div>
-                <label className="block text-[10px] font-bold text-[#5A6B85] uppercase mb-1">
+                <label className="block text-[10px] font-bold text-[#64748B] uppercase mb-1">
                   Disembarking Station
                 </label>
                 <select
                   value={fareStopTo}
                   onChange={(e) => setFareStopTo(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-[#D6DAE3] bg-[#F7F8FA] font-semibold text-[#0F172A] text-xs focus:outline-none focus:border-[#72222B]"
+                  className="w-full p-2.5 rounded-xl border border-[#E2E8F0] bg-[#F7F8FA] font-semibold text-[#0F172A] text-xs focus:outline-none focus:border-[#192841]"
                 >
                   {activeStops.map((s) => (
                     <option key={s.id} value={s.name}>
@@ -795,10 +797,10 @@ export default function SmartMetroLivePage() {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-[#0F172A] text-white flex items-center justify-between u-glow">
+            <div className="p-3.5 rounded-2xl bg-[#0F172A] text-white flex items-center justify-between shadow-xs">
               <div>
-                <div className="text-[11px] text-[#D6DAE3]">Digital TapPass Fare</div>
-                <div className="text-xl font-black text-white u-digital-num">LKR {calculatedFare}.00</div>
+                <div className="text-[11px] text-slate-300">Digital TapPass Fare</div>
+                <div className="text-xl font-black text-white">LKR {calculatedFare}.00</div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -806,7 +808,7 @@ export default function SmartMetroLivePage() {
                 <button
                   type="button"
                   onClick={() => alert("TapPass NFC active! Hold device near boarding terminal validator.")}
-                  className="py-2 px-3 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-extrabold text-xs transition-colors cursor-pointer shadow-xs"
+                  className="py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-extrabold text-xs transition-colors cursor-pointer shadow-xs border border-white/10"
                 >
                   Tap to Board
                 </button>
@@ -815,8 +817,8 @@ export default function SmartMetroLivePage() {
           </div>
 
           {/* Official Dispatch Announcements */}
-          <div className="p-4 rounded-2xl bg-white border border-[#D6DAE3] flex items-start gap-3 text-xs text-[#5A6B85]">
-            <Info size={16} className="text-[#72222B] shrink-0 mt-0.5" />
+          <div className="p-4 rounded-2xl bg-white border border-[#E2E8F0] flex items-start gap-3 text-xs text-[#64748B]">
+            <Info size={16} className="text-[#192841] shrink-0 mt-0.5" />
             <div>
               <strong className="text-[#0F172A] block">Transit Dispatch Notice:</strong>
               SmartMetro autonomous vehicle fleets are synchronized with Colombo traffic authority signals. High-capacity Euro-6 and electric pod lanes in effect.
@@ -844,8 +846,8 @@ export default function SmartMetroLivePage() {
             isSimulating={true}
           />
 
-          {/* Under-Map Mobile App Banner) */}
-          <div className="bg-[#0C1017] border border-[#72222B]/30 rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg u-glow-strong">
+          {/* Under-Map Mobile App Banner */}
+          <div className="bg-[#0C1017] border border-[#192841]/40 rounded-3xl p-5 sm:p-6 text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-lg">
             <div className="space-y-1 text-center sm:text-left">
               <div className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-wider text-[#22C55E]">
                 <QrCode size={13} />
@@ -854,7 +856,7 @@ export default function SmartMetroLivePage() {
               <h3 className="text-base sm:text-lg font-bold text-white">
                 Track live on the go with real-time push alerts
               </h3>
-              <p className="text-xs text-[#D6DAE3]/80">
+              <p className="text-xs text-slate-300">
                 Get platform vibration alerts, seat reservation, and offline QR ticketing.
               </p>
             </div>

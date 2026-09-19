@@ -1,3 +1,3 @@
-import LiveJourneyPage from "../live-journey/page";
+import SmartMetroLivePage from "../smartmetro/page";
 
-export default LiveJourneyPage;
+export default SmartMetroLivePage;

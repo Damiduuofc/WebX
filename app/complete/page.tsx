@@ -1,208 +1,340 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { useState, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import {
-  ArrowRight,
+  CheckCircle2,
   Clock,
   Navigation,
-  Footprints,
-  Train,
   Bus,
-  Zap,
-  CheckCircle2,
+  ArrowLeftRight,
+  Footprints,
+  Star,
+  Share2,
+  Download,
+  Home,
+  Sparkles,
 } from "lucide-react";
 import { AuthGuard, useAuth } from "../context/auth";
 
-function CompleteContent() {
-  const router = useRouter();
-  const { journey } = useAuth();
+// =========================================================================
+// JOURNEY SUMMARY DATA & PROTOTYPE DEFAULTS
+// =========================================================================
 
-  const handleGiveFeedback = () => {
-    router.push("/feedback");
+interface JourneySummary {
+  origin: string;
+  destination: string;
+  totalTimeMinutes: number;
+  distanceKm: number;
+  transportUsed: { mode: string; label: string }[];
+  transfers: number;
+  walkingDistanceMeters: number;
+  fare: number;
+}
+
+const DEFAULT_JOURNEY: JourneySummary = {
+  origin: "KDU, Ratmalana",
+  destination: "Bandaranaike International Airport (BIA)",
+  totalTimeMinutes: 42,
+  distanceKm: 18.4,
+  transportUsed: [
+    { mode: "bus", label: "Autonomous Bus 245" },
+    { mode: "rail", label: "SkyRail Line 02" },
+    { mode: "pod", label: "Smart Road Pod" },
+  ],
+  transfers: 2,
+  walkingDistanceMeters: 420,
+  fare: 210,
+};
+
+const FEEDBACK_TAGS = [
+  "On time",
+  "Clean vehicle",
+  "Friendly driver",
+  "Easy transfer",
+  "Comfortable seat",
+  "Good value",
+];
+
+const RATING_LABELS = ["", "Poor", "Fair", "Good", "Great", "Excellent"];
+
+function formatDuration(minutes: number) {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  if (h === 0) return `${m} min`;
+  return `${h}h ${m}m`;
+}
+
+function JourneyCompleteContent() {
+  const { journey, updateJourney } = useAuth();
+
+  const [rating, setRating] = useState<number>(0);
+  const [hoverRating, setHoverRating] = useState<number>(0);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [feedback, setFeedback] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  // Dynamic origin & destination from user journey state
+  const origin = journey?.origin || DEFAULT_JOURNEY.origin;
+  const destination = journey?.destination || DEFAULT_JOURNEY.destination;
+
+  const currentJourney: JourneySummary = {
+    ...DEFAULT_JOURNEY,
+    origin,
+    destination,
   };
 
+  const toggleTag = (tag: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]
+    );
+  };
+
+  const handleDone = () => {
+    updateJourney({
+      rating,
+      feedback: feedback || selectedTags.join(", "),
+    });
+    setSubmitted(true);
+  };
+
+  const isHovering = hoverRating > 0;
+  const displayRating = isHovering ? hoverRating : rating;
+  const ratingLabel = RATING_LABELS[displayRating];
+
+  const stats = [
+    {
+      icon: Clock,
+      label: "Total Journey Time",
+      value: formatDuration(currentJourney.totalTimeMinutes),
+    },
+    {
+      icon: Navigation,
+      label: "Distance",
+      value: `${currentJourney.distanceKm} km`,
+    },
+    {
+      icon: Bus,
+      label: "Transport Used",
+      value: currentJourney.transportUsed.map((t) => t.label).join(" + "),
+    },
+    {
+      icon: ArrowLeftRight,
+      label: "Transfers",
+      value: `${currentJourney.transfers} ${currentJourney.transfers === 1 ? "Transfer" : "Transfers"}`,
+    },
+    {
+      icon: Footprints,
+      label: "Walking Distance",
+      value:
+        currentJourney.walkingDistanceMeters >= 1000
+          ? `${(currentJourney.walkingDistanceMeters / 1000).toFixed(1)} km`
+          : `${currentJourney.walkingDistanceMeters} m`,
+    },
+  ];
+
   return (
-    <div className="min-h-screen pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8 max-w-3xl mx-auto space-y-8">
-      {/* ========================================================================= */}
-      {/* SECTION 26: CELEBRATORY SUCCESS HERO                                      */}
-      {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-8 sm:p-12 shadow-[0_12px_40px_rgba(25,40,65,0.06)] text-center space-y-4 relative overflow-hidden">
-        <div className="w-20 h-20 mx-auto rounded-3xl bg-[#192841]/10 text-4xl flex items-center justify-center shadow-inner u-glow">
-          🎉
+    <div className="w-full min-h-screen bg-[#F7F8FA] text-[#0F172A] flex items-center justify-center px-4 sm:px-6 lg:px-10 pt-24 pb-12 lg:pt-28 lg:pb-16">
+      <div className="w-full max-w-3xl grid grid-cols-1 gap-6">
+        {/* ===================================================================== */}
+        {/* CELEBRATORY HEADER                                                     */}
+        {/* ===================================================================== */}
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 lg:p-12 shadow-[0_4px_24px_rgba(25,40,65,0.06)] text-center space-y-4">
+          <div className="mx-auto w-16 h-16 lg:w-20 lg:h-20 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
+            <CheckCircle2 size={34} className="text-[#22C55E] lg:w-11 lg:h-11" strokeWidth={2} />
+          </div>
+
+          <div className="space-y-1.5">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#192841]/10 text-[#192841] text-[11px] font-extrabold uppercase tracking-wider">
+              <Sparkles size={12} />
+              <span>Journey Complete</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0F172A]">
+              You&apos;ve arrived 🎉
+            </h1>
+            <p className="text-sm lg:text-base text-[#64748B] font-bold">
+              {currentJourney.origin.split(",")[0]} to {currentJourney.destination.split(",")[0]}
+            </p>
+          </div>
         </div>
 
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200">
-            <CheckCircle2 size={13} className="text-emerald-600" />
-            <span>Trip Successfully Completed</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0F172A] tracking-tight">
-            You&apos;ve arrived!
-          </h1>
-          <div className="u-accent-line w-16 mx-auto" />
-          <p className="text-sm sm:text-base text-[#64748B] max-w-md mx-auto">
-            Welcome to <strong className="text-[#0F172A]">{journey.destination}</strong>.
-          </p>
-        </div>
-      </div>
+        {/* ===================================================================== */}
+        {/* TRIP SUMMARY STATS                                                     */}
+        {/* ===================================================================== */}
+        <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-8 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5">
+          <h2 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wide">
+            Trip Summary
+          </h2>
 
-      {/* ========================================================================= */}
-      {/* SECTION 27: JOURNEY SUMMARY METRICS (Total 42 min, 18.4 km, 2 transfers)  */}
-      {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-4">
-        <h2 className="text-sm font-bold text-[#64748B] uppercase tracking-wider">
-          Journey Summary
-        </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {stats.map((stat) => {
+              const Icon = stat.icon;
+              return (
+                <div
+                  key={stat.label}
+                  className="p-4 rounded-2xl bg-[#F7F8FA] border border-[#E2E8F0] flex flex-col gap-2"
+                >
+                  <Icon size={18} className="text-[#192841]" strokeWidth={1.75} />
+                  <div>
+                    <div className="text-[10px] font-bold text-[#64748B] uppercase tracking-wide">
+                      {stat.label}
+                    </div>
+                    <div className="text-sm font-extrabold text-[#0F172A] mt-0.5 leading-snug">
+                      {stat.value}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0] text-center">
-            <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
-              <Clock size={16} />
-            </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
-              42 min
-            </div>
-            <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-              Total Journey
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0] text-center">
-            <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
-              <Navigation size={16} />
-            </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
-              18.4 km
-            </div>
-            <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-              Distance
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0] text-center">
-            <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
-              <Train size={16} />
-            </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
-              2
-            </div>
-            <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-              Transfers
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0] text-center">
-            <div className="w-8 h-8 rounded-lg bg-white border border-[#E2E8F0] flex items-center justify-center mx-auto text-[#192841] mb-2 shadow-xs">
-              <Footprints size={16} />
-            </div>
-            <div className="text-xl sm:text-2xl font-black text-[#0F172A] u-digital-num">
-              6 min
-            </div>
-            <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-              Walking
+            {/* Fare card with clean dark slate TapPass theme */}
+            <div className="p-4 rounded-2xl bg-[#0F172A] text-white flex flex-col gap-2 justify-center shadow-xs">
+              <div className="text-[10px] font-bold text-slate-300 uppercase tracking-wide">
+                Fare Charged
+              </div>
+              <div className="text-lg font-black">LKR {currentJourney.fare}.00</div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* ========================================================================= */}
-      {/* SECTION 28: TRANSPORTATION MODES USED                                     */}
-      {/* ========================================================================= */}
-      <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-8 shadow-sm space-y-4">
-        <h2 className="text-sm font-bold text-[#64748B] uppercase tracking-wider">
-          Transportation Modes Used
-        </h2>
+        {/* ===================================================================== */}
+        {/* RATING & FEEDBACK                                                      */}
+        {/* ===================================================================== */}
+        {!submitted ? (
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-6 sm:p-7 lg:p-9 shadow-[0_4px_20px_rgba(25,40,65,0.06)] space-y-5">
+            <div className="space-y-1">
+              <h2 className="text-sm font-extrabold text-[#0F172A] uppercase tracking-wide">
+                Rate Your Trip
+              </h2>
+              <p className="text-xs text-[#64748B]">
+                Your feedback helps improve service on this route.
+              </p>
+            </div>
 
-        <div className="space-y-3">
-          {/* Autonomous Bus */}
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0]">
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[#192841] text-white flex items-center justify-center shadow-xs">
-                <Bus size={20} />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#0F172A]">
-                  Autonomous Bus 245
-                </h3>
-                <p className="text-xs text-[#64748B]">
-                  KDU Concourse → Central Station (15 min)
-                </p>
+            {/* Star Rating */}
+            <div className="flex items-center justify-center gap-2 lg:gap-3 py-2">
+              {[1, 2, 3, 4, 5].map((star) => {
+                const isFilled = star <= displayRating;
+
+                const starColorClass = isFilled
+                  ? "text-[#F59E0B] fill-[#F59E0B]"
+                  : "text-[#E2E8F0] fill-[#E2E8F0]";
+
+                return (
+                  <button
+                    key={star}
+                    type="button"
+                    onClick={() => setRating(star)}
+                    onMouseEnter={() => setHoverRating(star)}
+                    onMouseLeave={() => setHoverRating(0)}
+                    className="cursor-pointer transition-transform active:scale-90 hover:scale-110"
+                    aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+                  >
+                    <Star size={28} className={starColorClass} />
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Rating Label */}
+            {displayRating > 0 && (
+              <p className="text-center text-xs font-bold -mt-3 text-[#F59E0B]">
+                {ratingLabel}
+              </p>
+            )}
+
+            {/* Quick Feedback Tags */}
+            <div className="flex flex-wrap gap-2 justify-center">
+              {FEEDBACK_TAGS.map((tag) => {
+                const isSelected = selectedTags.includes(tag);
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => toggleTag(tag)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer border ${
+                      isSelected
+                        ? "bg-[#192841] text-white border-[#192841]"
+                        : "bg-[#F7F8FA] text-[#64748B] border-[#E2E8F0] hover:border-[#192841] hover:text-[#0F172A]"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Optional Comment */}
+            <textarea
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+              placeholder="Add a comment (optional)..."
+              rows={3}
+              className="w-full p-3.5 rounded-2xl border border-[#E2E8F0] bg-[#F7F8FA] text-xs font-semibold text-[#0F172A] placeholder:text-[#64748B]/70 focus:outline-none focus:border-[#192841] focus:bg-white transition-all resize-none"
+            />
+
+            {/* Done Button */}
+            <div className="flex justify-center">
+              <button
+                type="button"
+                onClick={handleDone}
+                className="w-full max-w-64 mx-auto flex justify-center py-3.5 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-extrabold text-sm transition-all cursor-pointer shadow-[0_4px_16px_rgba(25,40,65,0.25)] active:scale-[0.99]"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        ) : (
+          /* ===================================================================== */
+          /* POST-SUBMIT CONFIRMATION                                               */
+          /* ===================================================================== */
+          <div className="bg-white rounded-3xl border border-[#E2E8F0] p-7 sm:p-10 shadow-[0_4px_20px_rgba(25,40,65,0.06)] text-center space-y-4">
+            <div className="mx-auto w-14 h-14 rounded-full bg-[#22C55E]/10 flex items-center justify-center">
+              <CheckCircle2 size={28} className="text-[#22C55E]" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-lg font-black text-[#0F172A]">Thanks for riding Univa</h3>
+              <p className="text-xs text-[#64748B]">
+                {rating > 0
+                  ? "Your rating has been submitted."
+                  : "Have a great day ahead."}
+              </p>
+            </div>
+
+            <div className="flex justify-center flex-col sm:flex-row gap-2.5 pt-2 w-full">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
+                <Link
+                  href="/"
+                  className="w-[90%] sm:w-64 py-3 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+                >
+                  <Home size={16} />
+                  <span>Back to Home</span>
+                </Link>
+
+                <button
+                  type="button"
+                  onClick={() => alert("Receipt downloaded.")}
+                  className="w-[90%] sm:w-64 py-3 rounded-2xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-[#0F172A] font-extrabold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Download size={16} />
+                  <span>Download Receipt</span>
+                </button>
               </div>
             </div>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              Completed
-            </span>
           </div>
+        )}
 
-          <div className="flex justify-center text-[#64748B]">
-            ↓
-          </div>
-
-          {/* SkyRail */}
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0]">
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[#192841] text-white flex items-center justify-center shadow-xs">
-                <Train size={20} />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#0F172A]">
-                  SkyRail Line 02 Maglev
-                </h3>
-                <p className="text-xs text-[#64748B]">
-                  Central Station Platform 2 → SkyPort Gateway (10 min)
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              Completed
-            </span>
-          </div>
-
-          <div className="flex justify-center text-[#64748B]">
-            ↓
-          </div>
-
-          {/* Smart Road */}
-          <div className="flex items-center justify-between p-4 rounded-2xl bg-[#F7F9FC] border border-[#E2E8F0]">
-            <div className="flex items-center gap-3.5">
-              <div className="w-10 h-10 rounded-xl bg-[#192841] text-white flex items-center justify-center shadow-xs">
-                <Zap size={20} />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#0F172A]">
-                  Smart Road Autonomous Pod
-                </h3>
-                <p className="text-xs text-[#64748B]">
-                  SkyPort Gateway → Airport Terminal Curb (8 min)
-                </p>
-              </div>
-            </div>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              Completed
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Primary CTA: Give Feedback */}
-      <div className="space-y-3">
-        <button
-          type="button"
-          onClick={handleGiveFeedback}
-          className="w-full py-4 px-8 rounded-2xl bg-[#4F6EF7] hover:bg-[#3B4FE0] text-white font-bold text-base transition-all shadow-md flex items-center justify-center gap-3 cursor-pointer"
-        >
-          <span>How was your journey? Give Feedback</span>
-          <ArrowRight size={18} />
-        </button>
-
-        <Link
-          href="/"
-          className="w-full py-3 px-6 rounded-2xl bg-white hover:bg-slate-50 border border-[#E2E8F0] text-[#192841] font-semibold text-xs transition-colors block text-center"
-        >
-          Return to Home Dashboard
-        </Link>
+        {/* Share Journey (subtle secondary action) */}
+        {!submitted && (
+          <button
+            type="button"
+            onClick={() => alert("Journey summary link copied to clipboard.")}
+            className="w-[80%] sm:w-auto sm:min-w-56 mx-auto py-3 px-6 rounded-2xl bg-white border border-[#E2E8F0] hover:border-[#192841] text-[#64748B] hover:text-[#0F172A] font-bold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+          >
+            <Share2 size={14} />
+            <span>Share Journey Summary</span>
+          </button>
+        )}
       </div>
     </div>
   );
@@ -212,7 +344,7 @@ export default function CompletePage() {
   return (
     <AuthGuard message="Please sign in or create an account to view journey completion metrics.">
       <Suspense fallback={<div className="p-10 text-center text-sm font-semibold text-[#64748B]">Loading completion summary...</div>}>
-        <CompleteContent />
+        <JourneyCompleteContent />
       </Suspense>
     </AuthGuard>
   );

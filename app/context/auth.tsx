@@ -11,6 +11,7 @@ import React, {
 import { useRouter, usePathname } from "next/navigation";
 import { ShieldCheck, ArrowRight, Sparkles } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 export interface PassengerUser {
   name: string;
@@ -248,6 +249,15 @@ export function AuthGuard({
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-4">
         <div className="max-w-md w-full bg-white rounded-3xl border border-[#E2E8F0] p-8 shadow-lg text-center space-y-5">
+          <div className="flex justify-center pb-1">
+            <Image
+              src="/logo.png"
+              alt="Univa Logo"
+              width={120}
+              height={38}
+              className="h-8 w-auto object-contain"
+            />
+          </div>
           <div className="w-14 h-14 mx-auto rounded-2xl bg-[#192841]/10 text-[#192841] flex items-center justify-center">
             <ShieldCheck size={28} />
           </div>

@@ -200,7 +200,7 @@ export default function Step4LiveTrip({
         </div>
         <div className="w-full h-2.5 bg-[#F7F8FA] border border-[#D6DAE3]/50 rounded-full overflow-hidden p-0.5">
           <div
-            className="h-full bg-gradient-to-r from-[#72222B] to-[#9E303D] rounded-full transition-all duration-300 shadow-xs"
+            className="h-full bg-gradient-to-r from-[#192841] to-[#22C55E] rounded-full transition-all duration-300 shadow-xs"
             style={{ width: `${progress * 100}%` }}
           />
         </div>
@@ -231,7 +231,7 @@ export default function Step4LiveTrip({
             setProgress(1.0);
             onTripAutoCompleted();
           }}
-          className="px-4 py-2 rounded-xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-xs cursor-pointer shadow-sm transition-all"
+          className="px-4 py-2 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs cursor-pointer shadow-sm transition-all"
         >
           Arrive Now
         </button>

@@ -206,7 +206,7 @@ export default function Step1Search({
       <div className="bg-white rounded-2xl p-5 border border-[#D6DAE3] shadow-sm space-y-4">
         
         {/* Origin Row */}
-        <div className="flex items-center gap-3 bg-[#F7F8FA] px-4 py-3 rounded-xl border border-[#D6DAE3] focus-within:bg-white focus-within:border-[#72222B] focus-within:ring-2 focus-within:ring-[#72222B]/10 transition-all">
+        <div className="flex items-center gap-3 bg-[#F7F8FA] px-4 py-3 rounded-xl border border-[#D6DAE3] focus-within:bg-white focus-within:border-[#192841] focus-within:ring-2 focus-within:ring-[#192841]/10 transition-all">
           <span className="w-2.5 h-2.5 rounded-full bg-[#2E7D5B] shrink-0 shadow-xs" />
           <div className="flex-1 min-w-0">
             <span className="block text-[10px] font-bold text-[#5A6B85] uppercase tracking-wider">From</span>
@@ -224,10 +224,10 @@ export default function Step1Search({
         </div>
 
         {/* Destination Row */}
-        <div className="flex items-center gap-3 bg-white px-4 py-3 rounded-xl border-2 border-[#72222B] shadow-sm focus-within:ring-2 focus-within:ring-[#72222B]/20 transition-all">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#72222B] shrink-0 shadow-xs" />
+        <div className="flex items-center gap-3 bg-white px-4 py-3 rounded-xl border-2 border-[#192841] shadow-sm focus-within:ring-2 focus-within:ring-[#192841]/20 transition-all">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#192841] shrink-0 shadow-xs" />
           <div className="flex-1 min-w-0">
-            <span className="block text-[10px] font-bold text-[#72222B] uppercase tracking-wider">To</span>
+            <span className="block text-[10px] font-bold text-[#192841] uppercase tracking-wider">To</span>
             <input
               type="text"
               value={toLocation}
@@ -243,8 +243,8 @@ export default function Step1Search({
             onClick={handleVoiceClick}
             className={`px-3 py-1.5 rounded-lg transition-all duration-200 cursor-pointer flex items-center gap-1.5 text-xs font-bold shadow-2xs ${
               isVoiceListening
-                ? "bg-[#72222B] text-white ring-2 ring-[#72222B]/30 animate-pulse"
-                : "bg-[#72222B]/10 hover:bg-[#72222B] text-[#72222B] hover:text-white"
+                ? "bg-[#192841] text-white ring-2 ring-[#192841]/30 animate-pulse"
+                : "bg-[#192841]/10 hover:bg-[#192841] text-[#192841] hover:text-white"
             }`}
             title="Tell Univa (Voice Search)"
           >
@@ -261,10 +261,10 @@ export default function Step1Search({
           </div>
         )}
 
-        {/* Popular Destination Chips */}
-        <div className="space-y-2 pt-1 border-t border-[#D6DAE3]/60">
-          <span className="text-xs text-[#5A6B85] font-semibold block">
-            Popular Destinations:
+        {/* Popular Destination Quick Select Chips */}
+        <div className="pt-1">
+          <span className="block text-xs font-bold text-[#5A6B85] mb-2">
+            Recent / Popular Destinations:
           </span>
           <div className="flex flex-wrap gap-2">
             {RECENT_DESTINATIONS.map((dest) => {
@@ -278,8 +278,8 @@ export default function Step1Search({
                   onClick={() => handleSelectPreset(dest)}
                   className={`px-3 py-1.5 rounded-xl text-xs transition-all duration-200 cursor-pointer border ${
                     isSelected
-                      ? "bg-[#72222B] text-white border-[#72222B] shadow-sm font-bold scale-[1.02]"
-                      : "bg-white hover:bg-[#F7F8FA] text-[#5A6B85] hover:text-[#0F172A] border-[#D6DAE3] hover:border-[#72222B]/40 font-medium"
+                      ? "bg-[#192841] text-white border-[#192841] shadow-sm font-bold scale-[1.02]"
+                      : "bg-white hover:bg-[#F7F8FA] text-[#5A6B85] hover:text-[#0F172A] border-[#D6DAE3] hover:border-[#192841]/40 font-medium"
                   }`}
                 >
                   <span>{dest.name}</span>
@@ -304,7 +304,7 @@ export default function Step1Search({
               Live transit corridor from {fromLocation.split(",")[0]} to {toLocation.split("(")[0].trim()}
             </p>
           </div>
-          <span className="text-xs font-bold text-[#72222B] bg-[#72222B]/10 px-2.5 py-1 rounded-full border border-[#72222B]/20">
+          <span className="text-xs font-bold text-[#192841] bg-[#192841]/10 px-2.5 py-1 rounded-full border border-[#192841]/20">
             4 options ready
           </span>
         </div>
@@ -460,8 +460,8 @@ export default function Step1Search({
                 onClick={() => handleSelectVehicle(opt)}
                 className={`p-4 rounded-2xl border transition-all duration-200 cursor-pointer flex items-center justify-between gap-4 ${
                   isSelected
-                    ? "bg-white border-[#72222B] ring-2 ring-[#72222B]/15 shadow-md"
-                    : "bg-white hover:bg-[#F7F8FA] border-[#D6DAE3] hover:border-[#72222B]/40 shadow-xs"
+                    ? "bg-white border-[#192841] ring-2 ring-[#192841]/15 shadow-md"
+                    : "bg-white hover:bg-[#F7F8FA] border-[#D6DAE3] hover:border-[#192841]/40 shadow-xs"
                 }`}
               >
                 {/* Left: Info */}
@@ -494,7 +494,7 @@ export default function Step1Search({
 
                 {/* Right: Fare */}
                 <div className="text-right shrink-0">
-                  <span className="text-base font-extrabold text-[#72222B] block">
+                  <span className="text-base font-extrabold text-[#192841] block">
                     LKR {opt.fareLkr}
                   </span>
                   <span className="text-xs text-[#5A6B85] font-medium">
@@ -512,7 +512,7 @@ export default function Step1Search({
         <button
           type="button"
           onClick={() => onProceedToDetails()}
-          className="relative group w-full py-4 rounded-2xl bg-[#72222B] hover:bg-[#5B1B22] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(114,34,43,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(114,34,43,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#72222B]/20 overflow-hidden"
+          className="relative group w-full py-4 rounded-2xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm sm:text-base transition-all duration-300 shadow-[0_8px_20px_-3px_rgba(25,40,65,0.35)] hover:shadow-[0_12px_26px_-3px_rgba(25,40,65,0.45)] hover:-translate-y-0.5 active:scale-[0.99] flex items-center justify-center gap-2 cursor-pointer ring-2 ring-[#192841]/20 overflow-hidden"
         >
           {/* Dynamic Light Sweep Highlight on hover */}
           <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-out pointer-events-none" />
