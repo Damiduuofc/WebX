@@ -111,30 +111,30 @@ export function HeroImageGrid() {
         className="object-cover transition-transform duration-700 group-hover:scale-105"
       />
       {/* Visual Depth Gradient Scrim */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/20 pointer-events-none" />
 
-      {/* Top Badge: Mode Category */}
-      <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3 sm:left-3 sm:right-3 flex items-center justify-between pointer-events-none">
-        <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#ffffff]/90 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-bold text-white shadow-sm">
-          {item.type === "skyrail" && <Train size={11} className="text-[000000]" />}
-          {item.type === "bus" && <Bus size={11} className="text-[#000000]" />}
-          {item.type === "pod" && <Zap size={11} className="text-[#000000]" />}
-          <span>{item.badge}</span>
+      {/* Top Badge: Mode Category & Live Status */}
+      <div className="absolute top-2.5 left-2.5 right-2.5 sm:top-3 sm:left-3 sm:right-3 flex items-center justify-between pointer-events-none z-10 gap-1.5">
+        <span className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-[#192841]/90 backdrop-blur-md border border-white/20 text-[10px] sm:text-[11px] font-bold text-white shadow-md">
+          {item.type === "skyrail" && <Train size={11} className="text-sky-300 shrink-0" />}
+          {item.type === "bus" && <Bus size={11} className="text-emerald-400 shrink-0" />}
+          {item.type === "pod" && <Zap size={11} className="text-amber-300 shrink-0" />}
+          <span className="truncate">{item.badge}</span>
         </span>
 
-        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-white/95 backdrop-blur-md text-[9px] sm:text-[10px] font-extrabold text-[#000000] shadow-xs">
+        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 sm:px-2 sm:py-0.5 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/60 text-[9px] sm:text-[10px] font-extrabold text-[#0F172A] shadow-sm shrink-0">
           <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E]" />
           <span>{item.status}</span>
         </span>
       </div>
 
-      {/* Bottom Title Bar */}
-      <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-3 sm:left-3 sm:right-3 pointer-events-none">
+      {/* Bottom Title Bar with Dedicated Readable Scrim */}
+      <div className="absolute bottom-0 inset-x-0 p-2.5 sm:p-3.5 bg-gradient-to-t from-black/90 via-black/60 to-transparent pt-8 pointer-events-none z-10">
         <h4 className="text-xs sm:text-sm lg:text-base font-extrabold text-white leading-tight drop-shadow-md">
           {item.title}
         </h4>
-        <p className="text-[10px] sm:text-[11px] text-slate-300 font-medium truncate">
-          Year  Autonomous Network
+        <p className="text-[10px] sm:text-[11px] text-slate-200 font-medium truncate mt-0.5 drop-shadow-xs">
+          Univa Autonomous Network
         </p>
       </div>
     </div>
@@ -312,21 +312,21 @@ export default function HeroSection({
             className="lg:col-span-6 xl:col-span-5 flex flex-col justify-start text-left"
           >
 
-            {/* Title with Restrained Crimson & Neutral Typography */}
+            {/* Title styled with Plan your Journey color style (u-title gradient) */}
             <h1 className="font-sans font-black text-3xl sm:text-5xl md:text-[54px] lg:text-[52px] xl:text-[54px] uppercase leading-[1.08] sm:leading-[1.05] tracking-tight mb-4 sm:mb-6 flex flex-col gap-1 select-none">
-              <span className="text-[#0F172A] block">
+              <span className="u-title block">
                 One Platform.
               </span>
 
               <div className="flex items-center gap-2.5 sm:gap-3 my-1 sm:my-1.5">
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-r from-transparent to-[#192841]/30" />
+                <div className="u-accent-line w-8 sm:w-12" />
                 <span className="text-[#64748B] text-[11px] sm:text-xs md:text-sm font-bold tracking-[0.2em] sm:tracking-[0.25em]">
                   EVERY JOURNEY
                 </span>
-                <div className="h-[2px] w-6 sm:w-8 bg-gradient-to-l from-transparent to-[#192841]/30" />
+                <div className="u-accent-line w-8 sm:w-12" />
               </div>
 
-              <span className="text-[#192841] block leading-tight">
+              <span className="u-title block leading-tight">
                 UNIVA{" "}
                 <span className="italic font-black text-2xl sm:text-4xl md:text-[46px] lg:text-[46px] xl:text-[48px]">
                    NETWORK

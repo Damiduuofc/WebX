@@ -10,6 +10,11 @@ import {
   Train,
   Zap,
   ShieldCheck,
+  MapPin,
+  Bus,
+  ArrowLeftRight,
+  Car,
+  CheckCircle2,
 } from "lucide-react";
 import { AuthGuard, useAuth } from "../context/auth";
 import FlowHeader from "../components/FlowHeader";
@@ -62,10 +67,10 @@ function JourneyPlanContent() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex items-center gap-3 self-end md:self-center">
           <Link
-            href="/preferences?focus=destination"
-            className="px-4 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 border border-[#E2E8F0] text-xs font-bold text-[#192841] transition-all"
+            href="/preferences"
+            className="text-xs font-bold text-[#192841] hover:text-[#111C2E] px-4 py-2 rounded-xl border border-[#E2E8F0] hover:border-[#192841] transition-colors"
           >
             Change Destination
           </Link>
@@ -75,57 +80,61 @@ function JourneyPlanContent() {
       {/* ========================================================================= */}
       {/* SECTION 16: JOURNEY SUMMARY (Arrival, Time, Transfers, Walking)           */}
       {/* ========================================================================= */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {/* Arrival */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
-          <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
-            <Clock size={18} />
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 shadow-xs space-y-1 u-surface">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#64748B]">
+            <Clock size={14} className="text-[#192841]" />
+            <span>Arrival</span>
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
+          <div className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight u-mono">
             {journey.arrivalTime}
           </div>
-          <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-            Arrival Time
-          </div>
+          <span className="text-[10px] font-bold text-emerald-600 uppercase tracking-wider">
+            On Time
+          </span>
         </div>
 
         {/* Journey Time */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
-          <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
-            <Zap size={18} />
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 shadow-xs space-y-1 u-surface">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#64748B]">
+            <Zap size={14} className="text-amber-500" />
+            <span>Journey Time</span>
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
+          <div className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight u-mono">
             {journey.durationMins} min
           </div>
-          <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-            Journey Time
-          </div>
+          <span className="text-[10px] font-bold text-[#64748B]">
+            Total In-Transit
+          </span>
         </div>
 
         {/* Transfers */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
-          <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
-            <Train size={18} />
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 shadow-xs space-y-1 u-surface">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#64748B]">
+            <Train size={14} className="text-[#192841]" />
+            <span>Transfers</span>
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
+          <div className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight u-mono">
             {journey.transfersCount}
           </div>
-          <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-            Transfers
-          </div>
+          <span className="text-[10px] font-bold text-[#64748B]">
+            Synchronized Hub
+          </span>
         </div>
 
         {/* Walking */}
-        <div className="bg-white rounded-2xl p-5 border border-[#E2E8F0] shadow-xs u-surface">
-          <div className="w-9 h-9 rounded-xl bg-[#192841]/10 text-[#192841] flex items-center justify-center mb-3">
-            <Footprints size={18} />
+        <div className="bg-white rounded-2xl border border-[#E2E8F0] p-4 sm:p-5 shadow-xs space-y-1 u-surface">
+          <div className="flex items-center gap-1.5 text-xs font-semibold text-[#64748B]">
+            <Footprints size={14} className="text-emerald-600" />
+            <span>Walking</span>
           </div>
-          <div className="text-2xl font-black text-[#0F172A] tracking-tight u-digital-num">
+          <div className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight u-mono">
             {journey.walkingMins} min
           </div>
-          <div className="text-xs font-semibold text-[#64748B] mt-0.5">
-            Walking (350m)
-          </div>
+          <span className="text-[10px] font-bold text-emerald-600">
+            Step-free paths
+          </span>
         </div>
       </div>
 
@@ -153,8 +162,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 1: Current Location */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white u-glow-strong">
-              📍
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-[#192841] text-white flex items-center justify-center ring-4 ring-white shadow-xs u-glow-strong">
+              <MapPin size={12} className="text-white" />
             </div>
             <div>
               <span className="text-xs font-black text-[#192841]">09:58 AM</span>
@@ -165,8 +174,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 2: Walk */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center text-[10px] ring-4 ring-white">
-              🚶
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center ring-4 ring-white shadow-xs">
+              <Footprints size={12} className="text-slate-700" />
             </div>
             <div className="p-3 bg-[#F7F9FC] rounded-xl border border-[#E2E8F0] w-full max-w-lg">
               <span className="text-xs font-bold text-[#0F172A] block">Walk — 3 min (180m)</span>
@@ -176,8 +185,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 3: Autonomous Bus 245 */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
-              🚌
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-[#192841] text-white flex items-center justify-center ring-4 ring-white shadow-xs">
+              <Bus size={12} className="text-white" />
             </div>
             <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
@@ -195,8 +204,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 4: Central Station Transfer */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-amber-500 text-white flex items-center justify-center text-[10px] ring-4 ring-white">
-              🔄
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-amber-500 text-white flex items-center justify-center ring-4 ring-white shadow-xs">
+              <ArrowLeftRight size={12} className="text-white" />
             </div>
             <div className="p-3.5 bg-amber-50/80 rounded-2xl border border-amber-200 w-full max-w-lg space-y-1">
               <div className="flex items-center justify-between">
@@ -214,8 +223,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 5: SkyRail Line 02 */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
-              🚄
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-[#192841] text-white flex items-center justify-center ring-4 ring-white shadow-xs">
+              <Train size={12} className="text-white" />
             </div>
             <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
@@ -233,8 +242,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 6: Smart Road Autonomous Pod */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-[#192841] text-white flex items-center justify-center text-[10px] ring-4 ring-white">
-              🛣
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-[#192841] text-white flex items-center justify-center ring-4 ring-white shadow-xs">
+              <Car size={12} className="text-white" />
             </div>
             <div className="p-4 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs w-full max-w-lg space-y-1 u-surface">
               <div className="flex items-center justify-between">
@@ -252,8 +261,8 @@ function JourneyPlanContent() {
 
           {/* ITEM 7: Destination */}
           <div className="relative flex items-start gap-4">
-            <div className="absolute -left-6 sm:-left-8 top-1 w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[10px] ring-4 ring-white">
-              🏁
+            <div className="absolute -left-[23px] sm:-left-[31px] top-0.5 w-6 h-6 rounded-full bg-emerald-600 text-white flex items-center justify-center ring-4 ring-white shadow-xs">
+              <CheckCircle2 size={12} className="text-white" />
             </div>
             <div>
               <span className="text-xs font-black text-emerald-700">10:42 AM</span>

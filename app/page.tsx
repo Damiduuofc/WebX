@@ -4,7 +4,6 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import LoadingAnimation from "./components/loadingAnimation";
 import AuthModal from "./components/AuthModal";
 import HeroSection from "./components/HeroSection";
 import { useAuth } from "./context/auth";
@@ -162,8 +161,6 @@ function HomeContent() {
   const searchParams = useSearchParams();
   const { isAuthenticated, user, updateJourney } = useAuth();
 
-  const [showSplash, setShowSplash] = useState(true);
-  const [isFadingOut, setIsFadingOut] = useState(false);
   const [authModal, setAuthModal] = useState<"login" | "signup" | null>(null);
 
   // Search Bar state (docked hero bar)
@@ -185,13 +182,6 @@ function HomeContent() {
   ]);
 
   const feedbackSubmitted = searchParams.get("feedback_submitted");
-
-  const handleSplashComplete = () => {
-    setIsFadingOut(true);
-    setTimeout(() => {
-      setShowSplash(false);
-    }, 600);
-  };
 
   /**
    * Core Workflow Router:
@@ -280,21 +270,6 @@ function HomeContent() {
 
   return (
     <>
-      {/* 0. Starting Website Kinetic Animation */}
-      {showSplash && (
-        <div
-          className={`fixed inset-0 z-[100] bg-[#FFFFFF] transition-opacity duration-600 ${
-            isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}
-        >
-          <LoadingAnimation
-            loop={false}
-            loopDuration={2.6}
-            onComplete={handleSplashComplete}
-          />
-        </div>
-      )}
-
       {/* Global Auth Modal for quick modal switches */}
       {authModal && (
         <AuthModal

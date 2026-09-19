@@ -8,11 +8,12 @@ import { ArrowUpRight, Phone, Mail, MapPin } from "lucide-react";
 export default function Footer() {
   const pathname = usePathname();
 
-  // Full-screen auth pages have their own dedicated footer/layout
+  // Full-screen auth and live navigation pages have their own dedicated layout
   if (
     pathname === "/login" ||
     pathname === "/signup" ||
-    pathname === "/register"
+    pathname === "/register" ||
+    pathname === "/live-journey"
   ) {
     return null;
   }

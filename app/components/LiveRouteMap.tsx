@@ -67,6 +67,10 @@ interface LiveRouteMapProps {
   showTraffic?: boolean;
   onToggleTraffic?: () => void;
   isSimulating?: boolean;
+  heightClass?: string;
+  className?: string;
+  hideTopOverlay?: boolean;
+  hideControls?: boolean;
 }
 
 export default function LiveRouteMap({
@@ -81,6 +85,10 @@ export default function LiveRouteMap({
   showTraffic = true,
   onToggleTraffic,
   isSimulating = true,
+  heightClass,
+  className,
+  hideTopOverlay = false,
+  hideControls = false,
 }: LiveRouteMapProps) {
   const [zoomLevel, setZoomLevel] = useState(1);
   const [panOffset, setPanOffset] = useState({ x: 0, y: 0 });
@@ -199,8 +207,10 @@ export default function LiveRouteMap({
     <div
       ref={mapContainerRef}
       className={`relative w-full overflow-hidden rounded-3xl border border-[#D6DAE3] bg-[#0B0F17] shadow-[0_12px_40px_rgba(15,23,42,0.18)] u-glow-strong select-none ${
-        isFullscreen ? "h-screen w-screen rounded-none" : "h-[540px] sm:h-[620px] lg:h-[700px]"
-      }`}
+        isFullscreen
+          ? "h-screen w-screen rounded-none"
+          : heightClass || "h-[540px] sm:h-[620px] lg:h-[700px]"
+      } ${className || ""}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -208,74 +218,78 @@ export default function LiveRouteMap({
       style={{ cursor: isDragging ? "grabbing" : "grab" }}
     >
       {/* Top Map Status Overlay */}
-      <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-        {/* Route Badge & Live Pulse */}
-        <div className="flex items-center gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full shadow-lg pointer-events-auto">
-          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-          <span className="text-xs font-extrabold text-white tracking-wide">
-            {routeName}
-          </span>
-          <span className="text-[10px] font-bold text-[#D6DAE3] border-l border-white/20 pl-2">
-            {buses.length} Active Fleet Vehicles
-          </span>
-        </div>
+      {!hideTopOverlay && (
+        <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+          {/* Route Badge & Live Pulse */}
+          <div className="flex items-center gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full shadow-lg pointer-events-auto">
+            <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+            <span className="text-xs font-extrabold text-white tracking-wide">
+              {routeName}
+            </span>
+            <span className="text-[10px] font-bold text-[#D6DAE3] border-l border-white/20 pl-2">
+              {buses.length} Active Fleet Vehicles
+            </span>
+          </div>
 
-        {/* Live GPS Telemetry Status */}
-        <div className="hidden sm:flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[11px] text-white/80 pointer-events-auto">
-          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-          <span>GPS Calibration: Active (±1.5m Precision)</span>
+          {/* Live GPS Telemetry Status */}
+          <div className="hidden sm:flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[11px] text-white/80 pointer-events-auto">
+            <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
+            <span>GPS Calibration: Active (±1.5m Precision)</span>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Floating Map Controls (Right Side) */}
-      <div className="absolute top-16 right-4 z-20 flex flex-col gap-2 pointer-events-auto">
-        <button
-          type="button"
-          onClick={() => handleZoom(0.25)}
-          title="Zoom In"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-        >
-          <ZoomIn size={16} />
-        </button>
-        <button
-          type="button"
-          onClick={() => handleZoom(-0.25)}
-          title="Zoom Out"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-        >
-          <ZoomOut size={16} />
-        </button>
-        <button
-          type="button"
-          onClick={handleResetView}
-          title="Reset View"
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-        >
-          <Compass size={16} />
-        </button>
-        {onToggleTraffic && (
+      {!hideControls && (
+        <div className="absolute top-16 right-4 z-20 flex flex-col gap-2 pointer-events-auto">
           <button
             type="button"
-            onClick={onToggleTraffic}
-            title={showTraffic ? "Hide Traffic" : "Show Traffic"}
-            className={`w-9 h-9 rounded-xl border flex items-center justify-center shadow-md transition-all cursor-pointer ${
-              showTraffic
-                ? "bg-[#22C55E]/20 border-[#22C55E]/60 text-[#22C55E]"
-                : "bg-[#0F141C]/90 border-white/15 text-white/60 hover:text-white"
-            }`}
+            onClick={() => handleZoom(0.25)}
+            title="Zoom In"
+            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
           >
-            <Sliders size={16} />
+            <ZoomIn size={16} />
           </button>
-        )}
-        <button
-          type="button"
-          onClick={toggleFullscreen}
-          title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Map"}
-          className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
-        >
-          {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={() => handleZoom(-0.25)}
+            title="Zoom Out"
+            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          >
+            <ZoomOut size={16} />
+          </button>
+          <button
+            type="button"
+            onClick={handleResetView}
+            title="Reset View"
+            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          >
+            <Compass size={16} />
+          </button>
+          {onToggleTraffic && (
+            <button
+              type="button"
+              onClick={onToggleTraffic}
+              title={showTraffic ? "Hide Traffic" : "Show Traffic"}
+              className={`w-9 h-9 rounded-xl border flex items-center justify-center shadow-md transition-all cursor-pointer ${
+                showTraffic
+                  ? "bg-[#22C55E]/20 border-[#22C55E]/60 text-[#22C55E]"
+                  : "bg-[#0F141C]/90 border-white/15 text-white/60 hover:text-white"
+              }`}
+            >
+              <Sliders size={16} />
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={toggleFullscreen}
+            title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Map"}
+            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+          >
+            {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </button>
+        </div>
+      )}
 
       {/* Main SVG Vector Transit Canvas */}
       <svg
@@ -757,8 +771,9 @@ export default function LiveRouteMap({
 
             <div className="py-2.5 space-y-1.5 text-xs text-white/80">
               {selectedStop.landmark && (
-                <p className="text-[11px] text-[#94A3B8]">
-                  📍 {selectedStop.landmark}
+                <p className="text-[11px] text-[#94A3B8] flex items-center gap-1">
+                  <MapPin size={11} className="text-sky-400 shrink-0" />
+                  <span>{selectedStop.landmark}</span>
                 </p>
               )}
               <div className="flex items-center justify-between pt-1">

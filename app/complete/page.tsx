@@ -14,6 +14,7 @@ import {
   Download,
   Home,
   Sparkles,
+  PartyPopper,
 } from "lucide-react";
 import { AuthGuard, useAuth } from "../context/auth";
 
@@ -149,8 +150,8 @@ function JourneyCompleteContent() {
               <Sparkles size={12} />
               <span>Journey Complete</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0F172A] u-title">
-              You&apos;ve arrived 🎉
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[#0F172A] u-title flex items-center justify-center gap-2.5">
+              <span>You&apos;ve arrived!</span>
             </h1>
             <div className="u-accent-line w-16 mx-auto" />
             <p className="text-sm lg:text-base text-[#64748B] font-bold">

@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { LogOut } from "lucide-react";
 import { useAuth } from "../context/auth";
 
 const navItems = ["Home", "Plan Journey", "Live Route"];
@@ -115,6 +116,7 @@ export default function Navbar() {
       `}</style>
 
       <div
+        className={pathname === "/live-journey" ? "hidden lg:block" : ""}
         style={{
           position: "fixed",
           top: "16px",
@@ -282,18 +284,11 @@ export default function Navbar() {
                 <button
                   type="button"
                   onClick={() => logout()}
-                  style={{
-                    padding: "4px 8px",
-                    borderRadius: "6px",
-                    fontSize: "11px",
-                    color: "#EF4444",
-                    border: "none",
-                    background: "transparent",
-                    cursor: "pointer",
-                    marginLeft: "4px",
-                  }}
+                  title="Sign out"
+                  aria-label="Sign out"
+                  className="group relative flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 border border-slate-200/80 hover:border-rose-200 transition-all duration-200 cursor-pointer active:scale-90 ml-1 shadow-2xs"
                 >
-                  Sign Out
+                  <LogOut size={14} className="transition-transform duration-200 group-hover:translate-x-0.5" strokeWidth={2.2} />
                 </button>
               </div>
             ) : (
@@ -421,12 +416,22 @@ export default function Navbar() {
               />
 
               {isAuthenticated && user ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px", padding: "6px 8px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "8px 12px",
+                    background: "rgba(247, 249, 252, 0.8)",
+                    borderRadius: "14px",
+                    border: "1px solid #E2E8F0",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                     <div
                       style={{
-                        width: 32,
-                        height: 32,
+                        width: 34,
+                        height: 34,
                         borderRadius: "50%",
                         background: "#192841",
                         color: "#FFFFFF",
@@ -435,15 +440,16 @@ export default function Navbar() {
                         justifyContent: "center",
                         fontSize: 13,
                         fontWeight: 700,
+                        flexShrink: 0,
                       }}
                     >
                       {(user.name || user.email || "P").slice(0, 1).toUpperCase()}
                     </div>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }}>
+                    <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: "#0F172A" }} className="truncate">
                         {user.name}
                       </span>
-                      <span style={{ fontSize: 11, color: "#64748B" }}>
+                      <span style={{ fontSize: 11, color: "#64748B" }} className="truncate">
                         {user.email}
                       </span>
                     </div>
@@ -454,20 +460,11 @@ export default function Navbar() {
                       logout();
                       setMenuOpen(false);
                     }}
-                    style={{
-                      width: "100%",
-                      padding: "8px 12px",
-                      borderRadius: "10px",
-                      fontSize: "12px",
-                      fontWeight: 600,
-                      color: "#EF4444",
-                      border: "1px solid #FCA5A5",
-                      background: "#FEF2F2",
-                      cursor: "pointer",
-                      marginTop: 4,
-                    }}
+                    title="Sign out"
+                    aria-label="Sign out"
+                    className="group flex items-center justify-center w-9 h-9 rounded-full bg-white hover:bg-rose-50 text-slate-500 hover:text-rose-600 border border-slate-200 hover:border-rose-200 shadow-2xs transition-all duration-200 active:scale-90 cursor-pointer shrink-0 ml-2"
                   >
-                    Sign Out
+                    <LogOut size={15} className="transition-transform duration-200 group-hover:translate-x-0.5" strokeWidth={2.2} />
                   </button>
                 </div>
               ) : (
