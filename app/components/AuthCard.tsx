@@ -148,10 +148,10 @@ export default function AuthCard({
             loop={false}
             loopDuration={2.6}
             zIndex="z-[9999]"
-            message={`Welcome, ${successUser?.name || "Rider"}!`}
+            message={`Welcome, ${successUser?.name || "Passenger"}!`}
             subMessage={
               mode === "signup"
-                ? "Your Rider Account has been created • Initializing Univa Pass..."
+                ? "Your Passenger Account has been created • Initializing Univa Pass..."
                 : "You have logged in successfully • Initializing live transit telemetry..."
             }
             onComplete={() => {
@@ -270,7 +270,7 @@ export default function AuthCard({
                   </h3>
                   <p className="text-sm text-[#64748B]">
                     {mode === "signup"
-                      ? "Your Rider Account has been created."
+                      ? "Your Passenger Account has been created."
                       : "You have logged in successfully."}
                   </p>
                 </div>
@@ -573,7 +573,7 @@ export default function AuthCard({
                     </h3>
                     <p className="text-sm text-[#64748B]">
                       {mode === "signup"
-                        ? "Your Rider Account has been created."
+                        ? "Your Passenger Account has been created."
                         : "You have logged in successfully."}
                     </p>
                   </div>
@@ -1003,10 +1003,10 @@ export default function AuthCard({
           loop={false}
           loopDuration={2.6}
           zIndex="z-[9999]"
-          message={`Welcome, ${successUser?.name || "Rider"}!`}
+          message={`Welcome, ${successUser?.name || "Passenger"}!`}
           subMessage={
             mode === "signup"
-              ? "Your Rider Account has been created • Initializing Univa Pass..."
+              ? "Your Passenger Account has been created • Initializing Univa Pass..."
               : "You have logged in successfully • Initializing live transit telemetry..."
           }
           onComplete={() => {
@@ -1066,7 +1066,7 @@ export default function AuthCard({
                   </h3>
                   <p className="text-sm text-[#64748B]">
                     {mode === "signup"
-                      ? "Your Rider Account has been created."
+                      ? "Your Passenger Account has been created."
                       : "You have logged in successfully."}
                   </p>
                 </div>
