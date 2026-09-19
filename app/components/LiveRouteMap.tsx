@@ -187,6 +187,28 @@ export default function LiveRouteMap({
     setIsDragging(false);
   };
 
+  // Touch handlers for mobile drag pan
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (e.touches.length === 1) {
+      const touch = e.touches[0];
+      setIsDragging(true);
+      setDragStart({ x: touch.clientX - panOffset.x, y: touch.clientY - panOffset.y });
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    setPanOffset({
+      x: touch.clientX - dragStart.x,
+      y: touch.clientY - dragStart.y,
+    });
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   // Toggle fullscreen for map
   const toggleFullscreen = () => {
     if (!mapContainerRef.current) return;
@@ -206,33 +228,38 @@ export default function LiveRouteMap({
   return (
     <div
       ref={mapContainerRef}
-      className={`relative w-full overflow-hidden rounded-3xl border border-[#D6DAE3] bg-[#0B0F17] shadow-[0_12px_40px_rgba(15,23,42,0.18)] u-glow-strong select-none ${
+      className={`relative w-full overflow-hidden rounded-2xl sm:rounded-3xl border border-[#D6DAE3] bg-[#0B0F17] shadow-[0_12px_40px_rgba(15,23,42,0.18)] u-glow-strong select-none ${
         isFullscreen
           ? "h-screen w-screen rounded-none"
-          : heightClass || "h-[540px] sm:h-[620px] lg:h-[700px]"
+          : heightClass || "h-[380px] sm:h-[500px] lg:h-[680px]"
       } ${className || ""}`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       style={{ cursor: isDragging ? "grabbing" : "grab" }}
     >
       {/* Top Map Status Overlay */}
       {!hideTopOverlay && (
-        <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+        <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 z-20 flex items-center justify-between gap-2 pointer-events-none">
           {/* Route Badge & Live Pulse */}
-          <div className="flex items-center gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full shadow-lg pointer-events-auto">
+          <div className="flex items-center gap-1.5 sm:gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3 py-1.5 sm:px-3.5 rounded-full shadow-lg pointer-events-auto min-w-0 max-w-[calc(100%-52px)] sm:max-w-none">
             <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
-            <span className="text-xs font-extrabold text-white tracking-wide">
+            <span className="text-xs font-extrabold text-white tracking-wide truncate">
               {routeName}
             </span>
-            <span className="text-[10px] font-bold text-[#D6DAE3] border-l border-white/20 pl-2">
-              {buses.length} Active Fleet Vehicles
+            <span className="text-[10px] font-bold text-[#D6DAE3] border-l border-white/20 pl-2 shrink-0">
+              <span className="hidden sm:inline">{buses.length} Active Fleet Vehicles</span>
+              <span className="sm:hidden">{buses.length} Fleet</span>
             </span>
           </div>
 
           {/* Live GPS Telemetry Status */}
-          <div className="hidden sm:flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[11px] text-white/80 pointer-events-auto">
+          <div className="hidden md:flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[11px] text-white/80 pointer-events-auto shrink-0">
             <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
             <span>GPS Calibration: Active (±1.5m Precision)</span>
           </div>
@@ -241,52 +268,52 @@ export default function LiveRouteMap({
 
       {/* Floating Map Controls (Right Side) */}
       {!hideControls && (
-        <div className="absolute top-16 right-4 z-20 flex flex-col gap-2 pointer-events-auto">
+        <div className="absolute top-14 sm:top-16 right-3 sm:right-4 z-20 flex flex-col gap-1.5 sm:gap-2 pointer-events-auto">
           <button
             type="button"
             onClick={() => handleZoom(0.25)}
             title="Zoom In"
-            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
           >
-            <ZoomIn size={16} />
+            <ZoomIn size={15} />
           </button>
           <button
             type="button"
             onClick={() => handleZoom(-0.25)}
             title="Zoom Out"
-            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
           >
-            <ZoomOut size={16} />
+            <ZoomOut size={15} />
           </button>
           <button
             type="button"
             onClick={handleResetView}
             title="Reset View"
-            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
           >
-            <Compass size={16} />
+            <Compass size={15} />
           </button>
           {onToggleTraffic && (
             <button
               type="button"
               onClick={onToggleTraffic}
               title={showTraffic ? "Hide Traffic" : "Show Traffic"}
-              className={`w-9 h-9 rounded-xl border flex items-center justify-center shadow-md transition-all cursor-pointer ${
+              className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl border flex items-center justify-center shadow-md transition-all cursor-pointer ${
                 showTraffic
                   ? "bg-[#22C55E]/20 border-[#22C55E]/60 text-[#22C55E]"
                   : "bg-[#0F141C]/90 border-white/15 text-white/60 hover:text-white"
               }`}
             >
-              <Sliders size={16} />
+              <Sliders size={15} />
             </button>
           )}
           <button
             type="button"
             onClick={toggleFullscreen}
             title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Map"}
-            className="w-9 h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
+            className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0F141C]/90 hover:bg-[#192841] border border-white/15 text-white flex items-center justify-center shadow-md transition-all cursor-pointer"
           >
-            {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+            {isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
           </button>
         </div>
       )}
@@ -473,6 +500,15 @@ export default function LiveRouteMap({
               }}
               className="cursor-pointer group"
             >
+              {/* Invisible expanded touch hit target */}
+              <circle
+                cx={stop.x}
+                cy={stop.y}
+                r="28"
+                fill="transparent"
+                className="cursor-pointer"
+              />
+
               {/* Pulsing ring for selected stop */}
               {isSelected && (
                 <circle
@@ -561,6 +597,13 @@ export default function LiveRouteMap({
               }}
               className="cursor-pointer"
             >
+              {/* Invisible expanded touch hit target */}
+              <circle
+                r="30"
+                fill="transparent"
+                className="cursor-pointer"
+              />
+
               {/* Ripple animation around active bus */}
               <circle
                 r={isSelected ? "26" : "18"}
@@ -641,31 +684,31 @@ export default function LiveRouteMap({
         })}
       </svg>
 
-      {/* Selected Bus Floating Telemetry HUD Card */}
+      {/* Selected Bus Floating Telemetry HUD Card (Hidden when stop is selected to avoid overlap) */}
       <AnimatePresence>
-        {selectedBus && (
+        {!selectedStop && selectedBus && (
           <motion.div
             initial={{ opacity: 0, y: 15, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-4 left-4 right-4 sm:right-auto sm:w-96 z-30 bg-[#0F141C]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-4 shadow-2xl text-white pointer-events-auto"
+            className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-auto sm:w-96 z-30 bg-[#0F141C]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-3.5 sm:p-4 shadow-2xl text-white pointer-events-auto max-h-[60%] overflow-y-auto"
           >
-            <div className="flex items-center justify-between pb-3 border-b border-white/10">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-xl bg-[#192841] flex items-center justify-center text-white shadow-md border border-white/10">
-                  <Bus size={18} />
+            <div className="flex items-center justify-between pb-2.5 sm:pb-3 border-b border-white/10">
+              <div className="flex items-center gap-2 sm:gap-2.5 min-w-0 flex-1 mr-2">
+                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#192841] flex items-center justify-center text-white shadow-md border border-white/10 shrink-0">
+                  <Bus size={17} />
                 </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-extrabold tracking-tight">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <h4 className="text-sm font-extrabold tracking-tight truncate">
                       {selectedBus.vehicleType ?? "Bus"} {selectedBus.plate}
                     </h4>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/30">
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/30 shrink-0">
                       {selectedBus.status}
                     </span>
                   </div>
-                  <p className="text-[11px] text-[#94A3B8]">
+                  <p className="text-[10px] sm:text-[11px] text-[#94A3B8] truncate">
                     {selectedBus.driver} • SmartFleet Grid
                   </p>
                 </div>
@@ -674,64 +717,65 @@ export default function LiveRouteMap({
               <button
                 type="button"
                 onClick={() => onSelectBus?.(null)}
-                className="text-xs text-white/50 hover:text-white p-1"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-xs shrink-0"
+                title="Close vehicle HUD"
               >
                 ✕
               </button>
             </div>
 
             {/* Quick Live Stats */}
-            <div className="grid grid-cols-3 gap-2 py-3 text-center border-b border-white/10">
-              <div className="bg-white/5 rounded-xl p-2">
-                <div className="text-[10px] text-white/60">Speed</div>
+            <div className="grid grid-cols-3 gap-1.5 sm:gap-2 py-2 sm:py-3 text-center border-b border-white/10">
+              <div className="bg-white/5 rounded-xl p-1.5 sm:p-2">
+                <div className="text-[9px] sm:text-[10px] text-white/60">Speed</div>
                 <div className="text-xs font-bold text-white flex items-center justify-center gap-1 mt-0.5 u-digital-num">
-                  <Gauge size={12} className="text-[#22C55E]" />
+                  <Gauge size={11} className="text-[#22C55E]" />
                   <span>{selectedBus.speed} km/h</span>
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-xl p-2">
-                <div className="text-[10px] text-white/60">Next Stop ETA</div>
+              <div className="bg-white/5 rounded-xl p-1.5 sm:p-2">
+                <div className="text-[9px] sm:text-[10px] text-white/60">Next Stop</div>
                 <div className="text-xs font-bold text-[#22C55E] flex items-center justify-center gap-1 mt-0.5 u-digital-num">
-                  <Clock size={12} />
+                  <Clock size={11} />
                   <span>{selectedBus.etaMinutes} min</span>
                 </div>
               </div>
 
-              <div className="bg-white/5 rounded-xl p-2">
-                <div className="text-[10px] text-white/60">Occupancy</div>
+              <div className="bg-white/5 rounded-xl p-1.5 sm:p-2">
+                <div className="text-[9px] sm:text-[10px] text-white/60">Occupancy</div>
                 <div className="text-xs font-bold text-white flex items-center justify-center gap-1 mt-0.5">
-                  <Users size={12} className="text-[#FBBF24]" />
+                  <Users size={11} className="text-[#FBBF24]" />
                   <span>{selectedBus.occupancyPercent}%</span>
                 </div>
               </div>
             </div>
 
             {/* Next Stop & Accessibility */}
-            <div className="pt-2.5 space-y-1.5 text-xs">
+            <div className="pt-2 sm:pt-2.5 space-y-1 sm:space-y-1.5 text-xs">
               <div className="flex items-center justify-between text-white/80">
-                <span>Next Scheduled Stop:</span>
-                <strong className="text-white truncate max-w-[180px]">
+                <span>Next Stop:</span>
+                <strong className="text-white truncate max-w-[170px] sm:max-w-[180px]">
                   {selectedBus.nextStopName}
                 </strong>
               </div>
-              <div className="flex items-center justify-between text-[11px] text-[#94A3B8]">
+              <div className="flex items-center justify-between text-[10px] sm:text-[11px] text-[#94A3B8]">
                 <span className="flex items-center gap-1">
-                  <ShieldCheck size={12} className="text-[#22C55E]" />
-                  <span>Step-Free Ramp Active</span>
+                  <ShieldCheck size={11} className="text-[#22C55E]" />
+                  <span>Step-Free Ramp</span>
                 </span>
                 <span className="text-[#22C55E] font-bold">
-                  {selectedBus.seatsAvailable} Seats Free
+                  {selectedBus.seatsAvailable} Free
                 </span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="mt-3 pt-2 border-t border-white/10 flex items-center gap-2">
+            <div className="mt-2.5 sm:mt-3 pt-2 border-t border-white/10 flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => centerOnBus(selectedBus)}
-                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
+                className="flex-1 py-1.5 sm:py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
               >
                 <Navigation size={13} />
                 <span>Center on Bus</span>
@@ -749,31 +793,32 @@ export default function LiveRouteMap({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.96 }}
             transition={{ duration: 0.2 }}
-            className="absolute bottom-4 left-4 right-4 sm:right-auto sm:w-96 z-30 bg-[#0F141C]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-4 shadow-2xl text-white pointer-events-auto"
+            className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-auto sm:w-96 z-30 bg-[#0F141C]/95 backdrop-blur-xl border border-white/15 rounded-2xl p-3.5 sm:p-4 shadow-2xl text-white pointer-events-auto max-h-[60%] overflow-y-auto"
           >
             <div className="flex items-center justify-between pb-2 border-b border-white/10">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-[#22C55E] text-[#0F141C] font-black text-xs flex items-center justify-center">
+              <div className="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                <span className="w-6 h-6 rounded-full bg-[#22C55E] text-[#0F141C] font-black text-xs flex items-center justify-center shrink-0">
                   {selectedStop.seq}
                 </span>
-                <h4 className="text-sm font-bold text-white truncate max-w-[200px]">
+                <h4 className="text-sm font-bold text-white truncate">
                   {selectedStop.name}
                 </h4>
               </div>
               <button
                 type="button"
                 onClick={() => onSelectStop?.(null)}
-                className="text-xs text-white/50 hover:text-white p-1"
+                className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-xs shrink-0"
+                title="Close station details"
               >
                 ✕
               </button>
             </div>
 
-            <div className="py-2.5 space-y-1.5 text-xs text-white/80">
+            <div className="py-2 sm:py-2.5 space-y-1 sm:space-y-1.5 text-xs text-white/80">
               {selectedStop.landmark && (
-                <p className="text-[11px] text-[#94A3B8] flex items-center gap-1">
+                <p className="text-[10px] sm:text-[11px] text-[#94A3B8] flex items-center gap-1">
                   <MapPin size={11} className="text-sky-400 shrink-0" />
-                  <span>{selectedStop.landmark}</span>
+                  <span className="truncate">{selectedStop.landmark}</span>
                 </p>
               )}
               <div className="flex items-center justify-between pt-1">
