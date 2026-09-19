@@ -26,6 +26,23 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full bg-[#192841] text-white pt-14 md:pt-20 pb-0 overflow-hidden font-sans border-t border-white/10 mt-20">
+      {/* Faint telemetry grid + lit top edge, matching the rest of the app */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.06] pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.9) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+          maskImage: "radial-gradient(ellipse 70% 60% at 20% 0%, #000 0%, transparent 75%)",
+          WebkitMaskImage: "radial-gradient(ellipse 70% 60% at 20% 0%, #000 0%, transparent 75%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute top-0 inset-x-0 h-px pointer-events-none"
+        style={{ background: "linear-gradient(90deg, transparent, rgba(56,189,248,0.55), transparent)" }}
+      />
+
       {/* Top Section: Logo/Description + Links Grid */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 lg:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 pb-16">
         
@@ -58,7 +75,7 @@ export default function Footer() {
           
           {/* Column 1: Quick Links */}
           <div className="flex flex-col space-y-4">
-            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider">
+            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider u-mono">
               Quick Links
             </h4>
             <ul className="flex flex-col space-y-2.5">
@@ -84,7 +101,7 @@ export default function Footer() {
 
           {/* Column 2: Transit Network */}
           <div className="flex flex-col space-y-4">
-            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider">
+            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider u-mono">
               Transit Modes
             </h4>
             <ul className="flex flex-col space-y-2.5 text-sm text-[#D6DAE3]">
@@ -98,7 +115,7 @@ export default function Footer() {
 
           {/* Column 3: Rider Support & Dispatch */}
           <div className="flex flex-col space-y-4">
-            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider">
+            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider u-mono">
               Rider Dispatch
             </h4>
             <ul className="flex flex-col space-y-2.5 text-sm text-[#D6DAE3]">
@@ -126,7 +143,7 @@ export default function Footer() {
 
           {/* Column 4: Commuter Community & Social */}
           <div className="flex flex-col space-y-4">
-            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider">
+            <h4 className="text-white/60 font-semibold uppercase text-[11px] tracking-wider u-mono">
               Network Social
             </h4>
             <ul className="flex flex-col space-y-2.5">

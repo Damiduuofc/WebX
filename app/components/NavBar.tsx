@@ -128,6 +128,7 @@ export default function Navbar() {
       >
         <nav
           aria-label="Primary"
+          className="u-nav"
           style={{
             display: "flex",
             alignItems: "center",
@@ -139,7 +140,7 @@ export default function Navbar() {
             borderRadius: "999px",
             background: "rgba(255, 255, 255, 0.94)",
             border: "1px solid rgba(226, 232, 240, 0.9)",
-            boxShadow: "0 4px 20px rgba(25, 40, 65, 0.08), inset 0 1px 0 rgba(255,255,255,0.9)",
+            boxShadow: "0 0 0 1px rgba(25, 40, 65, 0.03), 0 8px 28px -8px rgba(25, 40, 65, 0.18), inset 0 1px 0 rgba(255,255,255,0.9)",
             backdropFilter: "blur(20px) saturate(160%)",
             WebkitBackdropFilter: "blur(20px) saturate(160%)",
             position: "relative",

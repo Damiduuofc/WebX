@@ -248,7 +248,7 @@ export function AuthGuard({
   if (!isAuthenticated) {
     return (
       <div className="min-h-[70vh] flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E2E8F0] p-8 shadow-lg text-center space-y-5">
+        <div className="max-w-md w-full bg-white rounded-3xl border border-[#E2E8F0] p-8 shadow-lg text-center space-y-5 u-surface u-hud">
           <div className="flex justify-center pb-1">
             <Image
               src="/logo.png"
@@ -269,7 +269,7 @@ export function AuthGuard({
           <div className="space-y-2.5 pt-2">
             <Link
               href={`/signup?redirect=${encodeURIComponent(pathname)}`}
-              className="w-full py-3.5 px-6 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
+              className="w-full py-3.5 px-6 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
             >
               <span>Create Account</span>
               <ArrowRight size={16} />

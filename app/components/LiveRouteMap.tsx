@@ -51,6 +51,8 @@ export interface LiveBus {
   driver: string;
   status: "In Transit" | "Approaching Stop" | "At Station" | "Slight Delay";
   heading: number; // degrees
+  /** Shown in the HUD title instead of "Bus" (e.g. "SkyRail", "Pod"). */
+  vehicleType?: string;
 }
 
 interface LiveRouteMapProps {
@@ -196,7 +198,7 @@ export default function LiveRouteMap({
   return (
     <div
       ref={mapContainerRef}
-      className={`relative w-full overflow-hidden rounded-3xl border border-[#D6DAE3] bg-[#0B0F17] shadow-[0_12px_40px_rgba(15,23,42,0.18)] select-none ${
+      className={`relative w-full overflow-hidden rounded-3xl border border-[#D6DAE3] bg-[#0B0F17] shadow-[0_12px_40px_rgba(15,23,42,0.18)] u-glow-strong select-none ${
         isFullscreen ? "h-screen w-screen rounded-none" : "h-[540px] sm:h-[620px] lg:h-[700px]"
       }`}
       onMouseDown={handleMouseDown}
@@ -209,10 +211,7 @@ export default function LiveRouteMap({
       <div className="absolute top-4 left-4 right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
         {/* Route Badge & Live Pulse */}
         <div className="flex items-center gap-2 bg-[#0F141C]/90 backdrop-blur-md border border-white/15 px-3.5 py-1.5 rounded-full shadow-lg pointer-events-auto">
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22C55E] opacity-75" />
-            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#22C55E]" />
-          </span>
+          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
           <span className="text-xs font-extrabold text-white tracking-wide">
             {routeName}
           </span>
@@ -223,7 +222,7 @@ export default function LiveRouteMap({
 
         {/* Live GPS Telemetry Status */}
         <div className="hidden sm:flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 px-3 py-1 rounded-full text-[11px] text-white/80 pointer-events-auto">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#22C55E] animate-pulse" />
+          <span className="u-pulse-dot" style={{ "--pulse-color": "#22C55E" } as React.CSSProperties} />
           <span>GPS Calibration: Active (±1.5m Precision)</span>
         </div>
       </div>
@@ -646,7 +645,7 @@ export default function LiveRouteMap({
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="text-sm font-extrabold tracking-tight">
-                      Bus {selectedBus.plate}
+                      {selectedBus.vehicleType ?? "Bus"} {selectedBus.plate}
                     </h4>
                     <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-[#22C55E]/20 text-[#22C55E] border border-[#22C55E]/30">
                       {selectedBus.status}
@@ -671,7 +670,7 @@ export default function LiveRouteMap({
             <div className="grid grid-cols-3 gap-2 py-3 text-center border-b border-white/10">
               <div className="bg-white/5 rounded-xl p-2">
                 <div className="text-[10px] text-white/60">Speed</div>
-                <div className="text-xs font-bold text-white flex items-center justify-center gap-1 mt-0.5">
+                <div className="text-xs font-bold text-white flex items-center justify-center gap-1 mt-0.5 u-digital-num">
                   <Gauge size={12} className="text-[#22C55E]" />
                   <span>{selectedBus.speed} km/h</span>
                 </div>
@@ -679,7 +678,7 @@ export default function LiveRouteMap({
 
               <div className="bg-white/5 rounded-xl p-2">
                 <div className="text-[10px] text-white/60">Next Stop ETA</div>
-                <div className="text-xs font-bold text-[#22C55E] flex items-center justify-center gap-1 mt-0.5">
+                <div className="text-xs font-bold text-[#22C55E] flex items-center justify-center gap-1 mt-0.5 u-digital-num">
                   <Clock size={12} />
                   <span>{selectedBus.etaMinutes} min</span>
                 </div>
@@ -718,7 +717,7 @@ export default function LiveRouteMap({
               <button
                 type="button"
                 onClick={() => centerOnBus(selectedBus)}
-                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
+                className="flex-1 py-2 px-3 rounded-xl bg-[#192841] hover:bg-[#111C2E] u-btn text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer border border-white/10"
               >
                 <Navigation size={13} />
                 <span>Center on Bus</span>

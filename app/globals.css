@@ -61,3 +61,555 @@ body {
     animation: none;
   }
 }
+
+/* ==========================================================================
+   Univa futuristic accent system
+   Restrained sci-fi cues layered on top of the core brand system: a faint
+   circuit/grid texture, soft navy glow, a live-status pulse ring, and a
+   shimmer sweep for progress/route lines. Kept subtle per brand guidance
+   (no heavy glassmorphism, no loud gradients, no constant motion).
+   ========================================================================== */
+
+:root {
+  --glow-navy: rgba(25, 40, 65, 0.22);
+  --glow-navy-soft: rgba(25, 40, 65, 0.12);
+}
+
+/* Faint dot-grid texture for section backgrounds (map panels, live journey,
+   hero-adjacent sections). Extremely low opacity so it reads as texture,
+   not decoration. */
+.u-grid-bg {
+  position: relative;
+  isolation: isolate;
+}
+
+.u-grid-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(circle, rgba(25, 40, 65, 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 0%, transparent 75%);
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 20%, #000 0%, transparent 75%);
+  pointer-events: none;
+}
+
+/* Soft ambient glow used on active/live surfaces (current-vehicle card,
+   live map frame, primary CTA on hover). */
+.u-glow {
+  box-shadow: 0 0 0 1px rgba(25, 40, 65, 0.06), 0 10px 30px -6px var(--glow-navy-soft);
+}
+
+.u-glow-strong {
+  box-shadow: 0 0 0 1px rgba(25, 40, 65, 0.08), 0 0 0 4px rgba(25, 40, 65, 0.05), 0 14px 36px -8px var(--glow-navy);
+}
+
+/* Thin gradient accent rule, e.g. under a heading or across a card top edge. */
+.u-accent-line {
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #192841 0%, rgba(25, 40, 65, 0.15) 65%, transparent 100%);
+}
+
+/* Live status pulse: a small solid dot with an expanding ring behind it.
+   Used for "On Time" / live-tracking indicators instead of a plain dot. */
+.u-pulse-dot {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--pulse-color, #22C55E);
+  flex-shrink: 0;
+}
+
+.u-pulse-dot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--pulse-color, #22C55E);
+  animation: u-pulse-ring 1.8s cubic-bezier(0.2, 0.6, 0.4, 1) infinite;
+}
+
+@keyframes u-pulse-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* Shimmer sweep for progress bars / active route lines: a soft highlight
+   that travels once across the element to suggest live motion/telemetry. */
+.u-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.u-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: u-shimmer-sweep 2.6s ease-in-out infinite;
+}
+
+@keyframes u-shimmer-sweep {
+  0%, 15% {
+    transform: translateX(-100%);
+  }
+  55%, 100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Tabular, evenly-tracked numerals for live readouts (ETA, countdowns,
+   distances) so they feel like a live instrument rather than static copy. */
+.u-digital-num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  font-feature-settings: "tnum" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-pulse-dot::after,
+  .u-shimmer::after {
+    animation: none;
+  }
+}
+
+/* ==========================================================================
+   App-wide futuristic system
+   One shared set of building blocks so every screen reads as the same product:
+   - atmosphere: a fixed, faint grid and soft navy/sky glows behind every page
+   - .u-surface: the single card shadow (soft, layered, with a lit top edge)
+   - .u-btn: the single primary-button treatment (glow on hover, press on click)
+   - focus ring, selection colour and scrollbar in the brand navy
+   Restrained by design: low contrast, no colour beyond the brand palette.
+   ========================================================================== */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(900px 520px at 6% -6%, rgba(56, 189, 248, 0.09), transparent 62%),
+    radial-gradient(820px 500px at 100% 0%, rgba(25, 40, 65, 0.07), transparent 62%),
+    radial-gradient(circle, rgba(25, 40, 65, 0.07) 1px, transparent 1px);
+  background-size: auto, auto, 28px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%);
+}
+
+.u-surface {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 0 0 1px rgba(56, 189, 248, 0.06),
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 18px 44px -18px rgba(25, 40, 65, 0.24),
+    0 0 44px -14px rgba(56, 189, 248, 0.2);
+}
+
+/* HUD corner brackets: the "targeting frame" detail on large panels. Drawn as
+   background layers, so it needs no extra elements and no positioning. */
+.u-hud {
+  --hud: rgba(56, 189, 248, 0.6);
+  background-image:
+    linear-gradient(var(--hud), var(--hud)), linear-gradient(var(--hud), var(--hud)),
+    linear-gradient(var(--hud), var(--hud)), linear-gradient(var(--hud), var(--hud)),
+    linear-gradient(var(--hud), var(--hud)), linear-gradient(var(--hud), var(--hud)),
+    linear-gradient(var(--hud), var(--hud)), linear-gradient(var(--hud), var(--hud));
+  background-repeat: no-repeat;
+  background-size: 16px 1.5px, 1.5px 16px, 16px 1.5px, 1.5px 16px, 16px 1.5px, 1.5px 16px, 16px 1.5px, 1.5px 16px;
+  background-position:
+    left 12px top 12px, left 12px top 12px,
+    right 12px top 12px, right 12px top 12px,
+    left 12px bottom 12px, left 12px bottom 12px,
+    right 12px bottom 12px, right 12px bottom 12px;
+}
+
+/* Instrument labels: small caps in a monospace face, like a HUD readout. */
+.u-mono {
+  font-family: ui-monospace, "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+  letter-spacing: 0.09em;
+}
+
+/* Titles: deep navy resolving to a cool cyan at the end of the line. */
+.u-title {
+  background: linear-gradient(100deg, #0f172a 0%, #192841 52%, #0369a1 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Display type for headings and figures. */
+h1, h2, h3, .u-display, .u-digital-num {
+  font-family: var(--font-display), var(--font-sans);
+}
+
+/* Aurora: two slow-drifting light fields behind everything. Only a transform
+   animates, so it stays on the compositor and costs almost nothing. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20vmax;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40vmax 30vmax at 20% 12%, rgba(56, 189, 248, 0.11), transparent 62%),
+    radial-gradient(36vmax 28vmax at 84% 16%, rgba(25, 40, 65, 0.09), transparent 62%),
+    radial-gradient(30vmax 24vmax at 62% 92%, rgba(99, 102, 241, 0.06), transparent 62%);
+  animation: u-aurora 46s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes u-aurora {
+  to { transform: translate3d(4vmax, 3vmax, 0) scale(1.07); }
+}
+
+/* Nav: a light that travels around the pill's edge. */
+@property --u-a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.u-nav::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: conic-gradient(from var(--u-a), transparent 0deg, transparent 240deg, rgba(56, 189, 248, 0.95) 320deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: u-nav-spin 7s linear infinite;
+}
+
+@keyframes u-nav-spin {
+  to { --u-a: 360deg; }
+}
+
+
+.u-surface-hover {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.u-surface-hover:hover {
+  border-color: rgba(25, 40, 65, 0.35);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 0 3px rgba(25, 40, 65, 0.05),
+    0 20px 40px -16px rgba(25, 40, 65, 0.3);
+  transform: translateY(-2px);
+}
+
+.u-btn {
+  transition: box-shadow 0.25s ease, transform 0.2s ease, background-color 0.2s ease;
+}
+
+.u-btn:hover:not(:disabled) {
+  box-shadow:
+    0 0 0 3px rgba(56, 189, 248, 0.16),
+    0 12px 30px -8px rgba(56, 189, 248, 0.5),
+    0 8px 20px -10px rgba(25, 40, 65, 0.6);
+}
+
+.u-btn:active:not(:disabled) {
+  transform: translateY(1px) scale(0.99);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(25, 40, 65, 0.55);
+  outline-offset: 2px;
+}
+
+::selection {
+  background: rgba(25, 40, 65, 0.16);
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(25, 40, 65, 0.35) transparent;
+}
+
+/* Pages fade in on navigation (opacity only: a transform here would trap
+   position: fixed descendants such as the splash screen). */
+main > * {
+  /* backwards, not both: a forwards fill would pin opacity: 1 and stop other
+     elements (e.g. the splash screen) from ever fading out */
+  animation: u-page-in 0.45s ease-out backwards;
+}
+
+@keyframes u-page-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after, .u-nav::before { animation: none; }
+  main > * { animation: none; }
+  .u-btn:active:not(:disabled) { transform: none; }
+  .u-surface-hover:hover { transform: none; }
+}
+
+/* Laser-style route lines: a steady bright core plus a colored dash
+   pattern that travels along the path, like a pulse of light moving
+   down a beam. Pair with a blurred duplicate path for the glow halo. */
+.u-laser-flow {
+  animation: u-laser-flow 1.8s linear infinite;
+}
+
+@keyframes u-laser-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-laser-flow {
+    animation: none;
+  }
+}
+
+/* Orbiting vehicles: each vehicle flies a full ellipse around a centre point.
+   Two sine-eased alternating translations, a quarter period out of phase,
+   trace the ellipse (x = rx*cos, y = ry*sin). The y-phase also drives scale
+   and opacity so the vehicle grows as it swings to the "front" (bottom arc)
+   and recedes on the "back" arc, and z-index swaps at the far left/right so
+   it passes behind then in front of the content.
+
+   Per-vehicle inputs (custom properties): --dur (orbit time), --ph (0-1
+   starting phase), --rx / --ry (radii), --sb / --sf (back / front scale),
+   --zf (front z-index). Pure CSS, so there is no SSR/client mismatch risk. */
+.u-orbit-z {
+  --rx: min(calc(50vw - var(--half, 100px) - 24px), var(--rxmax, 460px));
+  animation: u-orbit-z var(--dur) steps(1, end) infinite;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+}
+
+@keyframes u-orbit-z {
+  0%, 49.99% { z-index: var(--zf, 20); }
+  50%, 100% { z-index: 1; }
+}
+
+.u-orbit-x {
+  animation: u-orbit-x calc(var(--dur) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+  will-change: transform;
+}
+
+@keyframes u-orbit-x {
+  from { transform: translateX(calc(var(--rx) * -1)); }
+  to { transform: translateX(var(--rx)); }
+}
+
+.u-orbit-ys {
+  animation: u-orbit-ys calc(var(--dur) / 2) cubic-bezier(0.37, 0, 0.63, 1) infinite alternate;
+  animation-delay: calc(var(--dur) * (var(--ph) + 0.25) * -1);
+  will-change: transform, opacity;
+}
+
+@keyframes u-orbit-ys {
+  from { transform: translateY(calc(var(--ry) * -1)) scale(var(--sb, 0.72)); opacity: var(--ob, 0.38); }
+  to { transform: translateY(var(--ry)) scale(var(--sf, 1.1)); opacity: var(--of, 0.8); }
+}
+
+/* Viewing angle: the vehicle is never flipped. Over one lap (0% = far left end,
+   heading toward the viewer) it is seen from its front, then front-3/4, side
+   (moving right), rear (far right end, heading away), side (moving left),
+   front-3/4 and back to front. Each angle is its own layer (.u-vo-* fades it,
+   .u-vs-* stretches it):
+   - the incoming angle fades in on top of the outgoing one, which holds until
+     it is covered, so the vehicle never dips in opacity mid-turn;
+   - both layers are stretched to the same width throughout the turn, so the
+     silhouette changes smoothly instead of two shapes overlapping;
+   - the front angle is duplicated (fa/fb) so the loop point is seamless.
+   Layers share the orbit's phase (same delay as .u-orbit-x). */
+.u-vo-fa,
+.u-vo-h1,
+.u-vo-s1,
+.u-vo-r,
+.u-vo-s2,
+.u-vo-h2,
+.u-vo-fb {
+  opacity: 0;
+  animation-name: none;
+  animation-duration: var(--dur);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+  will-change: opacity;
+}
+
+.u-vs-fa,
+.u-vs-h1,
+.u-vs-s1,
+.u-vs-r,
+.u-vs-s2,
+.u-vs-h2,
+.u-vs-fb {
+  animation-duration: var(--dur);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-delay: calc(var(--dur) * var(--ph) * -1);
+  will-change: transform;
+}
+
+.u-vo-fa { animation-name: u-vo-fa; }
+.u-vo-h1 { animation-name: u-vo-h1; }
+.u-vo-s1 { animation-name: u-vo-s1; }
+.u-vo-r { animation-name: u-vo-r; }
+.u-vo-s2 { animation-name: u-vo-s2; }
+.u-vo-h2 { animation-name: u-vo-h2; }
+.u-vo-fb { animation-name: u-vo-fb; }
+.u-vs-fa { animation-name: u-vs-fa; }
+.u-vs-h1 { animation-name: u-vs-h1; }
+.u-vs-s1 { animation-name: u-vs-s1; }
+.u-vs-r { animation-name: u-vs-r; }
+.u-vs-s2 { animation-name: u-vs-s2; }
+.u-vs-h2 { animation-name: u-vs-h2; }
+.u-vs-fb { animation-name: u-vs-fb; }
+
+@keyframes u-vo-fa {
+  0% { opacity: 1; }
+  7.5% { opacity: 1; }
+  12.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-h1 {
+  0% { opacity: 0; }
+  7.5% { opacity: 1; }
+  12.5% { opacity: 1; }
+  20% { opacity: 1; }
+  25% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-s1 {
+  0% { opacity: 0; }
+  12.5% { opacity: 0; }
+  20% { opacity: 1; }
+  25% { opacity: 1; }
+  40% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-r {
+  0% { opacity: 0; }
+  25% { opacity: 0; }
+  40% { opacity: 1; }
+  50% { opacity: 1; }
+  65% { opacity: 1; }
+  75% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-s2 {
+  0% { opacity: 0; }
+  50% { opacity: 0; }
+  65% { opacity: 1; }
+  75% { opacity: 1; }
+  82.5% { opacity: 1; }
+  87.5% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-h2 {
+  0% { opacity: 0; }
+  75% { opacity: 0; }
+  82.5% { opacity: 1; }
+  87.5% { opacity: 1; }
+  95% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes u-vo-fb {
+  0% { opacity: 0; }
+  87.5% { opacity: 0; }
+  95% { opacity: 1; }
+  100% { opacity: 1; }
+}
+
+@keyframes u-vs-fa {
+  0% { transform: scaleX(1); }
+  12.5% { transform: scaleX(1.475); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes u-vs-h1 {
+  0% { transform: scaleX(0.678); }
+  12.5% { transform: scaleX(1); }
+  25% { transform: scaleX(1); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes u-vs-s1 {
+  0% { transform: scaleX(1); }
+  12.5% { transform: scaleX(1); }
+  25% { transform: scaleX(1); }
+  50% { transform: scaleX(0.807); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes u-vs-r {
+  0% { transform: scaleX(1); }
+  25% { transform: scaleX(1.239); }
+  50% { transform: scaleX(1); }
+  75% { transform: scaleX(1.239); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes u-vs-s2 {
+  0% { transform: scaleX(1); }
+  50% { transform: scaleX(0.807); }
+  75% { transform: scaleX(1); }
+  87.5% { transform: scaleX(1); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes u-vs-h2 {
+  0% { transform: scaleX(1); }
+  75% { transform: scaleX(1); }
+  87.5% { transform: scaleX(1); }
+  100% { transform: scaleX(0.678); }
+}
+
+@keyframes u-vs-fb {
+  0% { transform: scaleX(1); }
+  87.5% { transform: scaleX(1.475); }
+  100% { transform: scaleX(1); }
+}
+
+/* Gentle hover: a slow bob and roll so the vehicle reads as floating on its
+   engines rather than sliding along a path. */
+.u-orbit-bob {
+  animation: u-orbit-bob 3.6s ease-in-out infinite alternate;
+  animation-delay: var(--bd, 0s);
+  will-change: transform;
+}
+
+@keyframes u-orbit-bob {
+  from { transform: translateY(-4px) rotate(-0.7deg); }
+  to { transform: translateY(4px) rotate(0.7deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .u-orbit-stage {
+    display: none;
+  }
+}
